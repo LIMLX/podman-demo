@@ -3,19 +3,32 @@ import { ConfigModule } from '@nestjs/config';
 import baseConfig from 'config/base';
 import { AuthModule } from './auth/auth.module';
 import { ClientProxyFactory, ClientsModule } from '@nestjs/microservices';
-import { Transport } from '@nestjs/microservices/enums';
+import { PassportModule } from '@nestjs/passport';
 import { ConfigService } from '@nestjs/config';
 import { UserController } from './microservice/users.controller';
+import { JwtModule } from '@nestjs/jwt';
 
 @Module({
   imports: [
+    PassportModule,
+
+    JwtModule.registerAsync({
+      useFactory:(config:ConfigService) => ({
+        secret: config.get('jwt').KEY,
+        signOptions: {expiresIn: config.get('jwt').TIME}
+      }),
+      inject: [ConfigService]
+    }),
+
     ConfigModule.forRoot({
       isGlobal:true,
       load: [baseConfig]
     }),
     AuthModule
   ],
+
   controllers: [UserController],
+
   providers: [
     {
       provide: 'USER_SERVICE',
