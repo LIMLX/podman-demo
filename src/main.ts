@@ -1,7 +1,8 @@
 import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { LoggerInterceptor } from './interceptor/logger.interceptor';
 import { ConfigService } from '@nestjs/config';
+import { AppModule } from './app.module';
+import { LoggerInterceptor } from './interceptor';
+import { HttpFilter } from './interceptor';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -10,6 +11,7 @@ async function bootstrap() {
   const configService = app.get(ConfigService);
 
   app.useGlobalInterceptors(new LoggerInterceptor())
+  app.useGlobalFilters(new HttpFilter())
   
   await app.listen(configService.get('port'), () => {
     console.log(`正在监听 ${configService.get('port')}`)

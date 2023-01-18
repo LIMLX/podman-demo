@@ -18,10 +18,17 @@ export class RoleGuard implements CanActivate {
   // 角色权限守卫
   canActivate(context: ExecutionContext,): boolean | Promise<boolean> | Observable<boolean> {
     // 用对应守卫的key，调用传递数据
-    const roles = this.reflector.get<string[]>(this.config.get('roles').KEY, context.getHandler());
+    const roles: String[] = this.reflector.get<string[]>(this.config.get('roles'), context.getHandler());
+
     if (!roles) { // 未被装饰器装饰，直接放行
       return true;
     }
+
+    // 装饰器未赋值，或者未进行规则处理，直接返回未授权
+    if( roles.length === 0) {
+      return false
+    }
+    
     // 获取前端传递参数值
     const req: Request = context.switchToHttp().getRequest();
     // 截取token数据，获得jwt
@@ -35,6 +42,9 @@ export class RoleGuard implements CanActivate {
     if(roles.includes(user.role)) {
       return true
     }
+
+    console.log(roles)
+
     return false;
   }
 }

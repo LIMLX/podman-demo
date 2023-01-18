@@ -1,13 +1,17 @@
 import { Body, Controller, Get, Inject, Post, UseGuards } from "@nestjs/common";
+import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import { ClientProxy } from "@nestjs/microservices";
 import { AuthGuard } from "@nestjs/passport";
 import { map } from "rxjs";
-import { UserDTO } from "src/common";
+import { RoleGuard, UserDTO } from "src/common";
+import { Roles } from "src/common/decorators";
 
 @Controller("users")
+@UseGuards(RoleGuard)
 export class UserController {
   constructor(
+    private readonly config: ConfigService,
     private readonly jwtService: JwtService,
     @Inject("USER_SERVICE") private readonly userService: ClientProxy
     ) {}
@@ -30,8 +34,8 @@ export class UserController {
     return demo
   }
 
-  @UseGuards(AuthGuard('jwt'))
   @Post("/demo")
+  @Roles(["users"])
   demo () {
     return "jwt验证通过"
   }

@@ -10,7 +10,7 @@ export default () => ({
     },
 
     roles: {
-        KEY: config.get('role')
+        KEY: config.get('roles')
     },
 
     userService: {
@@ -20,5 +20,10 @@ export default () => ({
             host: config.get('USER_OPTIONS_HOST'),
             port: config.get('USER_OPTIONS_PORT')
         }
+    },
+
+    module: {
+        users: config.get('MODULE_USERS')
     }
+
 })

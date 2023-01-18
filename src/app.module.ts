@@ -7,6 +7,7 @@ import { PassportModule } from '@nestjs/passport';
 import { ConfigService } from '@nestjs/config';
 import { UserController } from './microservice/users.controller';
 import { JwtModule } from '@nestjs/jwt';
+import { JWTDATA } from './common/encryptions';
 
 @Module({
   imports: [
@@ -21,6 +22,7 @@ import { JwtModule } from '@nestjs/jwt';
     }),
 
     ConfigModule.forRoot({
+      envFilePath:['.env'], 
       isGlobal:true,
       load: [baseConfig]
     }),
@@ -30,6 +32,7 @@ import { JwtModule } from '@nestjs/jwt';
   controllers: [UserController],
 
   providers: [
+    JWTDATA,
     {
       provide: 'USER_SERVICE',
       useFactory: (configService: ConfigService) => {
