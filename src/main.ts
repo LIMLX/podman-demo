@@ -4,6 +4,7 @@ import { AppModule } from './app.module';
 import { LoggerInterceptor } from './interceptor';
 import { HttpFilter } from './interceptor';
 import { ValidationPipe } from '@nestjs/common';
+import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -16,6 +17,10 @@ async function bootstrap() {
 
   if(envPath === 'production') {
     console.log('开发环境')
+    const options = new DocumentBuilder().addBearerAuth().setTitle('校本化开发文档').
+    setDescription('测试阶段API').setVersion('1.0').build()
+    const doc = SwaggerModule.createDocument(app, options)
+    SwaggerModule.setup('/api/swagger',app,doc)
   } else {
     console.log('生产环境')
   }

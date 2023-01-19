@@ -15,8 +15,8 @@ export class UserDTO {
     @IsString({
         message: "应为字符串"
     })
-    @Length(5,10,{
-        message:'长度为5-10'
+    @Length(5,20,{
+        message:'长度为5-20'
     })
     student_num : string
 
