@@ -16,5 +16,4 @@ export class AuthService {
         .send<string>(pattern,userDTO)
         .pipe(map((massage: string) => ({ massage })));
     }
-
 }

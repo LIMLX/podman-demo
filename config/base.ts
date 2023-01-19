@@ -21,7 +21,14 @@ export default () => ({
             port: config.get('USER_OPTIONS_PORT')
         }
     },
-
+    smsService : {
+        name: config.get('SMS_NAME'),
+        transport: config.get('SMS_TRANSPORT'),
+        options: {
+            host: config.get('SMS_OPTIONS_HOST'),
+            port: config.get('SMS_OPTIONS_PORT')
+        }
+    },
     module: {
         users: config.get('MODULE_USERS')
     }

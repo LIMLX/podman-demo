@@ -5,7 +5,7 @@ import { AuthModule } from './auth/auth.module';
 import { ClientProxyFactory, ClientsModule } from '@nestjs/microservices';
 import { PassportModule } from '@nestjs/passport';
 import { ConfigService } from '@nestjs/config';
-import { UserController } from './microservice/users.controller';
+import { UserController,SmsController, SmsService, UsersService } from './microservice';
 import { JwtModule } from '@nestjs/jwt';
 import { JWTDATA } from './common/encryptions';
 
@@ -29,17 +29,27 @@ import { JWTDATA } from './common/encryptions';
     AuthModule
   ],
 
-  controllers: [UserController],
+  controllers: [UserController,SmsController],
 
   providers: [
     JWTDATA,
+    SmsService,
+    UsersService,
     {
       provide: 'USER_SERVICE',
       useFactory: (configService: ConfigService) => {
         const mathSvcOptions = configService.get('userService');
         return ClientProxyFactory.create(mathSvcOptions);
       },
-      inject: [ConfigService],
+      inject: [ConfigService]
+    },
+    {
+      provide: 'SMS_SERVICE',
+      useFactory: (configService: ConfigService) => {
+        const mathSvcOptions = configService.get('smsService');
+        return ClientProxyFactory.create(mathSvcOptions);
+      },
+      inject: [ConfigService]
     }
   ],
 })
