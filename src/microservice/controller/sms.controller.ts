@@ -1,9 +1,11 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Post, UseGuards } from "@nestjs/common";
 import { SmsService } from "../service";
 import { ApiOperation } from "@nestjs/swagger";
-import { SmsV } from "src/common/dto/sws.v.DTO";
+import { SmsV } from "src/common";
+import { RoleGuard } from "src/common";
 
 @Controller("sms")
+@UseGuards(RoleGuard)
 export class SmsController {
     constructor(
         private readonly smsService: SmsService

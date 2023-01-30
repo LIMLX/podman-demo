@@ -1,7 +1,6 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { map } from "rxjs";
-import { UserDTO } from "src/common";
 
 @Injectable()
 export class AuthService {
@@ -9,7 +8,7 @@ export class AuthService {
         @Inject("USER_SERVICE") private readonly userService: ClientProxy
         ) {}
 
-    validateUser(userDTO: UserDTO) {
+    validateUser(userDTO ) {
     const pattern = { cmd: "user_validateUser" };
 
     return this.userService

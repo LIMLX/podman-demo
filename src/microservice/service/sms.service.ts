@@ -2,7 +2,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { ClientProxy } from "@nestjs/microservices";
 import { map } from "rxjs";
-import { SmsV } from "src/common/dto/sws.v.DTO";
+import { SmsV } from "src/common/dto/sws/sws.v.DTO";
 
 @Injectable()
 export class SmsService {

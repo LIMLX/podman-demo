@@ -1,0 +1,7 @@
+export * from './StudentDTO'
+export * from './Student.DTO.Create'
+export * from './EmployeeDTO'
+export * from './Employee.DTO.Create'
+export * from './Classes.DTO.Create'
+export * from './Campus.DTO.Create'
+export * from './School.DTO.Create'
