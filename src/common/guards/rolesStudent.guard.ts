@@ -7,7 +7,7 @@ import { JWTDATA } from '../encryptions';
 import { ModuleData } from '../decorators/role.module';
 
 @Injectable()
-export class RoleGuard implements CanActivate {
+export class StudentRoleGuard implements CanActivate {
 
   constructor(
     private readonly reflector: Reflector,
@@ -18,7 +18,7 @@ export class RoleGuard implements CanActivate {
   // 角色权限守卫
   canActivate(context: ExecutionContext,): boolean | Promise<boolean> | Observable<boolean> {
     // 用对应守卫的key，调用传递数据
-    const roles: String[] = this.reflector.get<string[]>(this.config.get('roles'), context.getHandler());
+    const roles: String[] = this.reflector.get<string[]>(this.config.get('student'), context.getHandler());
 
     if (!roles) { // 未被装饰器装饰，直接放行
       return true;
@@ -38,12 +38,6 @@ export class RoleGuard implements CanActivate {
             module_data.push(moduleAlias[i])
         }
     }
-
-    if ( roles.indexOf('admin') !== -1) {
-        module_data.push('admin')
-    }
-
-    console.log(module_data)
 
     // 装饰器未赋值，或者未进行规则处理，直接返回未授权
     if(!roles || roles.length === 0) {
@@ -65,29 +59,6 @@ export class RoleGuard implements CanActivate {
       user = this.jwtData.getJWT(jwt)
     } catch (error){
       console.log('jwt解密错误')
-      return false
-    }
-
-    //====================================Admin权限验证==================================
-    // 如果带有admin，则访问的是admin权限
-    if(roles.indexOf("admin") !== -1) {
-      console.log("此权限验证得具有admin")
-
-      if(!user.admin) {
-        return false
-      }
-
-      // 模块权限验证
-      if(!user.admin.appAuth) {
-        return false
-      }
-  
-      // Admin携带appAuth为传递值时放行
-      for(let i = 0;i < user.admin.appAuth.length ; i++) {
-        if(module_data.indexOf(user.admin.appAuth[i].app_id) !== -1) {
-          return true
-        }
-      }
       return false
     }
 

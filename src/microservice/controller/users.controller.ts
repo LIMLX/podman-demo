@@ -1,14 +1,18 @@
 import { Body, Controller, Get, Inject, Patch, Post, UseGuards } from "@nestjs/common";
-import { CampusDTO_Create, ClassDTO_Create, EmployeeDTO, EmployeeDTO_Create, RoleGuard, SchoolDTO_Create, StudentDTO, StudentDTO_Create } from "src/common";
-import { Roles } from "src/common/decorators";
+import { CampusDTO_Create, ClassDTO_Create, EmployeeDTO, EmployeeDTO_Create, StudentRoleGuard, SchoolDTO_Create, StudentDTO, StudentDTO_Create } from "src/common";
+import { StudentRole } from "src/common/decorators";
 import { UsersService } from "../service";
 import { ApiOperation } from "@nestjs/swagger";
 import { RoleAuthCreateDTO, RoleCreateDTO, RoleDTO } from "src/common/dto/role";
-import { ApplicationAutCreatehDTO, ApplicationCreateDTO, ApplicationDTO } from "src/common/dto/app";
-import { AuthGuard } from "@nestjs/passport";
+import { ApplicationAutCreatehDTO, ApplicationCreateDTO, ApplicationDTO } from "src/common";
+import { EmployeeRoleGuard } from "src/common/guards/roleEmployee.guard";
+import { AdminRoleGuard } from "src/common/guards/roleAdmin.guard";
+
 
 @Controller("users")
-@UseGuards(RoleGuard)
+@UseGuards(StudentRoleGuard)
+@UseGuards(EmployeeRoleGuard)
+@UseGuards(AdminRoleGuard)
 export class UserController {
   constructor(
     private readonly usersService: UsersService
@@ -131,7 +135,7 @@ export class UserController {
   }
 
   // @UseGuards(AuthGuard('jwt'))
-  @Roles(['user'])
+  @StudentRole(['user'])
   @Post('/demo')
   demo () {
     return "ok"

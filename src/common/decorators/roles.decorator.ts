@@ -1,8 +1,18 @@
 import { SetMetadata } from '@nestjs/common';
-import { ConfigService } from '@nestjs/config';
-import { ModuleData } from './role.module';
 
 // 角色权限划分装饰器
-export const Roles = (roles: string[])=> {
-    return SetMetadata("roles",roles)
+
+// 学生角色
+export const StudentRole = (roles: string[])=> {
+    return SetMetadata("studentRole",roles)
+}
+
+// 职工角色
+export const EmployeeRole = (roles: string[])=> {
+    return SetMetadata("employeeRole",roles)
+}
+
+// 管理员角色
+export const AdminRole = (roles: string[])=> {
+    return SetMetadata("adminRole",roles)
 }

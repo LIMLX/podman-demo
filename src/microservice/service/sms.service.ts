@@ -2,6 +2,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { ClientProxy } from "@nestjs/microservices";
 import { map } from "rxjs";
+import { SmsCokde } from "src/common";
 import { SmsV } from "src/common/dto/sws/sws.v.DTO";
 
 @Injectable()
@@ -16,6 +17,19 @@ export class SmsService {
         const data = phone
         let status = this.smsService
       .send<any>(pattern,data)
+      .pipe(
+        map((message: any) => {
+          return {message : message}
+        }
+      ))
+      return status
+    }
+
+    verification_code (codeKey: SmsCokde) {
+      const pattern = { cmd: "sms_verification_code" };
+      
+      let status = this.smsService
+      .send<SmsCokde>(pattern,codeKey)
       .pipe(
         map((message: any) => {
           return {message : message}
