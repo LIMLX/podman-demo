@@ -1,0 +1,22 @@
+import { Request } from 'express';
+
+export class LogInfo {
+    
+    getReqMainInfo (req: Request) : object {
+        const { query, headers, url, method, body, connection } = req;
+        // 获取 IP
+        const xRealIp = headers['X-Real-IP'];
+        const xForwardedFor = headers['X-Forwarded-For'];
+        const { ip: cIp } = req;
+        const { remoteAddress } = connection || {};
+        const ip = xRealIp || xForwardedFor || cIp || remoteAddress;
+        return {
+            url,
+            host: headers.host,
+            ip,
+            method,
+            query,
+            body,
+          };
+    }
+}

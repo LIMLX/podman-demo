@@ -1,14 +1,14 @@
 import { Body, Controller, Post, UseGuards } from "@nestjs/common";
-import { SmsService } from "../service";
 import { ApiOperation } from "@nestjs/swagger";
-import { SmsCokde, SmsV } from "src/common";
 import { StudentRoleGuard } from "src/common";
+import { SmsCokde, SmsV } from "src/microservice/dto";
+import { SmsCodeService } from "src/microservice/service";
 
-@Controller("sms")
+@Controller("sms/code")
 @UseGuards(StudentRoleGuard)
-export class SmsController {
+export class SmsCodeController {
     constructor(
-        private readonly smsService: SmsService
+        private readonly smsService: SmsCodeService
     ){}
     
     @ApiOperation({summary:"验证码发送接口", description:"进行验证码发送，填写手机号码"})

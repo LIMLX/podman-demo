@@ -2,7 +2,7 @@ import { ApiProperty } from "@nestjs/swagger"
 import { IsInt, IsNotEmpty, IsString, Length } from "class-validator"
 
 // student表 字段
-export class StudentDTO_Create {
+export class StudentCreateDTO {
 
     @ApiProperty({
         required: true,

@@ -1,12 +1,12 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { IsNotEmpty, IsString, Length } from "class-validator"
+import { IsNotEmpty, IsString } from "class-validator"
 
-export class CampusDTO_Create {
-    campus_id : string
+export class SchoolCreateDTO {
+    school_id   : string
 
     @ApiProperty({
         required: true,
-        description:'校区名称'
+        description:'学校名称'
     })
 
     @IsNotEmpty({
@@ -15,11 +15,11 @@ export class CampusDTO_Create {
     @IsString({
         message: "应为字符串"
     })
-    campus_name : string
+    school_name : string
 
     @ApiProperty({
         required: true,
-        description:'校区代码'
+        description:'学校代码'
     })
 
     @IsNotEmpty({
@@ -28,6 +28,7 @@ export class CampusDTO_Create {
     @IsString({
         message: "应为字符串"
     })
-    campus_num : string
-    campus_school_id : string
+    school_num  : string
+    delete_time : Date
+
 }

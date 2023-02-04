@@ -5,9 +5,12 @@ import { AuthModule } from './auth/auth.module';
 import { ClientProxyFactory, ClientsModule } from '@nestjs/microservices';
 import { PassportModule } from '@nestjs/passport';
 import { ConfigService } from '@nestjs/config';
-import { UserController,SmsController, SmsService, UsersService } from './microservice';
 import { JwtModule } from '@nestjs/jwt';
 import { JWTDATA } from './common/encryptions';
+import { UserAuthController, UserEmployeeController, UserIdentityController, UserStudentController } from './microservice/controller/users';
+import { UserAuthService, UserEmployeeService, UserIdentityService, UserStudentService } from './microservice/service/users';
+import { SmsCodeController } from './microservice/controller/sms';
+import { SmsCodeService } from './microservice/service/sms';
 
 @Module({
   imports: [
@@ -29,12 +32,24 @@ import { JWTDATA } from './common/encryptions';
     AuthModule
   ],
 
-  controllers: [UserController,SmsController],
+  controllers: [
+    SmsCodeController,
+
+    UserAuthController,
+    UserStudentController,
+    UserEmployeeController,
+    UserIdentityController
+  ],
 
   providers: [
     JWTDATA,
-    SmsService,
-    UsersService,
+    SmsCodeService,
+
+    UserAuthService,
+    UserEmployeeService,
+    UserIdentityService,
+    UserStudentService,
+
     {
       provide: 'USER_SERVICE',
       useFactory: (configService: ConfigService) => {

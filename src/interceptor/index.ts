@@ -1,2 +1,2 @@
 export * from './exception.interceptor'
-export * from './logger.interceptor'
+export * from './response.interceptor'

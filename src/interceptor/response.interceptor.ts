@@ -2,15 +2,18 @@ import { CallHandler, ExecutionContext, Injectable, NestInterceptor } from '@nes
 import { Observable, map } from 'rxjs';
 
 @Injectable()
-export class LoggerInterceptor implements NestInterceptor{
+export class ResponseInterceptor implements NestInterceptor{
     intercept(context: ExecutionContext, next: CallHandler<any>): Observable<any> | Promise<Observable<any>> {
         return next
         .handle()
         .pipe(
             map(
-                data =>({
-                    data:data
-                })
+                (data) => {
+                    // 日志
+                    return {
+                        data: data
+                    }
+                }
             )
         )
     }

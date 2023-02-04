@@ -2,11 +2,11 @@ import { Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { ClientProxy } from "@nestjs/microservices";
 import { map } from "rxjs";
-import { SmsCokde } from "src/common";
-import { SmsV } from "src/common/dto/sws/sws.v.DTO";
+import { SmsCokde, SmsV } from "src/microservice/dto";
+
 
 @Injectable()
-export class SmsService {
+export class SmsCodeService {
     constructor(
         private readonly config: ConfigService,
         @Inject("SMS_SERVICE") private readonly smsService: ClientProxy

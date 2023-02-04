@@ -34,5 +34,4 @@ export default () => ({
     module: {
         users: config.get('MODULE_USERS')
     }
-
 })
