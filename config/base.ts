@@ -31,6 +31,14 @@ export default () => ({
             port: config.get('SMS_OPTIONS_PORT')
         }
     },
+    noticeService: {
+        name: config.get('NOTICE_NAME'),
+        transport: config.get('NOTICE_TRANSPORT'),
+        options: {
+            host: config.get('NOTICE_OPTIONS_HOST'),
+            port: config.get('NOTICE_OPTIONS_PORT')
+        }
+    },
     module: {
         users: config.get('MODULE_USERS')
     }

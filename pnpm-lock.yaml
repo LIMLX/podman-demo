@@ -14,6 +14,7 @@ specifiers:
   '@nestjs/testing': ^9.0.0
   '@types/express': ^4.17.13
   '@types/jest': 29.2.4
+  '@types/multer': ^1.4.7
   '@types/node': 18.11.18
   '@types/passport-jwt': ^3.0.8
   '@types/passport-local': ^1.0.35
@@ -27,6 +28,7 @@ specifiers:
   eslint-config-prettier: ^8.3.0
   eslint-plugin-prettier: ^4.0.0
   jest: 29.3.1
+  multer: 1.4.5-lts.1
   passport-jwt: ^4.0.1
   passport-local: ^1.0.0
   prettier: ^2.3.2
@@ -56,6 +58,7 @@ dependencies:
   class-transformer: registry.npmmirror.com/class-transformer/0.5.1
   class-validator: registry.npmmirror.com/class-validator/0.14.0
   cross-env: registry.npmmirror.com/cross-env/7.0.3
+  multer: registry.npmmirror.com/multer/1.4.5-lts.1
   passport-jwt: registry.npmmirror.com/passport-jwt/4.0.1
   passport-local: registry.npmmirror.com/passport-local/1.0.0
   reflect-metadata: registry.npmmirror.com/reflect-metadata/0.1.13
@@ -69,6 +72,7 @@ devDependencies:
   '@nestjs/testing': registry.npmmirror.com/@nestjs/testing/9.3.1_dtut5s7q4wjc2b2zci4h3xyp34
   '@types/express': registry.npmmirror.com/@types/express/4.17.16
   '@types/jest': registry.npmmirror.com/@types/jest/29.2.4
+  '@types/multer': registry.npmmirror.com/@types/multer/1.4.7
   '@types/node': registry.npmmirror.com/@types/node/18.11.18
   '@types/supertest': registry.npmmirror.com/@types/supertest/2.0.12
   '@typescript-eslint/eslint-plugin': registry.npmmirror.com/@typescript-eslint/eslint-plugin/5.50.0_go4drrxstycfikanvu45pi4vgq
@@ -1598,6 +1602,14 @@ packages:
     resolution: {integrity: sha512-Y4XFY5VJAuw0FgAqPNd6NNoV44jbq9Bz2L7Rh/J6jLTiHBSBJa9fxqQIvkIld4GsoDOcCbvzOUAbLPsSKKg+uA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/mime/-/mime-3.0.1.tgz}
     name: '@types/mime'
     version: 3.0.1
+
+  registry.npmmirror.com/@types/multer/1.4.7:
+    resolution: {integrity: sha512-/SNsDidUFCvqqcWDwxv2feww/yqhNeTRL5CVoL3jU4Goc4kKEL10T7Eye65ZqPNi4HRx8sAEX59pV1aEH7drNA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/multer/-/multer-1.4.7.tgz}
+    name: '@types/multer'
+    version: 1.4.7
+    dependencies:
+      '@types/express': registry.npmmirror.com/@types/express/4.17.16
+    dev: true
 
   registry.npmmirror.com/@types/node/18.11.18:
     resolution: {integrity: sha512-DHQpWGjyQKSHj3ebjFI/wRKcqQcdR+MoFBygntYOZytCqNfkd2ZC4ARDJ2DQqhjH5p85Nnd3jhUJIXrszFX/JA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/@types/node/-/node-18.11.18.tgz}
@@ -5196,6 +5208,21 @@ packages:
       object-assign: registry.npmmirror.com/object-assign/4.1.1
       type-is: registry.npmmirror.com/type-is/1.6.18
       xtend: registry.npmmirror.com/xtend/4.0.2
+
+  registry.npmmirror.com/multer/1.4.5-lts.1:
+    resolution: {integrity: sha512-ywPWvcDMeH+z9gQq5qYHCCy+ethsk4goepZ45GLD63fOu0YcNecQxi64nDs3qluZB+murG3/D4dJ7+dGctcCQQ==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/multer/-/multer-1.4.5-lts.1.tgz}
+    name: multer
+    version: 1.4.5-lts.1
+    engines: {node: '>= 6.0.0'}
+    dependencies:
+      append-field: registry.npmmirror.com/append-field/1.0.0
+      busboy: registry.npmmirror.com/busboy/1.6.0
+      concat-stream: registry.npmmirror.com/concat-stream/1.6.2
+      mkdirp: registry.npmmirror.com/mkdirp/0.5.6
+      object-assign: registry.npmmirror.com/object-assign/4.1.1
+      type-is: registry.npmmirror.com/type-is/1.6.18
+      xtend: registry.npmmirror.com/xtend/4.0.2
+    dev: false
 
   registry.npmmirror.com/mute-stream/0.0.8:
     resolution: {integrity: sha512-nnbWWOkoWyUsTjKrhgD0dcz22mdkSnpYqbEjIm2nhwhuxlSkpywJmBo8h0ZqJdkp73mb90SssHkN4rsRaBAfAA==, registry: https://registry.npm.taobao.org/, tarball: https://registry.npmmirror.com/mute-stream/-/mute-stream-0.0.8.tgz}

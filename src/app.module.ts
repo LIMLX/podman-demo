@@ -9,8 +9,9 @@ import { JwtModule } from '@nestjs/jwt';
 import { JWTDATA } from './common/encryptions';
 import { UserAuthController, UserEmployeeController, UserIdentityController, UserStudentController } from './microservice/controller/users';
 import { UserAuthService, UserEmployeeService, UserIdentityService, UserStudentService } from './microservice/service/users';
-import { SmsCodeController } from './microservice/controller/sms';
 import { SmsCodeService } from './microservice/service/sms';
+import { NoticeController, NoticeFileController, SmsCodeController } from './microservice/controller';
+import { NoticeFileService, NoticeService } from './microservice/service/notice';
 
 @Module({
   imports: [
@@ -38,7 +39,10 @@ import { SmsCodeService } from './microservice/service/sms';
     UserAuthController,
     UserStudentController,
     UserEmployeeController,
-    UserIdentityController
+    UserIdentityController,
+
+    NoticeController,
+    NoticeFileController
   ],
 
   providers: [
@@ -50,6 +54,8 @@ import { SmsCodeService } from './microservice/service/sms';
     UserIdentityService,
     UserStudentService,
 
+    NoticeService,
+    NoticeFileService,
     {
       provide: 'USER_SERVICE',
       useFactory: (configService: ConfigService) => {
@@ -62,6 +68,14 @@ import { SmsCodeService } from './microservice/service/sms';
       provide: 'SMS_SERVICE',
       useFactory: (configService: ConfigService) => {
         const mathSvcOptions = configService.get('smsService');
+        return ClientProxyFactory.create(mathSvcOptions);
+      },
+      inject: [ConfigService]
+    },
+    {
+      provide: 'NOTICE_SERVICE',
+      useFactory: (configService: ConfigService) => {
+        const mathSvcOptions = configService.get('noticeService');
         return ClientProxyFactory.create(mathSvcOptions);
       },
       inject: [ConfigService]
