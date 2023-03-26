@@ -4,7 +4,7 @@ import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
 import { Request } from 'express'
 import { JWTDATA } from '../encryptions';
-import { ModuleData } from '../decorators/role.module';
+import { EmployeeData } from '../dto/userToken.dto';
 
 @Injectable()
 export class EmployeeRoleGuard implements CanActivate {
@@ -18,32 +18,28 @@ export class EmployeeRoleGuard implements CanActivate {
   // 角色权限守卫
   canActivate(context: ExecutionContext,): boolean | Promise<boolean> | Observable<boolean> {
     // 用对应守卫的key，调用传递数据
-    const roles: String[] = this.reflector.get<string[]>(this.config.get('employee'), context.getHandler());
+    const roles: {module:string,level:number}[] = this.reflector.get<{module:string,level:number}[]>(this.config.get('employee'), context.getHandler());
 
     if (!roles) { // 未被装饰器装饰，直接放行
       return true;
     }
 
-    const moduleData = new ModuleData()
-
-    // 权限别名
-    const moduleAlias: string[] = moduleData.ModuleAlias
-    // 权限真名
-    const module: string[] = moduleData.Module
-    // 发给验证守卫的权限真名
-    let module_data = []
-
-    for(let i = 0; i< module.length; i++) {
-        if( roles.indexOf(module[i]) !== -1 ) {
-            module_data.push(moduleAlias[i])
-        }
-    }
-
-    // 装饰器未赋值，或者未进行规则处理，直接返回未授权
-    if(!roles || roles.length === 0) {
+    if(roles.length === 0) {
       return false
     }
+
+    //整理守卫数据
+    let module: string[] = []
+    let leave: number[] = []
     
+    // 总模块权限量
+    let sum = 0
+    roles.forEach((data) => {
+      sum++
+      module.push(data.module)
+      leave.push(data.level)
+    })
+
     //====================================JWT权限验证和token解密==================================
     // 获取前端传递参数值
     const req: Request = context.switchToHttp().getRequest();
@@ -53,33 +49,33 @@ export class EmployeeRoleGuard implements CanActivate {
     }
     const jwt = req.headers.authorization.split('Bearer ')[1]
     // jwt解密
-    let user : any
+    let employeeData : EmployeeData
 
     try{
-      user = this.jwtData.getJWT(jwt)
+      employeeData = this.jwtData.getJWT(jwt)
     } catch (error){
-      console.log('jwt解密错误')
+      console.error('jwt解密错误')
       return false
     }
 
-    //===================================Employee权限验证==================================
-
-      if(!user.employee) {
-        return false
-      }
-
-      // 模块权限验证
-      if(!user.employee.appAuth) {
-        return false
-      }
-  
-      // Admin携带appAuth为传递值时放行
-      for(let i = 0;i < user.employee.appAuth.length ; i++) {
-        if(module_data.indexOf(user.employee.appAuth[i].app_id) !== -1) {
-          return true
+    // 对比查找是否有模块权限
+    let indexOf : number
+    employeeData.module.forEach((data) => {
+      indexOf = module.indexOf(data.moduleNum)
+      if(indexOf >= 0) {
+        // 判断权限等级是否高于或者等于
+        if(data.operationLevel >= leave[indexOf]){
+          // 每当成功验证权限后减少需要的权限量
+          sum--
         }
       }
+    })
 
-    return false;
+    // 当权限>0没有完全去除时权限验证失败
+    if (sum > 0) {
+      return false
+    } else {
+      return true
+    }
   }
 }

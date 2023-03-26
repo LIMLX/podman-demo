@@ -1,9 +1,10 @@
 import { Body, Controller, Post, UseGuards } from "@nestjs/common";
-import { ApiOperation } from "@nestjs/swagger";
+import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { StudentRoleGuard } from "src/common";
 import { SmsCokde, SmsV } from "src/microservice/dto";
 import { SmsCodeService } from "src/microservice/service";
 
+@ApiTags('sms')
 @Controller("sms/code")
 @UseGuards(StudentRoleGuard)
 export class SmsCodeController {

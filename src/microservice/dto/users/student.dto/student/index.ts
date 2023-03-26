@@ -1,2 +1,3 @@
-export * from './student.create.dto'
-export * from './StudentDTO'
+export * from './create-student.dto'
+export * from './login-student.dto'
+export * from './update-student.dto'

@@ -7,11 +7,19 @@ import { PassportModule } from '@nestjs/passport';
 import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { JWTDATA } from './common/encryptions';
-import { UserAuthController, UserEmployeeController, UserIdentityController, UserStudentController } from './microservice/controller/users';
-import { UserAuthService, UserEmployeeService, UserIdentityService, UserStudentService } from './microservice/service/users';
 import { SmsCodeService } from './microservice/service/sms';
 import { NoticeController, NoticeFileController, SmsCodeController } from './microservice/controller';
 import { NoticeFileService, NoticeService } from './microservice/service/notice';
+import { 
+  UserEmployeeController, UserStudentController, UsersModuleController,
+  UsersOperationController, UsersOrganizationController, UsersRoleController 
+} from './microservice/controller/users';
+import { 
+  UserEmployeeService, UserStudentService, UsersModuleService,
+  UsersOperationService, UsersOrganizationService, UsersRoleService 
+} from './microservice/service/users';
+import { LeaveDivisionService, LeaveEmployeeService, LeaveFileService, LeaveStudentService, LeaveTypeService } from './microservice';
+import { LeaveDivisionController, LeaveEmployeeController, LeaveFileController, LeaveStudentController, LeaveTypeController } from './microservice/controller/leave';
 
 @Module({
   imports: [
@@ -36,26 +44,42 @@ import { NoticeFileService, NoticeService } from './microservice/service/notice'
   controllers: [
     SmsCodeController,
 
-    UserAuthController,
+    UsersModuleController,
+    UsersRoleController,
+    UsersOperationController,
+    UsersOrganizationController,
     UserStudentController,
     UserEmployeeController,
-    UserIdentityController,
 
     NoticeController,
-    NoticeFileController
+    NoticeFileController,
+
+    LeaveDivisionController,
+    LeaveEmployeeController,
+    LeaveStudentController,
+    LeaveFileController,
+    LeaveTypeController
   ],
 
   providers: [
     JWTDATA,
     SmsCodeService,
 
-    UserAuthService,
     UserEmployeeService,
-    UserIdentityService,
     UserStudentService,
+    UsersModuleService,
+    UsersOperationService,
+    UsersRoleService,
+    UsersOrganizationService,
 
     NoticeService,
     NoticeFileService,
+
+    LeaveDivisionService,
+    LeaveEmployeeService,
+    LeaveStudentService,
+    LeaveFileService,
+    LeaveTypeService,
     {
       provide: 'USER_SERVICE',
       useFactory: (configService: ConfigService) => {
@@ -76,6 +100,14 @@ import { NoticeFileService, NoticeService } from './microservice/service/notice'
       provide: 'NOTICE_SERVICE',
       useFactory: (configService: ConfigService) => {
         const mathSvcOptions = configService.get('noticeService');
+        return ClientProxyFactory.create(mathSvcOptions);
+      },
+      inject: [ConfigService]
+    },
+    {
+      provide: 'LEAVE_SERVICE',
+      useFactory: (configService: ConfigService) => {
+        const mathSvcOptions = configService.get('leaveService');
         return ClientProxyFactory.create(mathSvcOptions);
       },
       inject: [ConfigService]

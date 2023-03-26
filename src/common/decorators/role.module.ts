@@ -1,8 +1,15 @@
 export class ModuleData {
-    Module = [
-        "user"
+    // 模块权限Num
+    module = [
+        "History",
+        "Leave"
     ]
-    ModuleAlias = [
-        "8eaa2a88-4117-4729-b9dc-561a161c4517"
+
+    // 操作权限等级
+    leave = [
+        1,
+        2,
+        3,
+        4
     ]
 }

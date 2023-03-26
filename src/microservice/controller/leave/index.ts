@@ -1,0 +1,5 @@
+export * from './division.controller'
+export * from './employee.controller'
+export * from './file.controller'
+export * from './student.controller'
+export * from './type.controller'

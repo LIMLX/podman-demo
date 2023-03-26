@@ -1,5 +1,4 @@
 import { ExceptionFilter, Catch, ArgumentsHost,HttpException } from '@nestjs/common'
- 
 import {Request,Response} from 'express'
  
 @Catch(HttpException)
@@ -13,10 +12,11 @@ export class HttpFilter implements ExceptionFilter {
  
         // 记录日志
 
+        // 返回拦截的异常
         response.status(status).json({
-           data:exception,
+           massage:exception.getResponse(),
            success:false,
-           status
+           code: status
         })
     }
 }

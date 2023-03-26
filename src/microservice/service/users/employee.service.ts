@@ -1,42 +1,101 @@
 import { Inject, Injectable } from "@nestjs/common"
 import { JwtService } from "@nestjs/jwt"
 import { ClientProxy } from "@nestjs/microservices"
-import { map } from "rxjs"
-import { EmployeeCreateDTO, EmployeeDTO } from "src/microservice/dto"
+import { lastValueFrom, map } from "rxjs"
+import { CreateEmployeeDto, LoginEmloyeeDto, UpdateEmployeeDto, UpdateEmployeePswDto } from "src/microservice/dto"
 
 @Injectable()
 export class UserEmployeeService {
 
-    constructor(
+  constructor(
         private readonly jwtService: JwtService,
         @Inject("USER_SERVICE") private readonly userService: ClientProxy
-    ){}
+  ){}
 
-    login_employee (employeeDTO: EmployeeDTO) {
-    const pattern = { cmd: "employee_validateUser" }
+  // 职工登录
+  async loginEmployee (loginEmloyeeDto : LoginEmloyeeDto) {
+    const pattern = { cmd: "employee_login" };
+    const data = loginEmloyeeDto
 
-    let data = this.userService
-    .send<EmployeeDTO>(pattern,employeeDTO)
+
+    let token : any
+
+    let status = this.userService
+    .send<any>(pattern,data)
     .pipe(
       map((message: any) => {
         if (message) {
-          return {token: this.jwtService.sign({student: message})}
-      } else {
-        return {"message": "Unauthorized"}
+          token = {token: this.jwtService.sign(message)}
+          return token
+        } else {
+          return token = {"message": "Unauthorized"}
+        }
       }
-    }
     ))
-    return data
+
+    try {
+      await lastValueFrom(status)
+    } catch (error) {
+      console.error(error)
+    }
+    return token
   }
 
-  sign_in_employee (employeeDTO: EmployeeCreateDTO) {
-    const pattern = { cmd: "employee_signIn" }
+  // 创建新职工(注册)
+  async signInEmployee (createEmployeeDto: CreateEmployeeDto) {
+    const pattern = { cmd: "employee_create" };
+    const data = createEmployeeDto
 
     let status = this.userService
-    .send<EmployeeCreateDTO>(pattern,employeeDTO)
+    .send<any>(pattern,data)
     .pipe(
       map((message: any) => {
-        return {message : message}
+        return message
+      }
+    ))
+    return status
+  }
+
+  // 修改职工信息
+  async updateEmployee (updateEmployeeDto: UpdateEmployeeDto) {
+    const pattern = { cmd: "employee_update" };
+    const data = updateEmployeeDto
+
+    let status = this.userService
+    .send<any>(pattern,data)
+    .pipe(
+      map((message: any) => {
+        return message
+      }
+    ))
+    return status
+  }
+
+  // 修改职工密码
+  async updateEmployeePsw (updateEmployeePswDto: UpdateEmployeePswDto) {
+    const pattern = { cmd: "employee_updatePsw" };
+    const data = updateEmployeePswDto
+
+    let status = this.userService
+    .send<any>(pattern,data)
+    .pipe(
+      map((message: any) => {
+        return message
+      }
+    ))
+    return status
+  }
+
+  // 获取所有职工的基础信息
+  async findEmployeeAll () {
+    const pattern = { cmd: "employee_findAll" };
+    const data = {}
+
+    let status = this.userService
+    .send<any>(pattern,data)
+    .pipe(
+      map((message: any) => {
+        return message
       }
     ))
     return status

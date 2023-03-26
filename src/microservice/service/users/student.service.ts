@@ -2,8 +2,8 @@ import { Inject, Injectable } from "@nestjs/common";
 import { ConfigService } from "@nestjs/config";
 import { JwtService } from "@nestjs/jwt";
 import { ClientProxy } from "@nestjs/microservices";
-import { map } from "rxjs";
-import { StudentCreateDTO, StudentDTO } from "src/microservice/dto";
+import { lastValueFrom, map } from "rxjs";
+import { CreateStudentDto, LoginStudentDto, UpdateStudentDto, UpdateStudentPswDto } from "src/microservice/dto";
 
 @Injectable()
 export class UserStudentService {
@@ -11,43 +11,75 @@ export class UserStudentService {
         private readonly config: ConfigService,
         private readonly jwtService: JwtService,
         @Inject("USER_SERVICE") private readonly userService: ClientProxy
-        ) {}
+    ) {}
 
-    login_student (userDTO: StudentDTO) {
-    const pattern = { cmd: "student_validateUser" };
-
-    let userData = this.userService
-    .send<StudentDTO>(pattern,userDTO)
-    .pipe(
-      map((message: any) => {
-        if (message) {
-          return {token: this.jwtService.sign({student: message})}
-      } else {
-        return {"message": "Unauthorized"}
-      }
-    })
-    )
-    return userData
-    }
-
-    sign_in (userDTO: StudentCreateDTO) {
+    // 创建新学生(注册)
+    createStudent (createStudentDto: CreateStudentDto) {
       const pattern = { cmd: "student_signIn" };
+      const data = createStudentDto
 
       let status = this.userService
-      .send<StudentCreateDTO>(pattern,userDTO)
+      .send<any>(pattern,data)
       .pipe(
         map((message: any) => {
           return {message : message}
         }
       ))
+
       return status
     }
 
-    update (userDTO: StudentDTO) {
+    // 学生登录模块
+    async loginStudent (loginStudentDto : LoginStudentDto) {
+      const pattern = { cmd: "student_login" };
+      const data = loginStudentDto
+      let token : object
+      
+      const observable = this.userService
+      .send<any>(pattern,data)
+      .pipe(
+        map((message: any) => {
+          if (message) {
+            token = {token: this.jwtService.sign( message )}
+            return token
+          } else {
+            return token = {"message": "Unauthorized"}
+          }
+        }))
+
+        // 异步执行获取查询的数据
+        try {
+          await lastValueFrom(observable)
+        } catch (error) {
+          console.error(error)
+        }
+
+        return token
+    }
+
+    // 学生信息修改
+    updateStudent (updateStudentDto: UpdateStudentDto) {
       const pattern = { cmd: "student_update" };
+      const data = updateStudentDto
 
       let status = this.userService
-      .send<StudentDTO>(pattern,userDTO)
+      .send<any>(pattern,data)
+      .pipe(
+        map((message: any) => {
+          return {message : message}
+        }
+      ))
+
+      return status
+    }
+
+    // 学生密码修改
+    updateStudentPsw (updateStudentPswDto: UpdateStudentPswDto) {
+      const pattern = { cmd: "student_update_password" };
+      const data = updateStudentPswDto
+
+      let status = this.userService
+      .send<any>(pattern,data)
       .pipe(
         map((message: any) => {
           return {message : message}

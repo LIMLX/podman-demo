@@ -39,6 +39,14 @@ export default () => ({
             port: config.get('NOTICE_OPTIONS_PORT')
         }
     },
+    leaveService:{
+        name: config.get('LEAVE_NAME'),
+        transport: config.get('LEAVE_TRANSPORT'),
+        options: {
+            host: config.get('LEAVE_OPTIONS_HOST'),
+            port: config.get('LEAVE_OPTIONS_PORT')
+        }
+    },
     module: {
         users: config.get('MODULE_USERS')
     }
