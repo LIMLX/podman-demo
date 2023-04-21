@@ -23,7 +23,7 @@ export default () => ({
             port: config.get('USER_OPTIONS_PORT')
         }
     },
-    smsService : {
+    smsService: {
         name: config.get('SMS_NAME'),
         transport: config.get('SMS_TRANSPORT'),
         options: {
@@ -39,7 +39,7 @@ export default () => ({
             port: config.get('NOTICE_OPTIONS_PORT')
         }
     },
-    leaveService:{
+    leaveService: {
         name: config.get('LEAVE_NAME'),
         transport: config.get('LEAVE_TRANSPORT'),
         options: {
@@ -47,7 +47,21 @@ export default () => ({
             port: config.get('LEAVE_OPTIONS_PORT')
         }
     },
+    repairsService: {
+        name: config.get('REPAIRS_NAME'),
+        transport: config.get('REPAIRS_TRANSPORT'),
+        options: {
+            host: config.get('REPAIRS_OPTIONS_HOST'),
+            port: config.get('REPAIRS_OPTIONS_PORT')
+        }
+    },
     module: {
         users: config.get('MODULE_USERS')
+    },
+    blackList: {
+        key: config.get('BLACKLIST_KEY'),
+        time: +config.get("BLACKLIST_TIME"),
+        max: +config.get('BLACKLIST_MAX'),
+        fileName: config.get('BLACKLIST_FILE')
     }
 })
