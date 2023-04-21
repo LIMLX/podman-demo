@@ -26,6 +26,7 @@ export class httpBlacklist implements NestInterceptor {
     // 请求和响应周期
     async use(req: Request, res: Response, next: NextFunction) {
         const { time, max, fileName, key } = this.configService.get('blackList')
+        console.log(req.ip)
         // 查询黑名单是否存在于缓存中
         let blackList: any[] = await this.cacheManager.get(key)
         // 当不存在，或者说缓存key为空时，进行黑名单文件读取
@@ -64,11 +65,11 @@ export class httpBlacklist implements NestInterceptor {
             // 判断访问次数是否达到上限
             if (ipSum.data >= +max) {
                 // 放入黑名单(缓存)
-                blackList.push(ipSum.data)
+                blackList.push(req.ip)
                 await this.cacheManager.set(key, blackList, 0)
                 //方便存入到文件中，进行持久化处理
                 const filePart = join(__dirname, '../../../../', `${fileName}`)
-                appendFile(filePart, `-${ipSum.data}`, (err) => {
+                appendFile(filePart, `-${req.ip}`, (err) => {
                     if (err) throw err;
                     console.log('黑名单追加成功');
                 })

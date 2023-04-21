@@ -1,9 +1,11 @@
-import { Controller, Get, Post, Body, Param, Delete, UseInterceptors, UploadedFile } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, UseInterceptors, UploadedFile, Res } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ApiTags } from '@nestjs/swagger';
 import { User } from 'src/common';
 import { AutoDeleteFileDto } from 'src/microservice/dto/repairs/file.dto';
 import { RepairsFileService } from 'src/microservice/service/repairs';
+import { Response } from "express";
+
 
 @ApiTags("repairs")
 @Controller('repairs/file')
@@ -14,7 +16,7 @@ export class RepairsFileController {
     @Post('/upload')
     @UseInterceptors(FileInterceptor('file'))
     async uploadFile(@UploadedFile() file: Express.Multer.File, @Body('repairsId') repairsId: string, @User('type') type: string, @User('num') userNum: string) {
-        if (!file || !repairsId || !userNum) {
+        if (!file || !repairsId || !userNum || !type) {
             return "abnormal"
         }
         return await this.fileService.uploadFile(file, repairsId, type, userNum)
@@ -31,11 +33,11 @@ export class RepairsFileController {
 
     // 查看图片文件
     @Get('getFile/fileName=:fileName')
-    async getFiles(@Param('fileName') fileName: string) {
+    async getFiles(@Res() res: Response, @Param('fileName') fileName: string) {
         if (!fileName) {
             return "abnormal"
         }
-        return await this.fileService.getFiles(fileName)
+        return await this.fileService.getFiles(res, fileName)
     }
 
     // 当用户进行删除时点击取消填写工单后

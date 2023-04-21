@@ -38,7 +38,7 @@ export const User = createParamDecorator((data: any, ctx: ExecutionContext) => {
     const jwtData = new JWTDATA(jwtService)
     // 提取前端携带的token
     if (!request.headers.authorization) {
-        return "abnormal"
+        return undefined
     }
     let jwt: any
     try {

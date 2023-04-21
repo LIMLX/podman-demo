@@ -1,6 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { map } from "rxjs";
+import { Response } from "express";
 
 @Injectable()
 export class RepairsFileService {
@@ -25,10 +26,20 @@ export class RepairsFileService {
         return status
     }
     // 文件查看
-    async getFiles(fileName: string) {
+    async getFiles(res: Response, fileName: string) {
         const pattern = { cmd: "repairs_find_file" };
         const data = { fileName: fileName }
-        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }))
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => {
+            if (message !== "Unknown resource") {
+                res.sendFile(message, (err) => {
+                    if (err) {
+                        console.log(err)
+                    }
+                })
+            } else {
+                res.status(400).send(message)
+            }
+        }))
         return status
     }
     // 当用户进行删除时点击取消填写工单后
