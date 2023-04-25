@@ -34,7 +34,7 @@ export class TransferRepairDto {
     @IsString({
         message: "应为字符串"
     })
-    transferMaintainerId: string
+    transferMaintainerNum: string
 
 
     @ApiProperty({

@@ -23,8 +23,8 @@ export class RepairsFileController {
     }
 
     // 文件删除
-    @Delete('/delFile/fileName=:fileName/type=:type')
-    async removeFile(@Param('fileName') fileName: string, @Param('type') type: string) {
+    @Delete('/delFile/fileName=:fileName')
+    async removeFile(@Param('fileName') fileName: string, @User('type') type: string) {
         if (!fileName || !type) {
             return "abnormal"
         }
