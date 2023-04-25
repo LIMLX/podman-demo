@@ -26,7 +26,7 @@ export class RepairsMaintainerService {
         const observable = this.repairsService
             .send<any>(pattern, data)
             .pipe(map((message: any) => {
-                if (message) {
+                if (message && message !== "login error" && message !== "abnormal") {
                     token = { token: this.jwtService.sign(message) }
                     return token
                 } else {
