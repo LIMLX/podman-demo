@@ -22,7 +22,9 @@ import { LeaveDivisionService, LeaveEmployeeService, LeaveFileService, LeaveStud
 import { LeaveDivisionController, LeaveEmployeeController, LeaveFileController, LeaveStudentController, LeaveTypeController } from './microservice/controller/leave';
 import { RepairsAutoDispatchController, RepairsBuildingController, RepairsFileController, RepairsMaintainerController, RepairsManagerController, RepairsRepairsController, RepairsStatusController, RepairsTypeController } from './microservice/controller/repairs';
 import { RepairsAutoDispatchService, RepairsBuildingService, RepairsFileService, RepairsMaintainerService, RepairsManagerService, RepairsRepairsService, RepairsStatusService, RepairsTypeService } from './microservice/service/repairs';
-import { MsLeaveHealth, MsRepairsHealth, MsSmsHealth, MsUserHealth, httpBlacklist } from './common';
+import { MsEpiHealth, MsLeaveHealth, MsRepairsHealth, MsSmsHealth, MsUserHealth, httpBlacklist } from './common';
+import { EpiEmployeeController, EpiClockTypeController, EpiClockController } from './microservice/controller/epi';
+import { EpiClockService, EpiClockTypeService, EpiEmployeeService } from './microservice/service/epi';
 
 @Module({
   imports: [
@@ -70,7 +72,11 @@ import { MsLeaveHealth, MsRepairsHealth, MsSmsHealth, MsUserHealth, httpBlacklis
     RepairsManagerController,
     RepairsRepairsController,
     RepairsBuildingController,
-    RepairsMaintainerController
+    RepairsMaintainerController,
+
+    EpiClockController,
+    EpiClockTypeController,
+    EpiEmployeeController
   ],
 
   providers: [
@@ -101,6 +107,10 @@ import { MsLeaveHealth, MsRepairsHealth, MsSmsHealth, MsUserHealth, httpBlacklis
     RepairsRepairsService,
     RepairsBuildingService,
     RepairsMaintainerService,
+
+    EpiClockService,
+    EpiEmployeeService,
+    EpiClockTypeService,
     {
       provide: 'USER_SERVICE',
       useFactory: (configService: ConfigService) => {
@@ -141,6 +151,14 @@ import { MsLeaveHealth, MsRepairsHealth, MsSmsHealth, MsUserHealth, httpBlacklis
       },
       inject: [ConfigService]
     },
+    {
+      provide: 'EPI_SERVICE',
+      useFactory: (configService: ConfigService) => {
+        const mathSvcOptions = configService.get('epiService');
+        return ClientProxyFactory.create(mathSvcOptions);
+      },
+      inject: [ConfigService]
+    }
   ],
 })
 // 请求拦截器
@@ -149,7 +167,8 @@ export class AppModule implements NestModule {
     consumer.apply(MsLeaveHealth).forRoutes({ path: 'leave/*', method: RequestMethod.ALL }),
       consumer.apply(MsRepairsHealth).forRoutes({ path: 'repairs/*', method: RequestMethod.ALL }),
       consumer.apply(MsSmsHealth).forRoutes({ path: 'sms/*', method: RequestMethod.ALL }),
-      consumer.apply(MsUserHealth).forRoutes({ path: 'users/*', method: RequestMethod.ALL })
+      consumer.apply(MsUserHealth).forRoutes({ path: 'users/*', method: RequestMethod.ALL }),
+      consumer.apply(MsEpiHealth).forRoutes({ path: 'epi/*', method: RequestMethod.ALL })
 
     // 黑名单拦截
     consumer.apply(httpBlacklist).forRoutes({ path: '*', method: RequestMethod.ALL })

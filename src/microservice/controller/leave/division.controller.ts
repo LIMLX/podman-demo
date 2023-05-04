@@ -15,13 +15,13 @@ export class LeaveDivisionController {
   }
 
   @ApiOperation({ summary: "获取市级信息的接口", description: "根据省份id查询对应的市级信息" })
-  @Get('city/:provinceId')
+  @Get('city/province=:provinceId')
   async city(@Param() cityDto: CityDto) {
     return this.divisionService.city(cityDto)
   }
 
   @ApiOperation({ summary: "获取县级信息的接口", description: "根据市级id查询对应的县级信息" })
-  @Get('country/:cityId')
+  @Get('country/city=:cityId')
   async country(@Param() countryDto: CountryDto) {
     return this.divisionService.country(countryDto)
   }

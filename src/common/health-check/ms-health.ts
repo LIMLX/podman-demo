@@ -111,3 +111,28 @@ export class MsUserHealth implements NestInterceptor {
         return next()
     }
 }
+
+// epi(打卡)服务
+@Injectable()
+export class MsEpiHealth implements NestInterceptor {
+    constructor(
+        @Inject("EPI_SERVICE") private readonly epiService: ClientProxy
+    ) { }
+
+    async intercept(context: ExecutionContext, next: CallHandler): Promise<Observable<any>> {
+        // 放行
+        return next.handle()
+    }
+
+    // 请求和响应周期
+    async use(req: Request, res: Response, next: NextFunction) {
+        // 检测微服务状态
+        try {
+            await this.epiService.connect();
+        } catch (error) {
+            throw new ServiceUnavailableException();
+        }
+        // 放行
+        return next()
+    }
+}

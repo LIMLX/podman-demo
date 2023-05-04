@@ -55,6 +55,14 @@ export default () => ({
             port: config.get('REPAIRS_OPTIONS_PORT')
         }
     },
+    epiService: {
+        name: config.get('EPI_NAME'),
+        transport: config.get('EPI_TRANSPORT'),
+        options: {
+            host: config.get('EPI_OPTIONS_HOST'),
+            port: config.get('EPI_OPTIONS_PORT')
+        }
+    },
     module: {
         users: config.get('MODULE_USERS')
     },
