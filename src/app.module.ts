@@ -20,8 +20,8 @@ import {
 } from './microservice/service/users';
 import { LeaveDivisionService, LeaveEmployeeService, LeaveFileService, LeaveStudentService, LeaveTypeService } from './microservice';
 import { LeaveDivisionController, LeaveEmployeeController, LeaveFileController, LeaveStudentController, LeaveTypeController } from './microservice/controller/leave';
-import { RepairsAutoDispatchController, RepairsBuildingController, RepairsFileController, RepairsMaintainerController, RepairsManagerController, RepairsRepairsController, RepairsStatusController, RepairsTypeController } from './microservice/controller/repairs';
-import { RepairsAutoDispatchService, RepairsBuildingService, RepairsFileService, RepairsMaintainerService, RepairsManagerService, RepairsRepairsService, RepairsStatusService, RepairsTypeService } from './microservice/service/repairs';
+import { RepairsAdminController, RepairsAutoDispatchController, RepairsBuildingController, RepairsFileController, RepairsMaintainerController, RepairsManagerController, RepairsRepairsController, RepairsStatusController, RepairsTypeController } from './microservice/controller/repairs';
+import { RepairsAdminService, RepairsAutoDispatchService, RepairsBuildingService, RepairsFileService, RepairsMaintainerService, RepairsManagerService, RepairsRepairsService, RepairsStatusService, RepairsTypeService } from './microservice/service/repairs';
 import { MsEpiHealth, MsLeaveHealth, MsRepairsHealth, MsSmsHealth, MsUserHealth, httpBlacklist } from './common';
 import { EpiEmployeeController, EpiClockTypeController, EpiClockController } from './microservice/controller/epi';
 import { EpiClockService, EpiClockTypeService, EpiEmployeeService } from './microservice/service/epi';
@@ -73,6 +73,7 @@ import { EpiClockService, EpiClockTypeService, EpiEmployeeService } from './micr
     RepairsRepairsController,
     RepairsBuildingController,
     RepairsMaintainerController,
+    RepairsAdminController,
 
     EpiClockController,
     EpiClockTypeController,
@@ -107,6 +108,7 @@ import { EpiClockService, EpiClockTypeService, EpiEmployeeService } from './micr
     RepairsRepairsService,
     RepairsBuildingService,
     RepairsMaintainerService,
+    RepairsAdminService,
 
     EpiClockService,
     EpiEmployeeService,

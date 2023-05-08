@@ -78,13 +78,6 @@ export class RepairsMaintainerService {
         let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }))
         return status
     }
-    // 查询所有维修工信息----此操作为admin操作
-    async findMaintainerAll() {
-        const pattern = { cmd: "repairs_findAdmin_maintainer" };
-        const data = {}
-        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }))
-        return status
-    }
     // 查询所有维修工信息----此操作为users操作
     async findMtrUserAll() {
         const pattern = { cmd: "repairs_findUser_maintainer" };

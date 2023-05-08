@@ -12,7 +12,8 @@ export default () => ({
     roles: {
         studentKEY: config.get('student'),
         adminKEY: config.get('admin'),
-        employeeKEY: config.get('employee')
+        employeeKEY: config.get('employee'),
+        repairsAdminKEY: config.get('repairsAdmin')
     },
 
     userService: {

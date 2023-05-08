@@ -1,4 +1,4 @@
-export class EmployeeData{
+export class EmployeeData {
     employee?: {
         employeeId?: string
         employeeName?: string
@@ -15,7 +15,7 @@ export class EmployeeData{
     }[]
 }
 
-export class StudentData{
+export class StudentData {
     student?: {
         studentId?: string
         studentName?: string
@@ -30,4 +30,12 @@ export class StudentData{
         operationNum?: string
         operationLevel?: number
     }[]
+}
+
+export class RepairsAdminDto {
+    repairsAdmin: {
+        adminId: string
+        adminName: string
+        adminNum: string
+    }
 }

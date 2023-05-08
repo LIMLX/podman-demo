@@ -58,13 +58,6 @@ export class RepairsMaintainerController {
         return await this.maintainerService.deleteMtrType(maintainerId, typeId)
     }
 
-    // 查询所有维修工信息----此操作为admin操作
-    @ApiOperation({ summary: "查询维修工数据", description: "查询维修工详细数据---管理员" })
-    @Get("findMaintainerAll")
-    async findMaintainerAll() {
-        return await this.maintainerService.findMaintainerAll()
-    }
-
     // 查询所有维修工信息----此操作为users操作
     @ApiOperation({ summary: "查询维修工", description: "查询维修工简略数据---用户" })
     @Get('findMtrUserAll')
