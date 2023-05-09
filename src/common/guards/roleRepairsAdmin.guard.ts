@@ -19,7 +19,6 @@ export class RepairsAdminRoleGuard implements CanActivate {
     canActivate(context: ExecutionContext,): boolean | Promise<boolean> | Observable<boolean> {
         // 用对应守卫的key，调用传递数据
         const roles: { module: string, level: number }[] = this.reflector.get<{ module: string, level: number }[]>(this.config.get('repairsAdmin'), context.getHandler());
-        console.log(roles)
         if (!roles) { // 未被装饰器装饰，直接放行
             return true;
         }

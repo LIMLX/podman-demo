@@ -55,7 +55,6 @@ export const User = createParamDecorator((data: any, ctx: ExecutionContext) => {
         console.error('管道验证的jwt错误')
         return "abnormal"
     }
-
     // 判断是否是职工数据
     if (userData.employee) {
         const { employee, module } = userData

@@ -16,7 +16,7 @@ export class RepairsFileController {
     @Post('/upload')
     @UseInterceptors(FileInterceptor('file'))
     async uploadFile(@UploadedFile() file: Express.Multer.File, @Body('repairsId') repairsId: string, @User('type') type: string, @User('num') userNum: string) {
-        if (!file || !repairsId || !userNum || !type) {
+        if (!file || !repairsId || !userNum || !type || userNum === "abnormal") {
             return "abnormal"
         }
         return await this.fileService.uploadFile(file, repairsId, type, userNum)
