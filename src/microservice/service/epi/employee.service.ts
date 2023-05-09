@@ -3,7 +3,6 @@ import { ClientProxy } from "@nestjs/microservices";
 import { Response } from "express";
 import { map } from "rxjs";
 import { CreateClockExcelDto } from "src/microservice/dto/epi";
-import * as fs from 'fs';
 
 @Injectable()
 export class EpiEmployeeService {

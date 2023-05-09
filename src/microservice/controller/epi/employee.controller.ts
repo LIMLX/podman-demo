@@ -34,7 +34,7 @@ export class EpiEmployeeController {
 
     // 文件下载
     @Post("dowClockExcel")
-    async dowClockExcel(@Res() res: Response, createClockExcelDto: CreateClockExcelDto, @User('id') employeeId: string) {
+    async dowClockExcel(@Res() res: Response, @Body() createClockExcelDto: CreateClockExcelDto, @User('id') employeeId: string) {
         if (!employeeId || employeeId === "abnormal") {
             return "abnormal"
         }
