@@ -7,34 +7,47 @@ import { SmsCokde, SmsV } from "src/microservice/dto";
 
 @Injectable()
 export class SmsCodeService {
-    constructor(
-        private readonly config: ConfigService,
-        @Inject("SMS_SERVICE") private readonly smsService: ClientProxy
-    ){}
+  constructor(
+    private readonly config: ConfigService,
+    @Inject("SMS_SERVICE") private readonly smsService: ClientProxy
+  ) { }
 
-    send_verification(phone : SmsV ) {
-        const pattern = { cmd: "sms_send_verification" };
-        const data = phone
-        let status = this.smsService
-      .send<any>(pattern,data)
+  send_verification(phone: SmsV) {
+    const pattern = { cmd: "sms_send_verification" };
+    const data = phone
+    let status = this.smsService
+      .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return {message : message}
+          return { message: message }
         }
-      ))
-      return status
-    }
+        ))
+    return status
+  }
 
-    verification_code (codeKey: SmsCokde) {
-      const pattern = { cmd: "sms_verification_code" };
-      
-      let status = this.smsService
-      .send<SmsCokde>(pattern,codeKey)
+  verification_code(codeKey: SmsCokde) {
+    const pattern = { cmd: "sms_verification_code" };
+
+    let status = this.smsService
+      .send<SmsCokde>(pattern, codeKey)
       .pipe(
         map((message: any) => {
-          return {message : message}
+          return { message: message }
         }
-      ))
-      return status
-    }
+        ))
+    return status
+  }
+
+  // async demo() {
+  //   const pattern = { cmd: "demo" };
+
+  //   let status = this.smsService
+  //     .send<SmsCokde>(pattern, "")
+  //     .pipe(
+  //       map((message: any) => {
+  //         return { message: message }
+  //       }
+  //       ))
+  //   return status
+  // }
 }

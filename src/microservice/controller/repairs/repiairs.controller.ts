@@ -17,9 +17,9 @@ export class RepairsRepairsController {
         if (!userType || userType === "abnormal") {
             return "abnormal"
         }
-        if (userId === "student") {
+        if (userType === "student") {
             createRepairDto.userLevel = 0
-        } else if (userId === "employee") {
+        } else if (userType === "employee") {
             createRepairDto.userLevel = 1
         } else {
             return "abnormal"

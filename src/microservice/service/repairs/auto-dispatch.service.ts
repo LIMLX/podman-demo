@@ -19,4 +19,11 @@ export class RepairsAutoDispatchService {
         let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }))
         return status
     }
+
+    // async demo() {
+    //     const pattern = { cmd: "repairs_autoDemo" };
+    //     const data = {}
+    //     let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }))
+    //     return status
+    // }
 }
