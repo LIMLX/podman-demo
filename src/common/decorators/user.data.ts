@@ -22,15 +22,11 @@ export const User = createParamDecorator((data: any, ctx: ExecutionContext) => {
 
     const config = new ConfigService()
     const request = ctx.switchToHttp().getRequest<Request>();
-    // 获取jwt密钥
-    const jwtKey = config.get('JWT_ENC')
-    // 获取过期时间
-    const jwtTime = config.get('JWT_TIME')
 
     // 配置option
     const options: JwtModuleOptions = {
-        secret: jwtKey,
-        signOptions: { expiresIn: jwtTime }
+        secret: config.get('JWT_ENC'),
+        signOptions: { expiresIn: config.get('JWT_TIME') }
     }
     // 创建jwtService
     const jwtService = new JwtService(options)

@@ -25,6 +25,7 @@ import { RepairsAdminService, RepairsAutoDispatchService, RepairsBuildingService
 import { MsEpiHealth, MsLeaveHealth, MsRepairsHealth, MsSmsHealth, MsUserHealth, httpBlacklist } from './common';
 import { EpiEmployeeController, EpiClockTypeController, EpiClockController } from './microservice/controller/epi';
 import { EpiClockService, EpiClockTypeService, EpiEmployeeService } from './microservice/service/epi';
+import { MtrRepairsSocket } from './microservice/socket';
 
 @Module({
   imports: [
@@ -109,6 +110,7 @@ import { EpiClockService, EpiClockTypeService, EpiEmployeeService } from './micr
     RepairsBuildingService,
     RepairsMaintainerService,
     RepairsAdminService,
+    MtrRepairsSocket,
 
     EpiClockService,
     EpiEmployeeService,
