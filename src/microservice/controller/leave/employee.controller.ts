@@ -1,4 +1,4 @@
-import { Body, Controller, Get, Param, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Get, Param, Patch, Post, Query } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { User } from "src/common/decorators";
 import { CreateEmployeeExcelDto, FindLeaveAdvancedFilterDto, ParamLeaveFilterDto, UpdateLeaveDto, UpdateLeaveManyDto } from "src/microservice/dto/leave/employee.dto";
@@ -21,25 +21,26 @@ export class LeaveEmployeeController {
 
   // 查询详细请假单
   @ApiOperation({ summary: "点击查询详细请假单的接口", description: "获取更详细的请假单详细" })
-  @Get('/leave/id=:id')
-  async findLeaveOne(@Param('id') id: string, @Body('leaveUUID') leaveUUID: string) {
-    return await this.employeeService.findLeaveOne(+id, leaveUUID)
+  @Get('/leave/id=:leaveId')
+  async findLeaveOne(@Param('leaveId') leaveId: string) {
+    return await this.employeeService.findLeaveOne(leaveId)
   }
 
   // 查询详细离校单
   @ApiOperation({ summary: "点击查询详细离校单的接口", description: "获取更详细的离校单接口" })
-  @Get("/leaveSchool/id=:id")
-  async findLeaveSchoolOne(@Param('id') id: string, @Body('leaveUUID') leaveUUID: string) {
-    return await this.employeeService.findLeaveSchoolOne(+id, leaveUUID)
+  @Get("/leaveSchool/id=:leaveSchoolId")
+  async findLeaveSchoolOne(@Param('leaveSchoolId') leaveSchoolId: string) {
+    return await this.employeeService.findLeaveSchoolOne(leaveSchoolId)
   }
 
   // 初步过滤查询
   @ApiOperation({ summary: "低级过滤筛选查询的接口", description: "获取低级过滤后的请假单离校单信息" })
-  @Get("/leaveFilter/employeeId=:id/typeNum=:typeNum/time=:time/page=:page")
-  async leaveFilter(@User("id") employeeId: string, @Param() paramLeaveFilterDto: ParamLeaveFilterDto) {
+  @Get("leaveFilter/page=:page")
+  async leaveFilter(@User("id") employeeId: string, @Query() paramLeaveFilterDto: ParamLeaveFilterDto, @Param('page') page: string) {
     if (!employeeId || employeeId === "abnormal") {
       return "abnormal"
     }
+    paramLeaveFilterDto.page = page
     return await this.employeeService.leaveFilter(employeeId, paramLeaveFilterDto)
   }
 
@@ -66,15 +67,22 @@ export class LeaveEmployeeController {
   // 修改请假单值(审批)
   @ApiOperation({ summary: "职工(辅导员)批准的接口", description: "辅导员操作请假单接口" })
   @Patch('/leavePass')
-  async auditLeave(@Body() updateLeaveDto: UpdateLeaveDto) {
+  async auditLeave(@Body() updateLeaveDto: UpdateLeaveDto, @User('id') employeeId: string) {
+    if (!employeeId || employeeId === "abnormal") {
+      return "abnormal"
+    }
+    updateLeaveDto.approverId = employeeId
     return await this.employeeService.leaveAuditOne(updateLeaveDto)
   }
 
   // 批量审批
   @ApiOperation({ summary: "职工(辅导员)批量批准的接口", description: "辅导员批量操作请假单接口" })
   @Patch('/leavePassMany')
-  async auditLeaveMany(@Body() updateLeaveManyDto: UpdateLeaveManyDto) {
-    return await this.employeeService.auditLeaveMany(updateLeaveManyDto)
+  async auditLeaveMany(@Body() updateLeaveManyDto: UpdateLeaveManyDto[], @User('id') employeeId: string) {
+    if (!employeeId || employeeId === "abnormal") {
+      return "abnormal"
+    }
+    return await this.employeeService.auditLeaveMany(updateLeaveManyDto, employeeId)
   }
 
   // Excel表下载(近返回文件路径)
@@ -84,6 +92,7 @@ export class LeaveEmployeeController {
     if (!employeeId || employeeId === "abnormal") {
       return "abnormal"
     }
-    return await this.employeeService.dowExcel(employeeId, createEmployeeExcelDto)
+    createEmployeeExcelDto.employeeId = employeeId
+    return await this.employeeService.dowExcel(createEmployeeExcelDto)
   }
 }

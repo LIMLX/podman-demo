@@ -1,17 +1,18 @@
-export class  ParamLeaveOneDto {
+export class ParamLeaveOneDto {
     id: number
     leaveUUID: string
 }
 
-export class  ParamLeaveSchoolOneDto {
+export class ParamLeaveSchoolOneDto {
     id: number
     leaveUUID: string
 }
 
-export class  ParamLeaveFilterDto {
+export class ParamLeaveFilterDto {
     employeeId: string
-    typeNum : string
+    typeNum: string
+    statusNum: string
     time: string
-    page:string
+    page: string
 }
 

@@ -30,34 +30,6 @@ export class UserStudentService {
     return status
   }
 
-  // 学生登录模块
-  async loginStudent(loginStudentDto: LoginStudentDto) {
-    const pattern = { cmd: "student_login" };
-    const data = loginStudentDto
-    let token: object
-
-    const observable = this.userService
-      .send<any>(pattern, data)
-      .pipe(
-        map((message: any) => {
-          if (message && message !== "login error" && message !== "abnormal") {
-            token = { token: this.jwtService.sign(message) }
-            return token
-          } else {
-            return token = { "message": "Unauthorized" }
-          }
-        }))
-
-    // 异步执行获取查询的数据
-    try {
-      await lastValueFrom(observable)
-    } catch (error) {
-      console.error(error)
-    }
-
-    return token
-  }
-
   // 学生信息修改
   async updateStudent(updateStudentDto: UpdateStudentDto) {
     const pattern = { cmd: "student_update" };

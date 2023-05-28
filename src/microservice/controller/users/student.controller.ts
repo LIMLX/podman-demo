@@ -20,12 +20,6 @@ export class UserStudentController {
         return this.usersService.createStudent(createStudentDto)
     }
 
-    @ApiOperation({ summary: "学生登录模块", description: "同时进行数据库登录查询,并且返回jwt数据" })
-    @Post("/login")
-    async loginStudent(@Body() loginStudentDto: LoginStudentDto) {
-        return await this.usersService.loginStudent(loginStudentDto)
-    }
-
     @ApiOperation({ summary: "学生信息修改模块", description: "修改学生信息" })
     @Patch("/update")
     async updateStudent(@Body() updateStudentDto: UpdateStudentDto) {

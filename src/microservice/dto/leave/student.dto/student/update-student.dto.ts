@@ -1,11 +1,11 @@
 import { ApiProperty } from '@nestjs/swagger';
-import {CreateLeaveDto, CreateLeaveSchoolDto} from './create-student.dto';
+import { CreateLeaveDto, CreateLeaveSchoolDto, CreateReturnDto } from './create-student.dto';
 import { IsInt, IsNotEmpty, IsString } from 'class-validator';
 
-export class UpdateLeaveDto extends CreateLeaveDto{
+export class UpdateLeaveDto extends CreateLeaveDto {
     @ApiProperty({
         required: true,
-        description:'请假单id'
+        description: '请假单id'
     })
 
     @IsNotEmpty({
@@ -14,12 +14,12 @@ export class UpdateLeaveDto extends CreateLeaveDto{
     @IsInt({
         message: "应为字符串"
     })
-    leaveId : number
+    leaveId: number
 
 
     @ApiProperty({
         required: true,
-        description:'请假单uuid'
+        description: '请假单uuid'
     })
 
     @IsNotEmpty({
@@ -28,13 +28,13 @@ export class UpdateLeaveDto extends CreateLeaveDto{
     @IsString({
         message: "应为字符串"
     })
-    leaveUUID : string
+    leaveUUID: string
 }
 
-export class UpdateLeaveSchoolDto extends CreateLeaveSchoolDto{
+export class UpdateLeaveSchoolDto extends CreateLeaveSchoolDto {
     @ApiProperty({
         required: true,
-        description:'离校单id'
+        description: '离校单id'
     })
 
     @IsNotEmpty({
@@ -43,12 +43,12 @@ export class UpdateLeaveSchoolDto extends CreateLeaveSchoolDto{
     @IsInt({
         message: "应为字符串"
     })
-    leaveSchoolId : number
+    leaveSchoolId: number
 
 
     @ApiProperty({
         required: true,
-        description:'离校单uuid'
+        description: '离校单uuid'
     })
 
     @IsNotEmpty({
@@ -57,5 +57,9 @@ export class UpdateLeaveSchoolDto extends CreateLeaveSchoolDto{
     @IsString({
         message: "应为字符串"
     })
-    leaveSchoolUUID : string
+    leaveSchoolUUID: string
+}
+
+export class UpdateReturnDto extends CreateReturnDto {
+    returnId: string
 }

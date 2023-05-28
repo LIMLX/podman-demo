@@ -30,9 +30,9 @@ async function bootstrap() {
 
   // 响应拦截器
   app.useGlobalInterceptors(new ResponseInterceptor())
-
   // 异常过滤器
   app.useGlobalFilters(new HttpFilter())
+
   app.enableCors(); // 启用 CORS
   await app.listen(configService.get('port'), () => {
     console.log(`正在监听 ${configService.get('port')}`)

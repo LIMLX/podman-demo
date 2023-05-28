@@ -2,7 +2,6 @@ import { createParamDecorator, ExecutionContext } from '@nestjs/common';
 import { Request } from 'express'
 import { JWTDATA } from '../encryptions';
 import { JwtModuleOptions, JwtService } from '@nestjs/jwt';
-import { EmployeeData } from '../dto/userToken.dto';
 import { ConfigService } from '@nestjs/config';
 
 /*

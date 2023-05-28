@@ -1,11 +1,11 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { IsInt, IsNotEmpty, IsString } from "class-validator"
+import { Contains, IsIn, IsInt, IsNotEmpty, IsString, Min } from "class-validator"
 
 export class ClassStudentDto {
     student: [
         {
             class: {
-                student:[
+                student: [
                     {
                         student_name: string
                     }
@@ -53,12 +53,12 @@ export class FindLeaveSchoolAllDto {
     end_time?: Date
     flight?: string
     province?: string
-    city?:  string
+    city?: string
     country?: string
     leave_school_creation_time?: Date
     content?: string
 
-    transportation?:{
+    transportation?: {
         transportation_name?: string
     }
 
@@ -66,7 +66,7 @@ export class FindLeaveSchoolAllDto {
         type_name?: string
     }
 
-    leaveStatus?:{
+    leaveStatus?: {
         status_name?: string
     }
 }
@@ -80,7 +80,7 @@ export class FindLeaveOneDto {
     content?: string
     start_time?: Date
     end_time?: Date
-    approver_id? : string
+    approver_id?: string
     remark?: string
     status?: number
     leave_creation_time?: Date
@@ -132,33 +132,39 @@ export class PresidentStudentLikeDto {
 
 export class FindLeaveFilterDto {
     studentId: string
+
     statusNum: string
+
+    @IsIn(['Today', 'Week', 'Month', 'HalfYear', 'Year', undefined])
+    time: string
+
+    @IsIn(['leave', 'all', 'school', 'returnSchool', undefined])
     typeNum: string
-    time : string
 
 
     @ApiProperty({
         required: true,
-        description:'省级id'
+        description: '页数'
     })
 
     @IsNotEmpty({
         message: "不能为空"
     })
-    @IsInt({
-        message: "应为字符串"
-    })
+    @IsInt()
+    @Min(1)
     page: number
 }
 
 export class FindLeavePagingDto {
     @ApiProperty({
         required: true,
-        description:'省级id'
+        description: '页数'
     })
 
     @IsNotEmpty({
         message: "不能为空"
     })
-    page: string
+    @IsInt()
+    @Min(1)
+    page: number
 }

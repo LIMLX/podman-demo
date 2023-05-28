@@ -12,35 +12,6 @@ export class UserEmployeeService {
     @Inject("USER_SERVICE") private readonly userService: ClientProxy
   ) { }
 
-  // 职工登录
-  async loginEmployee(loginEmloyeeDto: LoginEmloyeeDto) {
-    const pattern = { cmd: "employee_login" };
-    const data = loginEmloyeeDto
-
-
-    let token: any
-
-    let status = this.userService
-      .send<any>(pattern, data)
-      .pipe(
-        map((message: any) => {
-          if (message && message !== "login error" && message !== "abnormal") {
-            token = { token: this.jwtService.sign(message) }
-            return token
-          } else {
-            return token = { "message": "Unauthorized" }
-          }
-        }
-        ))
-
-    try {
-      await lastValueFrom(status)
-    } catch (error) {
-      console.error(error)
-    }
-    return token
-  }
-
   // 创建新职工(注册)
   async signInEmployee(createEmployeeDto: CreateEmployeeDto) {
     const pattern = { cmd: "employee_create" };

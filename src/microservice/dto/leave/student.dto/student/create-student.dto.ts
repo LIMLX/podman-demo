@@ -2,9 +2,10 @@ import { ApiProperty } from "@nestjs/swagger"
 import { IsNotEmpty, IsString } from "class-validator"
 
 export class CreateLeaveDto {
+
     @ApiProperty({
         required: true,
-        description:'状态id'
+        description: '类型id'
     })
 
     @IsNotEmpty({
@@ -13,26 +14,12 @@ export class CreateLeaveDto {
     @IsString({
         message: "应为字符串"
     })
-    statusId: string
+    typeNum: string
 
 
     @ApiProperty({
         required: true,
-        description:'类型id'
-    })
-
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
-    typeId: string
-
-
-    @ApiProperty({
-        required: true,
-        description:'内容'
+        description: '内容'
     })
 
     @IsNotEmpty({
@@ -46,7 +33,7 @@ export class CreateLeaveDto {
 
     @ApiProperty({
         required: true,
-        description:'起始时间'
+        description: '起始时间'
     })
 
     @IsNotEmpty({
@@ -57,31 +44,30 @@ export class CreateLeaveDto {
 
     @ApiProperty({
         required: true,
-        description:'结束时间'
+        description: '结束时间'
     })
 
     @IsNotEmpty({
         message: "不能为空"
     })
     endTime: Date
-    userUUID:string
+    userUUID: string
 
     @ApiProperty({
         required: false,
-        description:'文件'
+        description: '文件'
     })
     file: {
-        leave_uuid: string,
         file_name: string,
         file_type: string
     }[]
 }
 
-export class CreateLeaveSchoolDto{
+export class CreateLeaveSchoolDto {
     leaveUserId: string
     @ApiProperty({
         required: true,
-        description:'省级id'
+        description: '省级id'
     })
 
     @IsNotEmpty({
@@ -90,23 +76,23 @@ export class CreateLeaveSchoolDto{
     @IsString({
         message: "应为字符串"
     })
-    leaveSchoolTypeId : string
+    leaveSchoolTypeNum: string
 
 
     @ApiProperty({
         required: true,
-        description:'开始时间'
+        description: '开始时间'
     })
 
     @IsNotEmpty({
         message: "不能为空"
     })
-    startTime : Date
+    startTime: Date
 
 
     @ApiProperty({
         required: true,
-        description:'结束时间'
+        description: '结束时间'
     })
 
     @IsNotEmpty({
@@ -117,7 +103,7 @@ export class CreateLeaveSchoolDto{
 
     @ApiProperty({
         required: true,
-        description:'交通方式'
+        description: '交通方式'
     })
 
     @IsNotEmpty({
@@ -126,12 +112,12 @@ export class CreateLeaveSchoolDto{
     @IsString({
         message: "应为字符串"
     })
-    transportationId:string
+    transportationNum: string
 
 
     @ApiProperty({
         required: true,
-        description:'航班号'
+        description: '航班号'
     })
 
     @IsNotEmpty({
@@ -140,12 +126,12 @@ export class CreateLeaveSchoolDto{
     @IsString({
         message: "应为字符串"
     })
-    flight:string
+    flight: string
 
 
     @ApiProperty({
         required: true,
-        description:'省级id'
+        description: '省级id'
     })
 
     @IsNotEmpty({
@@ -159,7 +145,7 @@ export class CreateLeaveSchoolDto{
 
     @ApiProperty({
         required: true,
-        description:'市级id'
+        description: '市级id'
     })
 
     @IsNotEmpty({
@@ -173,7 +159,7 @@ export class CreateLeaveSchoolDto{
 
     @ApiProperty({
         required: true,
-        description:'县级id'
+        description: '县级id'
     })
 
     @IsNotEmpty({
@@ -187,7 +173,7 @@ export class CreateLeaveSchoolDto{
 
     @ApiProperty({
         required: true,
-        description:'内容'
+        description: '内容'
     })
 
     @IsNotEmpty({
@@ -197,18 +183,21 @@ export class CreateLeaveSchoolDto{
         message: "应为字符串"
     })
     content: string
+}
 
-
-    @ApiProperty({
-        required: true,
-        description:'状态id'
-    })
-
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
-    leaveSchoolStatus: string
+export class CreateReturnDto {
+    userId?: string
+    phone?: string
+    startET?: Date
+    endET?: Date
+    startTime?: Date
+    endTime?: Date
+    transportationNum?: string
+    flight?: string
+    startProvince?: string
+    startCity?: string
+    startCountry?: string
+    endProvince?: string
+    endCity?: string
+    endCountry?: string
 }
