@@ -16,7 +16,7 @@ export class UsersService {
     async login(loginDto: LoginDto) {
         const pattern = { cmd: "user_login" };
         const data = loginDto
-        let token: object
+        let token: any
 
         const observable = this.userService
             .send<any>(pattern, data)
@@ -26,7 +26,7 @@ export class UsersService {
                         token = { token: this.jwtService.sign(message) }
                         return token
                     } else if (message === "login error") {
-
+                        token = "账号或密码错误"
                     } else {
                         return token = { "message": "Unauthorized" }
                     }

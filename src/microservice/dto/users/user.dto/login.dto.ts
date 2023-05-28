@@ -16,7 +16,7 @@ export class LoginDto {
     @Length(5, 20, {
         message: '长度为5-20'
     })
-    userName: string
+    account: string
 
 
     @ApiProperty({
@@ -33,5 +33,5 @@ export class LoginDto {
     @Length(5, 20, {
         message: '长度为5-20'
     })
-    passWord: string
+    password: string
 }
