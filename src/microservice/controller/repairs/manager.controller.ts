@@ -63,7 +63,7 @@ export class RepairsManagerController {
 
     // 楼栋管理员筛选查询自己管理的楼栋报修
     @ApiOperation({ summary: "楼栋管理员筛选查询负责楼栋工单", description: "楼栋管理员筛选查询负责楼栋工单---楼栋管理员" })
-    @Get("findRepairsFilterAll/type=:type/status=:status/page=:page")
+    @Get("findRepairsFilterAll/page=:page")
     async findRepairsFilterAll(@Param("page") page: string, @User("num") managerNum: string, @Query() { type, status }: { type: string, status: string }) {
         if (!managerNum || managerNum === "abnormal") {
             return "abnormal"

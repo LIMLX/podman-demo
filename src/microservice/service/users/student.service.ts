@@ -1,21 +1,17 @@
 import { Inject, Injectable } from "@nestjs/common";
-import { ConfigService } from "@nestjs/config";
-import { JwtService } from "@nestjs/jwt";
 import { ClientProxy } from "@nestjs/microservices";
-import { lastValueFrom, map } from "rxjs";
+import { map } from "rxjs";
 import { CreateStudentDto, LoginStudentDto, UpdateStudentDto, UpdateStudentPswDto } from "src/microservice/dto";
 import { Response } from "express";
 
 @Injectable()
 export class UserStudentService {
   constructor(
-    private readonly config: ConfigService,
-    private readonly jwtService: JwtService,
     @Inject("USER_SERVICE") private readonly userService: ClientProxy
   ) { }
 
   // 创建新学生(注册)
-  createStudent(createStudentDto: CreateStudentDto) {
+  async createStudent(createStudentDto: CreateStudentDto) {
     const pattern = { cmd: "student_signIn" };
     const data = createStudentDto
 

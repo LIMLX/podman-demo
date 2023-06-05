@@ -39,9 +39,9 @@ export class RepairsStatusService {
     }
 
     // 删除状态
-    async deleteStatus(param: { statusId: string }) {
+    async deleteStatus(statusId: string) {
         const pattern = { cmd: "repairs_delete_status" };
-        const data = param
+        const data = statusId
         let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }))
         return status
     }

@@ -21,6 +21,13 @@ export class RepairsBuildingService {
         let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }))
         return status
     }
+    // 查询所有楼栋数据---用户
+    async findBuildingUserAll() {
+        const pattern = { cmd: "repairs_findUser_buildingAll" };
+        const data = {}
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }))
+        return status
+    }
     // 修改楼栋数据
     async updateBuilding(updateBuilding: UpdateBuildingDto) {
         const pattern = { cmd: "repairs_update_building" };

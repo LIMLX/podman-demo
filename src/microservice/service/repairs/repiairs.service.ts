@@ -23,7 +23,7 @@ export class RepairsRepairsService {
     }
 
     // 删除维修工单
-    async deleteRepairs(repairsId: number, userId: string) {
+    async deleteRepairs(repairsId: string, userId: string) {
         const pattern = { cmd: "repairs_delete" };
         const data = { repairsId: repairsId, userId: userId }
         let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }))
@@ -39,7 +39,7 @@ export class RepairsRepairsService {
     }
 
     // 查看单个的个人的详情工单----在此方法内只能供创建人查看
-    async findRepairsOne(repairsId: number, userId: string) {
+    async findRepairsOne(repairsId: string, userId: string) {
         const pattern = { cmd: "repairs_findOne" };
         const data = { repairsId: repairsId, userId: userId }
         let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }))

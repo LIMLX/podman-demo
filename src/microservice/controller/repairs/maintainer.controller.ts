@@ -1,10 +1,12 @@
-import { Controller, Get, Post, Body, Param, Query } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query, UseGuards } from '@nestjs/common';
+import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
-import { User } from 'src/common';
+import { RepairsMtrRoleGuard, RepiarsMtrRole, User } from 'src/common';
 import { AuthMaintainerBuildingDto, AuthMaintainerTypeDto, CreateMaintainerDto, DelMaintainerBuildingDto, DelMaintainerTypeDto, FulfilRepairsDto, LoginMaintainerDto, OrderReceivingDto, ReturnRepairDto, TransferRepairDto, UpdateMaintainerDto } from 'src/microservice/dto/repairs';
 import { RepairsMaintainerService } from 'src/microservice/service/repairs';
 
 @ApiTags("repairs")
+@UseGuards(RepairsMtrRoleGuard)
 @Controller('repairs/maintainer')
 export class RepairsMaintainerController {
     constructor(private readonly maintainerService: RepairsMaintainerService) { }
@@ -58,7 +60,9 @@ export class RepairsMaintainerController {
         return await this.maintainerService.deleteMtrType(maintainerId, typeId)
     }
 
-    // 查询所有维修工信息----此操作为users操作
+    // 查询所有维修工信息----此操作为users维修工操作
+    @UseGuards(AuthGuard('jwt'))
+    @RepiarsMtrRole("mtr")
     @ApiOperation({ summary: "查询维修工", description: "查询维修工简略数据---用户" })
     @Get('findMtrUserAll')
     async findMtrUserAll() {
@@ -66,17 +70,20 @@ export class RepairsMaintainerController {
     }
 
     // 维修工查询自己负责的所有工单
+    @UseGuards(AuthGuard('jwt'))
+    @RepiarsMtrRole("mtr")
     @ApiOperation({ summary: "维修工查询自己负责的工单", description: "获取当前维修工负责的工单---维修工" })
     @Get('findRepairsAll/page=:page')
     async findRepairsAll(@User('id') maintainerId: string, @Param('page') page: number) {
         if (!maintainerId || maintainerId === "abnormal") {
             return "abnormal"
         }
-        console.log(maintainerId)
         return await this.maintainerService.findRepairsAll(maintainerId, page)
     }
 
     // 维修工查询过滤后的所有工单
+    @UseGuards(AuthGuard('jwt'))
+    @RepiarsMtrRole("mtr")
     @ApiOperation({ summary: "维修工过滤查询自己负责的工单", description: "获取过滤当前维修工负责的工单---维修工" })
     @Get('findRepairsFilterAll/page=:page')
     async findRepairsFilterAll(@User('id') maintainerId: string, @Param('page') page: number, @Query() { type, status, time }: { type: string, status: string, time: string }) {
@@ -87,6 +94,8 @@ export class RepairsMaintainerController {
     }
 
     // 维修工转单
+    @UseGuards(AuthGuard('jwt'))
+    @RepiarsMtrRole("mtr")
     @ApiOperation({ summary: "维修工转单工单", description: "维修工转单工单---维修工" })
     @Post('transferRepair')
     async transferRepair(@User('id') maintainerId: string, @Body() transferRepair: TransferRepairDto) {
@@ -98,6 +107,8 @@ export class RepairsMaintainerController {
     }
 
     // 维修工退单
+    @UseGuards(AuthGuard('jwt'))
+    @RepiarsMtrRole("mtr")
     @ApiOperation({ summary: "维修工退单工单", description: "维修工退单工单---维修工" })
     @Post('returnRepair')
     async returnRepair(@User('id') maintainerId: string, @Body() returnRepair: ReturnRepairDto) {
@@ -109,6 +120,8 @@ export class RepairsMaintainerController {
     }
 
     // 维修工完单(交单)
+    @UseGuards(AuthGuard('jwt'))
+    @RepiarsMtrRole("mtr")
     @ApiOperation({ summary: "维修工完成工单", description: "维修工完成工单---维修工" })
     @Post("fulfilRepairs")
     async fulfilRepairs(@User('id') maintainerId: string, @Body() fulfilRepairs: FulfilRepairsDto) {
@@ -117,5 +130,10 @@ export class RepairsMaintainerController {
         }
         fulfilRepairs.maintainerId = maintainerId
         return await this.maintainerService.fulfilRepairs(fulfilRepairs)
+    }
+
+    @Get('demo')
+    async demo() {
+        return await this.maintainerService.demo()
     }
 }

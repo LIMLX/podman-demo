@@ -39,7 +39,7 @@ export class RepairsTypeController {
     // 删除类型
     @ApiOperation({ summary: "删除工单类型", description: "删除维修工单的类型---管理员" })
     @Delete('deleteType/id=:typeId')
-    async deleteType(@Param() param: { typeId: string }) {
-        return await this.typeService.deleteType(param);
+    async deleteType(@Param("typeId") typeId: string) {
+        return await this.typeService.deleteType(typeId);
     }
 }

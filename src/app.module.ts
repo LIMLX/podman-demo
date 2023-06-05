@@ -11,11 +11,13 @@ import { SmsCodeService } from './microservice/service/sms';
 import { NoticeController, NoticeFileController, SmsCodeController } from './microservice/controller';
 import { NoticeFileService, NoticeService } from './microservice/service/notice';
 import {
+  UserAdminController,
   UserController,
   UserEmployeeController, UserStudentController, UsersModuleController,
   UsersOperationController, UsersOrganizationController, UsersRoleController
 } from './microservice/controller/users';
 import {
+  UserAdminService,
   UserEmployeeService, UserStudentService, UsersModuleService,
   UsersOperationService, UsersOrganizationService, UsersRoleService, UsersService
 } from './microservice/service/users';
@@ -58,6 +60,7 @@ import { MtrRepairsSocket } from './microservice/socket';
     UserStudentController,
     UserEmployeeController,
     UserController,
+    UserAdminController,
 
     NoticeController,
     NoticeFileController,
@@ -94,6 +97,7 @@ import { MtrRepairsSocket } from './microservice/socket';
     UsersRoleService,
     UsersOrganizationService,
     UsersService,
+    UserAdminService,
 
     NoticeService,
     NoticeFileService,

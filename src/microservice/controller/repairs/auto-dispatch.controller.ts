@@ -21,4 +21,3 @@ export class RepairsAutoDispatchController {
         return await this.autoDispatchService.findSetting()
     }
 }
-

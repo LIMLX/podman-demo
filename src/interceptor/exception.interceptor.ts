@@ -1,4 +1,4 @@
-import { ExceptionFilter, Catch, ArgumentsHost, HttpException, BadRequestException, UnauthorizedException, NotFoundException, ServiceUnavailableException } from '@nestjs/common'
+import { ExceptionFilter, Catch, ArgumentsHost, HttpException, BadRequestException, UnauthorizedException, NotFoundException, ServiceUnavailableException, ForbiddenException } from '@nestjs/common'
 import { Request, Response } from 'express'
 
 @Catch(HttpException)
@@ -36,6 +36,13 @@ export class HttpFilter implements ExceptionFilter {
             // 返回拦截的异常
             response.status(status).json({
                 massage: "服务暂时无法使用",
+                success: false,
+                code: status
+            })
+        } else if (exception instanceof ForbiddenException) {
+            // 返回拦截的异常
+            response.status(status).json({
+                massage: "权限验证错误",
                 success: false,
                 code: status
             })

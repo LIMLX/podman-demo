@@ -13,11 +13,11 @@ export const EmployeeRole = (roles: { module: string, level: number }[]) => {
 }
 
 // 管理员角色
-export const AdminRole = (roles: { module: string, level: number }[]) => {
+export const AdminRole = (roles: { admin: string, level: number }[]) => {
     return SetMetadata("adminRole", roles)
 }
 
-// 维修端管理员角色
-export const RepiarsAdminRole = (roles: {}[]) => {
-    return SetMetadata("repairsAdminRole", roles)
+// 维修工角色
+export const RepiarsMtrRole = (roles: string) => {
+    return SetMetadata("repairsMtrRole", roles)
 }

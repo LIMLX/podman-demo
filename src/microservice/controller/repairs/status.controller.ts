@@ -22,7 +22,7 @@ export class RepairsStatusController {
         return await this.statusService.findStatusAll();
     }
 
-    // 用户端查询所有状态
+    // 用户查询所有状态
     @ApiOperation({ summary: "查询工单状态", description: "查询维修工单状态的简略数据---用户" })
     @Get('findStatusUserAll')
     async findStatusUserAll() {
@@ -39,7 +39,7 @@ export class RepairsStatusController {
     // 删除状态
     @ApiOperation({ summary: "删除工单状态", description: "删除维修工单的状态---管理员" })
     @Delete('deleteStatus/id=:statusId')
-    async deleteStatus(@Param() param: { statusId: string }) {
-        return await this.statusService.deleteStatus(param);
+    async deleteStatus(@Param("statusId") statusId: string) {
+        return await this.statusService.deleteStatus(statusId);
     }
 }

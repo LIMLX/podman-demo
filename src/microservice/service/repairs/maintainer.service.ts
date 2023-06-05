@@ -11,9 +11,9 @@ export class RepairsMaintainerService {
         @Inject("REPAIRS_SERVICE") private readonly repairsService: ClientProxy
     ) { }
     // 维修工创建
-    async createMaintainer({ maintainerName, maintainerNum, maintainerPhone, maintainerPsw }: CreateMaintainerDto) {
+    async createMaintainer(createMaintainerDto: CreateMaintainerDto) {
         const pattern = { cmd: "repairs_create_maintainer" };
-        const data = {}
+        const data = createMaintainerDto
         let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }))
         return status
     }
@@ -29,6 +29,8 @@ export class RepairsMaintainerService {
                 if (message && message !== "login error" && message !== "abnormal") {
                     token = { token: this.jwtService.sign(message) }
                     return token
+                } else if (message === "login error") {
+                    token = "账号或密码错误"
                 } else {
                     return token = { "message": "Unauthorized" }
                 }
@@ -117,6 +119,13 @@ export class RepairsMaintainerService {
     async fulfilRepairs(fulfilRepairs: FulfilRepairsDto) {
         const pattern = { cmd: "repairs_fulfilReapairs_maintainer" };
         const data = fulfilRepairs
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }))
+        return status
+    }
+
+    async demo() {
+        const pattern = { cmd: "repairs_demo" };
+        const data = {}
         let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }))
         return status
     }

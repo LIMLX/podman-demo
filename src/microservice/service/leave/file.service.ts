@@ -58,4 +58,18 @@ export class LeaveFileService {
         }
       })
   }
+
+  async demo() {
+    const pattern = { cmd: "demo" };
+    const data = {}
+
+    let status = this.leaveService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status
+  }
 }

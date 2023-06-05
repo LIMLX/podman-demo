@@ -13,7 +13,8 @@ export default () => ({
         studentKEY: config.get('student'),
         adminKEY: config.get('admin'),
         employeeKEY: config.get('employee'),
-        repairsAdminKEY: config.get('repairsAdmin')
+        repairsAdminKEY: config.get('repairsAdmin'),
+        repairsMtrKEY: config.get('repairsMtr')
     },
 
     userService: {

@@ -4,10 +4,9 @@ import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
 import { Request } from 'express'
 import { JWTDATA } from '../encryptions';
-import { EmployeeData, RepairsAdminDto } from '../dto/userToken.dto';
 
 @Injectable()
-export class RepairsAdminRoleGuard implements CanActivate {
+export class RepairsMtrRoleGuard implements CanActivate {
 
     constructor(
         private readonly reflector: Reflector,
@@ -18,7 +17,7 @@ export class RepairsAdminRoleGuard implements CanActivate {
     // 角色权限守卫
     canActivate(context: ExecutionContext,): boolean | Promise<boolean> | Observable<boolean> {
         // 用对应守卫的key，调用传递数据
-        const roles: { module: string, level: number }[] = this.reflector.get<{ module: string, level: number }[]>(this.config.get('repairsAdmin'), context.getHandler());
+        const roles = this.reflector.get(this.config.get('roles').repairsMtrKEY, context.getHandler());
         if (!roles) { // 未被装饰器装饰，直接放行
             return true;
         }
@@ -32,18 +31,18 @@ export class RepairsAdminRoleGuard implements CanActivate {
         }
         const jwt = req.headers.authorization.split('Bearer ')[1]
         // jwt解密
-        let adminData: RepairsAdminDto
+        let mtrData: any
 
         try {
-            adminData = this.jwtData.getJWT(jwt)
+            mtrData = this.jwtData.getJWT(jwt)
         } catch (error) {
             console.error('jwt解密错误')
             return false
         }
 
         // 判断
-        if (adminData.repairsAdmin) {
-            if (adminData.repairsAdmin.adminId && adminData.repairsAdmin.adminName && adminData.repairsAdmin.adminNum) {
+        if (mtrData.maintainer) {
+            if (mtrData.maintainer.maintainerId && mtrData.maintainer.maintainerNum && mtrData.maintainer.maintainerName) {
                 return true
             } else {
                 return false

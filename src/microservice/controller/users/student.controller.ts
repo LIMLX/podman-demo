@@ -16,8 +16,8 @@ export class UserStudentController {
 
     @ApiOperation({ summary: "学生注册模块", description: "录入学生信息" })
     @Post("/signIn")
-    createStudent(@Body() createStudentDto: CreateStudentDto) {
-        return this.usersService.createStudent(createStudentDto)
+    async createStudent(@Body() createStudentDto: CreateStudentDto) {
+        return await this.usersService.createStudent(createStudentDto)
     }
 
     @ApiOperation({ summary: "学生信息修改模块", description: "修改学生信息" })

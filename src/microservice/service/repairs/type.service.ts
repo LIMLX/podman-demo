@@ -39,9 +39,9 @@ export class RepairsTypeService {
     }
 
     // 删除类型
-    async deleteType(param: { typeId: string }) {
+    async deleteType(typeId: string) {
         const pattern = { cmd: "repairs_delete_type" };
-        const data = param
+        const data = typeId
         let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }))
         return status
     }

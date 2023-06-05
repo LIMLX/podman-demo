@@ -20,7 +20,7 @@ export class TransferRepairDto {
     @IsString({
         message: "应为字符串"
     })
-    repairsUUID: string
+    repairsId: string
 
 
     @ApiProperty({
@@ -63,7 +63,7 @@ export class ReturnRepairDto {
     @IsString({
         message: "应为字符串"
     })
-    repairsUUID: string
+    repairsId: string
     maintainerId: string
 
 
@@ -93,7 +93,12 @@ export class FulfilRepairsDto {
     @IsString({
         message: "应为字符串"
     })
-    repairsUUID: string
+    repairsId: string
     maintainerId: string
-    fileSite: string
+
+
+    file: {
+        file_site: string
+        file_type: string
+    }[]
 }

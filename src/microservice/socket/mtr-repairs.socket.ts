@@ -93,11 +93,11 @@ export class MtrRepairsSocket implements OnGatewayInit {
         }
     }
 
-    // 接收消息
-    @SubscribeMessage('rapairSocket')
-    handleMessage(client: Server, payload: any): void {
-        this.server.emit('rapairSocket', payload);
-    }
+    // // 接收消息
+    // @SubscribeMessage('rapairSocket')
+    // handleMessage(client: Server, payload: any): void {
+    //     this.server.emit('rapairSocket', payload);
+    // }
 
     // 身份验证
     async authentication(token: string) {

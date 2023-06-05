@@ -22,6 +22,13 @@ export class RepairsBuildingController {
         return await this.buildingService.findBuildingAll();
     }
 
+    // 查询所有楼栋数据---用户
+    @ApiOperation({ summary: "查询所有楼栋", description: "获取所有楼栋详细数据---用户" })
+    @Get("findBuildingUserAll")
+    async findBuildingUserAll() {
+        return await this.buildingService.findBuildingUserAll();
+    }
+
     // 修改楼栋数据
     @ApiOperation({ summary: "修改楼栋", description: "修改楼栋详细数据---管理员" })
     @Patch('updateBuilding')

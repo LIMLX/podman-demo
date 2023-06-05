@@ -1,8 +1,6 @@
 import { Controller, Get, Post, Body, Param, Delete, UseInterceptors, UploadedFile, Res } from '@nestjs/common';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { ApiTags } from '@nestjs/swagger';
-import { User } from 'src/common';
-import { AutoDeleteFileDto } from 'src/microservice/dto/repairs/file.dto';
+import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { RepairsFileService } from 'src/microservice/service/repairs';
 import { Response } from "express";
 
@@ -13,36 +11,35 @@ export class RepairsFileController {
     constructor(private readonly fileService: RepairsFileService) { }
 
     // 单文件上传
+    @ApiOperation({ summary: "单文件上传的接口", description: "上传单个文件" })
     @Post('/upload')
     @UseInterceptors(FileInterceptor('file'))
-    async uploadFile(@UploadedFile() file: Express.Multer.File, @Body('repairsId') repairsId: string, @User('type') type: string, @User('num') userNum: string) {
-        if (!file || !repairsId || !userNum || !type || userNum === "abnormal") {
+    async uploadFile(@UploadedFile() file: Express.Multer.File) {
+        if (!file) {
             return "abnormal"
         }
-        return await this.fileService.uploadFile(file, repairsId, type, userNum)
+        return await this.fileService.uploadFile(file)
     }
 
     // 文件删除
+    @ApiOperation({ summary: "单文件删除的接口", description: "单个文件删除" })
     @Delete('/delFile/fileName=:fileName')
-    async removeFile(@Param('fileName') fileName: string, @User('type') type: string) {
-        if (!fileName || !type) {
-            return "abnormal"
-        }
-        return await this.fileService.removeFile(fileName, type)
-    }
-
-    // 查看图片文件
-    @Get('getFile/fileName=:fileName')
-    async getFiles(@Res() res: Response, @Param('fileName') fileName: string) {
+    async removeFile(@Param('fileName') fileName: string) {
         if (!fileName) {
             return "abnormal"
         }
-        return await this.fileService.getFiles(res, fileName)
+        if (!fileName.includes('.') || !fileName.includes('-')) {
+            return "abnormal"
+        }
+        return await this.fileService.removeFile(fileName)
     }
 
-    // 当用户进行删除时点击取消填写工单后
-    @Post('autoDeleteFile')
-    async autoDeleteFile(@Body() { repairsId }: AutoDeleteFileDto) {
-        return await this.fileService.autoDeleteFile(repairsId)
+    // 查看图片文件
+    @Get('getFile/fileName=:fileName/type=:type')
+    async getFiles(@Res() res: Response, @Param('fileName') fileName: string, @Param('type') type: string) {
+        if (!fileName) {
+            return "abnormal"
+        }
+        return await this.fileService.getFiles(res, fileName, type)
     }
 }

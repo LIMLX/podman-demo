@@ -10,17 +10,17 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   constructor(private readonly authService: AuthService) {
     super();
   }
-  async validate( userDTO): Promise<any> {
+  async validate(userDTO): Promise<any> {
 
     // 验证数据是否存在
     const user: any = this.authService.validateUser(userDTO)
 
     console.log(user)
-    
+
     return {
-        userId: 1,
-        username: 'john',
-        password: 'changeme',
-      }
+      userId: 1,
+      username: 'john',
+      password: 'changeme',
     }
+  }
 }
