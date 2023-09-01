@@ -14,18 +14,6 @@ export class UserStudentController {
         private readonly usersService: UserStudentService
     ) { }
 
-    @ApiOperation({ summary: "学生注册模块", description: "录入学生信息" })
-    @Post("/signIn")
-    async createStudent(@Body() createStudentDto: CreateStudentDto) {
-        return await this.usersService.createStudent(createStudentDto)
-    }
-
-    @ApiOperation({ summary: "学生信息修改模块", description: "修改学生信息" })
-    @Patch("/update")
-    async updateStudent(@Body() updateStudentDto: UpdateStudentDto) {
-        return await this.usersService.updateStudent(updateStudentDto)
-    }
-
     @ApiOperation({ summary: "学生信息修改密码", description: "修改学生密码" })
     @Patch("/updatePsw")
     async updateStudentPsw(@Body() updateStudentPswDto: UpdateStudentPswDto) {

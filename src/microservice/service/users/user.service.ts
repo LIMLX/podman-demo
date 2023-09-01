@@ -14,7 +14,7 @@ export class UsersService {
     ) { }
 
     async login(loginDto: LoginDto) {
-        const pattern = { cmd: "user_login" };
+        const pattern = { cmd: "users_user_login" };
         const data = loginDto
         let token: any
 

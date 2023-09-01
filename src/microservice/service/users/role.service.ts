@@ -5,112 +5,142 @@ import { AuthEmployeeRoleDto, AuthStudentRoleDto, CreateRoleDto, DeleteRoleDto, 
 
 @Injectable()
 export class UsersRoleService {
-    constructor(
-        @Inject("USER_SERVICE") private readonly userService: ClientProxy
-    ){}
+  constructor(
+    @Inject("USER_SERVICE") private readonly userService: ClientProxy
+  ) { }
 
-    // 创建角色
-    async createRole(createRoleDto: CreateRoleDto) {
-        const pattern = { cmd: "role_create" };
-        const data = createRoleDto
+  // 创建角色
+  async createRole(createRoleDto: CreateRoleDto) {
+    const pattern = { cmd: "users_role_create" };
+    const data = createRoleDto
 
-        let status = this.userService
-        .send<any>(pattern,data)
-        .pipe(
-          map((message: any) => {
-            return message
-          }
-        ))
-        return status
-    }
-
-    // 修改角色
-    async updateRole(updateRoledto: UpdateRoleDto) {
-        const pattern = { cmd: "role_update" };
-        const data = updateRoledto
-
-        let status = this.userService
-        .send<any>(pattern,data)
-        .pipe(
-          map((message: any) => {
-            return message
-          }
-        ))
-        return status
-    }
-
-    // 删除角色
-    async deleteRole (deleteRoleDto : DeleteRoleDto) {
-        const pattern = { cmd: "role_delete" };
-        const data = deleteRoleDto
-
-        let status = this.userService
-        .send<any>(pattern,data)
-        .pipe(
-          map((message: any) => {
-            return message
-          }
-        ))
-        return status
-    }
-
-    // 授权职工的角色
-    async roleEmployeeAuth (authEmployeeRoleDto: AuthEmployeeRoleDto) {
-        const pattern = { cmd: "role_authEmployee" };
-        const data = authEmployeeRoleDto
-
-        let status = this.userService
-        .send<any>(pattern,data)
-        .pipe(
-          map((message: any) => {
-            return message
-          }
-        ))
-        return status
-    }
-
-    // 授权学生的角色
-    async roleStudentAuth (authStudentRoleDto: AuthStudentRoleDto) {
-        const pattern = { cmd: "role_authStudent" };
-        const data = authStudentRoleDto
-
-        let status = this.userService
-        .send<any>(pattern,data)
-        .pipe(
-          map((message: any) => {
-            return message
-          }
-        ))
-        return status
-    }    
-
-    // 获取所有职工角色信息
-    async findRoleEmployeeAll () {
-      const pattern = { cmd: "role_findEmployeeAll" };
-      const data = {}
-
-      let status = this.userService
-      .send<any>(pattern,data)
+    let status = this.userService
+      .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
           return message
         }
-      ))
-      return status
-    }
-  
-    // 获取所有学生角色信息
-    async findRoleStudentAll () {
-      const pattern = { cmd: "role_findStudentAll" };
-      const data = {}
+        ))
+    return status
+  }
 
-      let status = this.userService
-      .send<any>(pattern,data)
+  // 修改角色
+  async updateRole(updateRoledto: UpdateRoleDto) {
+    const pattern = { cmd: "users_role_update" };
+    const data = updateRoledto
+
+    let status = this.userService
+      .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
           return message
         }
-      ))
-      return status
-    }
+        ))
+    return status
+  }
+
+  // 删除角色
+  async deleteRole(deleteRoleDto: DeleteRoleDto) {
+    const pattern = { cmd: "users_role_delete" };
+    const data = deleteRoleDto
+
+    let status = this.userService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status
+  }
+
+  // 授权职工的角色
+  async roleEmployeeAuth(authEmployeeRoleDto: AuthEmployeeRoleDto) {
+    const pattern = { cmd: "users_role_authEmployee" };
+    const data = authEmployeeRoleDto
+
+    let status = this.userService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status
+  }
+
+  // 授权学生的角色
+  async roleStudentAuth(authStudentRoleDto: AuthStudentRoleDto) {
+    const pattern = { cmd: "users_role_authStudent" };
+    const data = authStudentRoleDto
+
+    let status = this.userService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status
+  }
+
+  // 获取所有职工角色信息
+  async findRoleEmployeeAll() {
+    const pattern = { cmd: "users_role_findEmployeeAll" };
+    const data = {}
+
+    let status = this.userService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status
+  }
+
+  // 获取某个职工角色下的用户信息
+  async findEmployee(roleId: string, page: number) {
+    const pattern = { cmd: "users_role_findEmployee" };
+    const data = { roleId: roleId, page: page }
+
+    let status = this.userService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status
+  }
+
+  // 获取所有学生角色信息
+  async findRoleStudentAll() {
+    const pattern = { cmd: "users_role_findStudentAll" };
+    const data = {}
+
+    let status = this.userService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status
+  }
+
+  // 获取某个学生角色下的用户信息
+  async findStudent(roleId: string, page: number) {
+    const pattern = { cmd: "users_role_findStudent" };
+    const data = { roleId: roleId, page: page }
+
+    let status = this.userService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status
+  }
 }

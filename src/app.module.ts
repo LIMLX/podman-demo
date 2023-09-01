@@ -12,12 +12,15 @@ import { NoticeController, NoticeFileController, SmsCodeController } from './mic
 import { NoticeFileService, NoticeService } from './microservice/service/notice';
 import {
   UserAdminController,
+  UserAdminEmployeeController,
   UserController,
   UserEmployeeController, UserStudentController, UsersModuleController,
   UsersOperationController, UsersOrganizationController, UsersRoleController
 } from './microservice/controller/users';
 import {
+  UserAdminEmployeeService,
   UserAdminService,
+  UserAdminStudentService,
   UserEmployeeService, UserStudentService, UsersModuleService,
   UsersOperationService, UsersOrganizationService, UsersRoleService, UsersService
 } from './microservice/service/users';
@@ -25,10 +28,13 @@ import { LeaveDivisionService, LeaveEmployeeService, LeaveFileService, LeaveStud
 import { LeaveDivisionController, LeaveEmployeeController, LeaveFileController, LeaveStudentController, LeaveTypeController } from './microservice/controller/leave';
 import { RepairsAdminController, RepairsAutoDispatchController, RepairsBuildingController, RepairsFileController, RepairsMaintainerController, RepairsManagerController, RepairsRepairsController, RepairsStatusController, RepairsTypeController } from './microservice/controller/repairs';
 import { RepairsAdminService, RepairsAutoDispatchService, RepairsBuildingService, RepairsFileService, RepairsMaintainerService, RepairsManagerService, RepairsRepairsService, RepairsStatusService, RepairsTypeService } from './microservice/service/repairs';
-import { MsEpiHealth, MsLeaveHealth, MsRepairsHealth, MsSmsHealth, MsUserHealth, httpBlacklist } from './common';
+import { MsEpiHealth, MsHistoryHealth, MsLeaveHealth, MsRepairsHealth, MsSmsHealth, MsUserHealth, httpBlacklist } from './common';
 import { EpiEmployeeController, EpiClockTypeController, EpiClockController } from './microservice/controller/epi';
 import { EpiClockService, EpiClockTypeService, EpiEmployeeService } from './microservice/service/epi';
 import { MtrRepairsSocket } from './microservice/socket';
+import { UserAdminStudentController } from './microservice/controller/users/admin-student.controller';
+import { HistoryAdminController, HistoryDivisionController, HistoryFileController, HistoryUserController } from './microservice/controller/history';
+import { HistoryAdminService, HistoryDivisionService, HistoryFileService, HistoryUserService } from './microservice/service/history';
 
 @Module({
   imports: [
@@ -51,8 +57,10 @@ import { MtrRepairsSocket } from './microservice/socket';
   ],
 
   controllers: [
+    // sms短信
     SmsCodeController,
 
+    // users用户
     UsersModuleController,
     UsersRoleController,
     UsersOperationController,
@@ -61,16 +69,21 @@ import { MtrRepairsSocket } from './microservice/socket';
     UserEmployeeController,
     UserController,
     UserAdminController,
+    UserAdminEmployeeController,
+    UserAdminStudentController,
 
+    // notice通知
     NoticeController,
     NoticeFileController,
 
+    // leave请假
     LeaveDivisionController,
     LeaveEmployeeController,
     LeaveStudentController,
     LeaveFileController,
     LeaveTypeController,
 
+    // repair报修
     RepairsFileController,
     RepairsAutoDispatchController,
     RepairsTypeController,
@@ -81,15 +94,25 @@ import { MtrRepairsSocket } from './microservice/socket';
     RepairsMaintainerController,
     RepairsAdminController,
 
+    // Epi报备
     EpiClockController,
     EpiClockTypeController,
-    EpiEmployeeController
+    EpiEmployeeController,
+
+    // history党史
+    HistoryAdminController,
+    HistoryDivisionController,
+    HistoryUserController,
+    HistoryFileController
   ],
 
   providers: [
+    // jwt验证
     JWTDATA,
+    // sms短信
     SmsCodeService,
 
+    // users用户
     UserEmployeeService,
     UserStudentService,
     UsersModuleService,
@@ -98,16 +121,21 @@ import { MtrRepairsSocket } from './microservice/socket';
     UsersOrganizationService,
     UsersService,
     UserAdminService,
+    UserAdminEmployeeService,
+    UserAdminStudentService,
 
+    // notice通知
     NoticeService,
     NoticeFileService,
 
+    // leave请假
     LeaveDivisionService,
     LeaveEmployeeService,
     LeaveStudentService,
     LeaveFileService,
     LeaveTypeService,
 
+    // repair报修
     RepairsFileService,
     RepairsAutoDispatchService,
     RepairsTypeService,
@@ -119,9 +147,18 @@ import { MtrRepairsSocket } from './microservice/socket';
     RepairsAdminService,
     MtrRepairsSocket,
 
+    // epi报备
     EpiClockService,
     EpiEmployeeService,
     EpiClockTypeService,
+
+    // history党史
+    HistoryAdminService,
+    HistoryUserService,
+    HistoryFileService,
+    HistoryDivisionService,
+
+    // 用户模块
     {
       provide: 'USER_SERVICE',
       useFactory: (configService: ConfigService) => {
@@ -130,6 +167,7 @@ import { MtrRepairsSocket } from './microservice/socket';
       },
       inject: [ConfigService]
     },
+    // 短信模块
     {
       provide: 'SMS_SERVICE',
       useFactory: (configService: ConfigService) => {
@@ -138,6 +176,7 @@ import { MtrRepairsSocket } from './microservice/socket';
       },
       inject: [ConfigService]
     },
+    // 通知模块
     {
       provide: 'NOTICE_SERVICE',
       useFactory: (configService: ConfigService) => {
@@ -146,6 +185,7 @@ import { MtrRepairsSocket } from './microservice/socket';
       },
       inject: [ConfigService]
     },
+    // 请假模块
     {
       provide: 'LEAVE_SERVICE',
       useFactory: (configService: ConfigService) => {
@@ -154,6 +194,7 @@ import { MtrRepairsSocket } from './microservice/socket';
       },
       inject: [ConfigService]
     },
+    // 报修模块
     {
       provide: 'REPAIRS_SERVICE',
       useFactory: (configService: ConfigService) => {
@@ -162,10 +203,29 @@ import { MtrRepairsSocket } from './microservice/socket';
       },
       inject: [ConfigService]
     },
+    // 打卡模块
     {
       provide: 'EPI_SERVICE',
       useFactory: (configService: ConfigService) => {
         const mathSvcOptions = configService.get('epiService');
+        return ClientProxyFactory.create(mathSvcOptions);
+      },
+      inject: [ConfigService]
+    },
+    // 报备模块
+    {
+      provide: 'REPORT_SERVICE',
+      useFactory: (configService: ConfigService) => {
+        const mathSvcOptions = configService.get('reportService');
+        return ClientProxyFactory.create(mathSvcOptions);
+      },
+      inject: [ConfigService]
+    },
+    // 党史模块
+    {
+      provide: 'HISTORY_SERVICE',
+      useFactory: (configService: ConfigService) => {
+        const mathSvcOptions = configService.get('historyService');
         return ClientProxyFactory.create(mathSvcOptions);
       },
       inject: [ConfigService]
@@ -175,13 +235,14 @@ import { MtrRepairsSocket } from './microservice/socket';
 // 请求拦截器
 export class AppModule implements NestModule {
   configure(consumer: MiddlewareConsumer) {
+    // 正常拦截审核
     consumer.apply(MsLeaveHealth).forRoutes({ path: 'leave/*', method: RequestMethod.ALL }),
       consumer.apply(MsRepairsHealth).forRoutes({ path: 'repairs/*', method: RequestMethod.ALL }),
       consumer.apply(MsSmsHealth).forRoutes({ path: 'sms/*', method: RequestMethod.ALL }),
       consumer.apply(MsUserHealth).forRoutes({ path: 'users/*', method: RequestMethod.ALL }),
-      consumer.apply(MsEpiHealth).forRoutes({ path: 'epi/*', method: RequestMethod.ALL })
-
-    // 黑名单拦截
-    consumer.apply(httpBlacklist).forRoutes({ path: '*', method: RequestMethod.ALL })
+      consumer.apply(MsEpiHealth).forRoutes({ path: 'epi/*', method: RequestMethod.ALL }),
+      consumer.apply(MsHistoryHealth).forRoutes({ path: 'history/*', method: RequestMethod.ALL }),
+      // 黑名单拦截
+      consumer.apply(httpBlacklist).forRoutes({ path: '*', method: RequestMethod.ALL })
   }
 }

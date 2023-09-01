@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { map } from "rxjs";
-import { CreateStudentDto, LoginStudentDto, UpdateStudentDto, UpdateStudentPswDto } from "src/microservice/dto";
+import { UpdateStudentPswDto } from "src/microservice/dto";
 import { Response } from "express";
 
 @Injectable()
@@ -9,38 +9,6 @@ export class UserStudentService {
   constructor(
     @Inject("USER_SERVICE") private readonly userService: ClientProxy
   ) { }
-
-  // 创建新学生(注册)
-  async createStudent(createStudentDto: CreateStudentDto) {
-    const pattern = { cmd: "student_signIn" };
-    const data = createStudentDto
-
-    let status = this.userService
-      .send<any>(pattern, data)
-      .pipe(
-        map((message: any) => {
-          return { message: message }
-        }
-        ))
-
-    return status
-  }
-
-  // 学生信息修改
-  async updateStudent(updateStudentDto: UpdateStudentDto) {
-    const pattern = { cmd: "student_update" };
-    const data = updateStudentDto
-
-    let status = this.userService
-      .send<any>(pattern, data)
-      .pipe(
-        map((message: any) => {
-          return { message: message }
-        }
-        ))
-
-    return status
-  }
 
   // 学生密码修改
   async updateStudentPsw(updateStudentPswDto: UpdateStudentPswDto) {

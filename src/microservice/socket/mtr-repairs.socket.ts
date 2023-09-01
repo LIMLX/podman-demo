@@ -63,8 +63,8 @@ export class MtrRepairsSocket implements OnGatewayInit {
             vhost: this.config.get('RabbitMQ_vhost')
         }
         try {
-            this.connection = await amqp.connect(mqOptions)
-            this.channels = await this.connection.createChannel()
+            this.connection = await amqp.connect(mqOptions);
+            this.channels = await this.connection.createChannel();
             console.log("RabbitMQ连接建立成功")
         } catch (error) {
             console.log("RabbitMQ连接错误")
@@ -79,9 +79,14 @@ export class MtrRepairsSocket implements OnGatewayInit {
         this.jwtData = new JWTDATA(new JwtService(options))
         // MQ消费者监听
         try {
+            // 检测是否存在此队列，存在不进行操作，不存在则进行持久化创建
+            await this.channels.assertQueue(this.config.get('RabbitMQ_socketQueueName'), { durable: true })
+            // 队列监听
             await this.channels.consume(this.config.get('RabbitMQ_socketQueueName'), (msg) => {
+                // 当有传递1时
                 if (msg.content.toString() === "1") {
                     this.channels.ack(msg)
+                    // 使用socket发送true
                     if (this.connectSum > 0) {
                         this.server.emit('message', true)
                     }

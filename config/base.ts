@@ -65,6 +65,22 @@ export default () => ({
             port: config.get('EPI_OPTIONS_PORT')
         }
     },
+    reportService: {
+        name: config.get('REPROT_NAME'),
+        transport: config.get('REPROT_TRANSPORT'),
+        options: {
+            host: config.get('REPROT_OPTIONS_HOST'),
+            port: config.get('REPROT_OPTIONS_PORT')
+        }
+    },
+    historyService: {
+        name: config.get('HISTORY_NAME'),
+        transport: config.get('HISTORY_TRANSPORT'),
+        options: {
+            host: config.get('HISTORY_OPTIONS_HOST'),
+            port: config.get('HISTORY_OPTIONS_PORT')
+        }
+    },
     module: {
         users: config.get('MODULE_USERS')
     },

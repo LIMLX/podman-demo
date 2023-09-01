@@ -35,11 +35,19 @@ export class AuthAdminDto {
         description: '模块等级'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
+    @IsNotEmpty()
     @IsInt()
     authLevel: number
+
+
+    @ApiProperty({
+        required: true,
+        description: '授权用户等级'
+    })
+
+    @IsNotEmpty()
+    @IsInt()
+    userLevel: number
 }
 
 export class DelAuthAdminDto {
