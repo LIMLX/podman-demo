@@ -506,6 +506,21 @@ export class HistoryAdminService {
     return status;
   }
 
+  // 获取民族信息
+  async findNation() {
+    const pattern = { cmd: "history_admin_findNation" };
+    const data = {};
+
+    let status = this.historyService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ));
+    return status;
+  }
+
   // 修改人物封面
   async updatePersonagCover(file: Express.Multer.File, personagId: string) {
     const pattern = { cmd: "history_admin_updatePersonagCover" };

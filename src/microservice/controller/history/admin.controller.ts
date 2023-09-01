@@ -277,6 +277,12 @@ export class HistoryAdminController {
     return await this.adminService.createPersonag(file, createPersonagDto);
   }
 
+  // 获取民族信息
+  @Get("findNation")
+  async findNation() {
+    return await this.adminService.findNation();
+  }
+
   // 修改人物封面
   @Patch("updatePersonagCover/id=:personagId")
   @UseInterceptors(FileInterceptor('file'))
