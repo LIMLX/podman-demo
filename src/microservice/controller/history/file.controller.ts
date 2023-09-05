@@ -14,6 +14,10 @@ export class HistoryFileController {
     if (!file) {
       return "文件上传错误";
     }
+    // 验证1.5mb上传
+    if (file.size >= 1024 * 1024 * 1.5) {
+      return "文件大小大于1.5MB";
+    }
     return await this.fileService.uploadFile(file);
   }
 

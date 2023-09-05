@@ -65,9 +65,9 @@ export class MtrRepairsSocket implements OnGatewayInit {
         try {
             this.connection = await amqp.connect(mqOptions);
             this.channels = await this.connection.createChannel();
-            console.log("RabbitMQ连接建立成功")
+            console.log("RabbitMQ连接建立成功");
         } catch (error) {
-            console.log("RabbitMQ连接错误")
+            console.log("RabbitMQ连接错误");
             console.error(error)
         }
         // JWT初始化配置

@@ -50,6 +50,12 @@ export class UsersRoleController {
     return await this.usersService.findEmployee(roleId, page);
   }
 
+  @ApiOperation({ summary: "获取职工角色下的职工总数量接口", description: "获取职工角色下的职工总数量" })
+  @Get("findEmployeeSum/roleId=:roleId")
+  async findEmployeeSum(@Param("roleId") roleId: string) {
+    return await this.usersService.findEmployeeSum(roleId);
+  }
+
   @ApiOperation({ summary: "获取所有学生角色信息接口", description: "获取所有学生角色信息" })
   @Get('findRoleStudentAll')
   async findRoleStudentAll() {

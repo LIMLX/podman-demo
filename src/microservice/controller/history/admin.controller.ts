@@ -112,6 +112,10 @@ export class HistoryAdminController {
         return "abnormal";
       }
     }
+    // 验证1.5mb上传
+    if (file.size >= 1024 * 1024 * 1.5) {
+      return "文件大小大于1.5MB";
+    }
     // 进行定时判断
     if (createHistoryDto.appointmentTime === '') {
       createHistoryDto.appointmentTime = undefined;
@@ -147,6 +151,10 @@ export class HistoryAdminController {
   @Patch("updateCover/id=:articleId")
   @UseInterceptors(FileInterceptor('file'))
   async updateCover(@UploadedFile() file: Express.Multer.File, @Param("articleId") articleId: string) {
+    // 验证1.5mb上传
+    if (file.size >= 1024 * 1024 * 1.5) {
+      return "文件大小大于1.5MB";
+    }
     return await this.adminService.updateCover(file, articleId);
   }
 
@@ -263,6 +271,10 @@ export class HistoryAdminController {
     } catch (error) {
       return "abnormal";
     }
+    // 验证1.5mb上传
+    if (file.size >= 1024 * 1024 * 1.5) {
+      return "文件大小大于1.5MB";
+    }
     // 进行定时判断
     if (createPersonagDto.appointmentTime === '') {
       createPersonagDto.appointmentTime = undefined;
@@ -287,6 +299,10 @@ export class HistoryAdminController {
   @Patch("updatePersonagCover/id=:personagId")
   @UseInterceptors(FileInterceptor('file'))
   async updatePersonagCover(@UploadedFile() file: Express.Multer.File, @Param("personagId") personagId: string) {
+    // 验证1.5mb上传
+    if (file.size >= 1024 * 1024 * 1.5) {
+      return "文件大小大于1.5MB";
+    }
     return await this.adminService.updatePersonagCover(file, personagId);
   }
 

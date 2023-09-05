@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { UserAdminEmployeeService } from 'src/microservice/service/users';
-import { AuthEmployeeRoleDto, CreateEmployeeDto, UpdateClassAssistantDto, UpdateClassTeacherDto, UpdateEmployeeDto } from 'src/microservice/dto/users/admin-employee.dto';
+import { AuthEmployeeRoleDto, CreateEmployeeDto, UpdateClassAssistantDto, UpdateClassTeacherDto, UpdateEmployeeDto, UpdateEmployeePswDto } from 'src/microservice/dto/users/admin-employee.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('users/admin-employee')
@@ -11,6 +11,12 @@ export class UserAdminEmployeeController {
     @Get("findEmployee/page=:page")
     async findEmployee(@Query() { departmentId, search }: { departmentId: string, search: string }, @Param("page") page: number) {
         return await this.adminEmployeeService.findEmployee(departmentId, search, page);
+    }
+
+    // 查询职工当前筛选条件下的总数量
+    @Get("findEmployeeSum")
+    async findEmployeeSum(@Query() { departmentId, search }: { departmentId: string, search: string }) {
+        return await this.adminEmployeeService.findEmployeeSum(departmentId, search);
     }
 
     // 创建职工
@@ -26,9 +32,15 @@ export class UserAdminEmployeeController {
     }
 
     // 删除职工
-    @Post("delEmployee")
-    async delEmployee(@Body("employeeId") employeeId: string) {
+    @Delete("delEmployee/id=:employeeId")
+    async delEmployee(@Param("employeeId") employeeId: string) {
         return await this.adminEmployeeService.delEmployee(employeeId);
+    }
+
+    // 修改职工密码
+    @Patch("changePassword")
+    async changePassword(@Body() updateEmployeePswDto: UpdateEmployeePswDto) {
+        return await this.adminEmployeeService.changePassword(updateEmployeePswDto);
     }
 
     // 添加学生(文件版)
@@ -39,7 +51,7 @@ export class UserAdminEmployeeController {
     }
 
     // 离职/复职
-    @Get("transfer/id=:id")
+    @Patch("transfer/id=:id")
     async transfer(@Param("id") employeeId: string) {
         return await this.adminEmployeeService.transfer(employeeId);
     }

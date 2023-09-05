@@ -114,6 +114,21 @@ export class UsersRoleService {
     return status
   }
 
+  // 获取某个职工角色下的用户数量
+  async findEmployeeSum(roleId: string) {
+    const pattern = { cmd: "users_role_findEmployeeSum" };
+    const data = roleId
+
+    let status = this.userService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status
+  }
+
   // 获取所有学生角色信息
   async findRoleStudentAll() {
     const pattern = { cmd: "users_role_findStudentAll" };

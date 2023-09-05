@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { map } from "rxjs";
-import { AuthEmployeeRoleDto, CreateEmployeeDto, UpdateClassAssistantDto, UpdateClassTeacherDto, UpdateEmployeeDto } from "src/microservice/dto/users/admin-employee.dto";
+import { AuthEmployeeRoleDto, CreateEmployeeDto, UpdateClassAssistantDto, UpdateClassTeacherDto, UpdateEmployeeDto, UpdateEmployeePswDto } from "src/microservice/dto/users/admin-employee.dto";
 
 @Injectable()
 export class UserAdminEmployeeService {
@@ -12,6 +12,21 @@ export class UserAdminEmployeeService {
     async findEmployee(departmentId: string, search: string, page: number) {
         const pattern = { cmd: "users_adminEmployee_findEmployee" };
         const data = { departmentId: departmentId, search: search, page: page }
+
+        const employeeData = this.userService
+            .send<any>(pattern, data)
+            .pipe(
+                map((message: any) => {
+                    return message
+                }
+                ))
+        return employeeData;
+    }
+
+    // 查询职工当前筛选条件下的总数量
+    async findEmployeeSum(departmentId: string, search: string) {
+        const pattern = { cmd: "users_adminEmployee_findEmployeeSum" };
+        const data = { departmentId: departmentId, search: search }
 
         const employeeData = this.userService
             .send<any>(pattern, data)
@@ -95,6 +110,21 @@ export class UserAdminEmployeeService {
     async delEmployee(employeeId: string) {
         const pattern = { cmd: "users_adminEmployee_delEmployee" };
         const data = employeeId;
+
+        const status = this.userService
+            .send<any>(pattern, data)
+            .pipe(
+                map((message: any) => {
+                    return message
+                }
+                ))
+        return status;
+    }
+
+    // 修改职工密码
+    async changePassword(updateEmployeePswDto: UpdateEmployeePswDto) {
+        const pattern = { cmd: "users_adminEmployee_changePassword" };
+        const data = updateEmployeePswDto;
 
         const status = this.userService
             .send<any>(pattern, data)

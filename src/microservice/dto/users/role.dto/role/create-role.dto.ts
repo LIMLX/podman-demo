@@ -4,7 +4,7 @@ import { IsInt, IsNotEmpty, IsString } from "class-validator"
 export class CreateRoleDto {
     @ApiProperty({
         required: true,
-        description:'角色代码'
+        description: '角色代码'
     })
 
     @IsNotEmpty({
@@ -18,7 +18,7 @@ export class CreateRoleDto {
 
     @ApiProperty({
         required: true,
-        description:'角色名称'
+        description: '角色名称'
     })
 
     @IsNotEmpty({
@@ -32,7 +32,7 @@ export class CreateRoleDto {
 
     @ApiProperty({
         required: true,
-        description:'角色身份(0为职工,1为学生)'
+        description: '角色身份(0为职工,1为学生)'
     })
 
     @IsNotEmpty({
@@ -46,7 +46,7 @@ export class CreateRoleDto {
 
     @ApiProperty({
         required: false,
-        description:'部门id'
+        description: '部门id'
     })
     roleDepartmentId?: string
 }
@@ -54,7 +54,7 @@ export class CreateRoleDto {
 export class AuthEmployeeRoleDto {
     @ApiProperty({
         required: true,
-        description:'角色id'
+        description: '角色id'
     })
 
     @IsNotEmpty({
@@ -68,7 +68,7 @@ export class AuthEmployeeRoleDto {
 
     @ApiProperty({
         required: true,
-        description:'职工id'
+        description: '职工id'
     })
 
     @IsNotEmpty({
@@ -83,7 +83,7 @@ export class AuthEmployeeRoleDto {
 export class AuthStudentRoleDto {
     @ApiProperty({
         required: true,
-        description:'角色id'
+        description: '角色id'
     })
 
     @IsNotEmpty({
@@ -97,7 +97,7 @@ export class AuthStudentRoleDto {
 
     @ApiProperty({
         required: true,
-        description:'学生id'
+        description: '学生id'
     })
 
     @IsNotEmpty({

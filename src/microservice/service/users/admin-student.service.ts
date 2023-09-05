@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { map } from "rxjs";
-import { AuthStudentRoleDto, CreateStudentDto, FindStudentDto, UpdateStudentDto } from "src/microservice/dto/users/admin-student.dto";
+import { AuthStudentRoleDto, CreateStudentDto, FindStudentDto, UpdateStudentDto, UpdateStudentPswDto } from "src/microservice/dto/users/admin-student.dto";
 
 @Injectable()
 export class UserAdminStudentService {
@@ -12,6 +12,37 @@ export class UserAdminStudentService {
     async findStudent(findStudentDto: FindStudentDto) {
         const pattern = { cmd: "users_adminStudent_findStudent" };
         const data = findStudentDto
+
+        const studentData = this.userService
+            .send<any>(pattern, data)
+            .pipe(
+                map((message: any) => {
+                    return message
+                }
+                ))
+        return studentData;
+    }
+
+    // 查询学生详情数据
+    async findStudentOne(studentId: string) {
+        const pattern = { cmd: "users_adminStudent_findStudentOne" };
+        const data = studentId
+
+        const studentData = this.userService
+            .send<any>(pattern, data)
+            .pipe(
+                map((message: any) => {
+                    return message
+                }
+                ))
+        return studentData;
+    }
+
+
+    // 查询学生当前筛选条件的总数量
+    async findStudentSum(findStudentDto: FindStudentDto) {
+        const pattern = { cmd: "users_adminStudent_findStudentSum" };
+        const data = findStudentDto;
 
         const studentData = this.userService
             .send<any>(pattern, data)
@@ -70,8 +101,6 @@ export class UserAdminStudentService {
 
     // 添加学生(文件版)
     async createStudentExcel(file: Express.Multer.File) {
-
-
         // 定义指定文件格式为excel后缀
         const allowedMimeTypes = [
             'application/vnd.ms-excel',
@@ -97,6 +126,21 @@ export class UserAdminStudentService {
     async delStudent(studentId: string) {
         const pattern = { cmd: "users_adminStudent_delStudent" };
         const data = studentId;
+
+        const status = this.userService
+            .send<any>(pattern, data)
+            .pipe(
+                map((message: any) => {
+                    return message
+                }
+                ))
+        return status;
+    }
+
+    // 修改学生密码
+    async changePassword(updateStudentPswDto: UpdateStudentPswDto) {
+        const pattern = { cmd: "users_adminStudent_changePassword" };
+        const data = updateStudentPswDto;
 
         const status = this.userService
             .send<any>(pattern, data)

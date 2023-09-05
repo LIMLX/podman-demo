@@ -1,6 +1,6 @@
-import { Body, Controller, Get, Param, Patch, Post, Query, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UploadedFile, UseInterceptors } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { AuthStudentRoleDto, CreateStudentDto, FindStudentDto, UpdateStudentDto } from "src/microservice/dto/users/admin-student.dto";
+import { AuthStudentRoleDto, CreateStudentDto, FindStudentDto, UpdateStudentDto, UpdateStudentPswDto } from "src/microservice/dto/users/admin-student.dto";
 import { UserAdminStudentService } from "src/microservice/service/users";
 
 @Controller('users/admin-student')
@@ -12,6 +12,18 @@ export class UserAdminStudentController {
     async findStudent(@Query() findStudentDto: FindStudentDto, @Param("page") page: number) {
         findStudentDto.page = page;
         return await this.adminStudentService.findStudent(findStudentDto);
+    }
+
+    // 查询学生详情数据
+    @Get("findStudentOne/id=:studentId")
+    async findStudentOne(@Param("studentId") studentId: string) {
+        return await this.adminStudentService.findStudentOne(studentId);
+    }
+
+    // 查询学生当前筛选条件的总数量
+    @Get("findStudentSum")
+    async findStudentSum(@Query() findStudentDto: FindStudentDto) {
+        return await this.adminStudentService.findStudentSum(findStudentDto);
     }
 
     // 创建学生
@@ -27,7 +39,7 @@ export class UserAdminStudentController {
     }
 
     // 授权班长
-    @Get("authMonitor/id=:id")
+    @Patch("authMonitor/id=:id")
     async authMonitor(@Param("id") studentId: string) {
         return await this.adminStudentService.authMonitor(studentId);
     }
@@ -40,9 +52,15 @@ export class UserAdminStudentController {
     }
 
     // 删除学生
-    @Post("delStudent")
-    async delStudent(@Body("studentId") studentId: string) {
+    @Delete("delStudent/id=:studentId")
+    async delStudent(@Param("studentId") studentId: string) {
         return await this.adminStudentService.delStudent(studentId);
+    }
+
+    // 修改学生密码
+    @Patch("changePassword")
+    async changePassword(@Body() updateStudentPswDto: UpdateStudentPswDto) {
+        return await this.adminStudentService.changePassword(updateStudentPswDto);
     }
 
     // 授权学生

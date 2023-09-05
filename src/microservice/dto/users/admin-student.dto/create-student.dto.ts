@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { IsInt, IsNotEmpty, IsString, Length, max, min } from "class-validator"
+import { IsInt, IsNotEmpty, IsNumberString, IsString, Length, max, min } from "class-validator"
 
 export class CreateStudentDto {
     @ApiProperty({
@@ -26,7 +26,6 @@ export class CreateStudentDto {
     })
     @IsNotEmpty()
     @IsInt()
-    @Length(0, 1)
     studentSex: number
 
     @ApiProperty({
@@ -34,7 +33,7 @@ export class CreateStudentDto {
         description: '身份证'
     })
     @IsNotEmpty()
-    @IsString()
+    @IsNumberString()
     @Length(0, 18)
     identification: string
 

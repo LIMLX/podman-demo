@@ -35,6 +35,9 @@ export class CreateEmployeeDto {
     @IsNotEmpty()
     @IsString()
     departmentId: string
+
+    phone: string
+    identification: string
 }
 
 export class AuthEmployeeRoleDto {
