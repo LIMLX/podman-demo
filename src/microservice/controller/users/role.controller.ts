@@ -49,9 +49,14 @@ export class UsersRoleController {
   async findEmployee(@Param() { roleId, page }: { roleId: string, page: number }) {
     return await this.usersService.findEmployee(roleId, page);
   }
+  @ApiOperation({ summary: "获取某个职工角色下的模块权限等级", description: "获取某个职工角色下的模块权限等级" })
+  @Get("findEmployeeModule/role=:roleId")
+  async findEmployeeModule(@Param("roleId") roleId: string) {
+    return await this.usersService.findEmployeeModule(roleId);
+  }
 
   @ApiOperation({ summary: "获取职工角色下的职工总数量接口", description: "获取职工角色下的职工总数量" })
-  @Get("findEmployeeSum/roleId=:roleId")
+  @Get("findEmployeeSum/role=:roleId")
   async findEmployeeSum(@Param("roleId") roleId: string) {
     return await this.usersService.findEmployeeSum(roleId);
   }
@@ -60,6 +65,13 @@ export class UsersRoleController {
   @Get('findRoleStudentAll')
   async findRoleStudentAll() {
     return await this.usersService.findRoleStudentAll();
+  }
+
+  // 获取某个学生角色下的模块权限等级
+  @ApiOperation({ summary: "获取某个学生角色下的模块权限等级", description: "获取某个学生角色下的模块权限等级" })
+  @Get('findStudentModule/role=:roleId')
+  async findStudentModule(@Param("roleId") roleId: string) {
+    return await this.usersService.findStudentModule(roleId);
   }
 
   @ApiOperation({ summary: "获取学生角色下的职工信息接口", description: "获取学生角色下的职工信息" })

@@ -114,6 +114,21 @@ export class UsersRoleService {
     return status
   }
 
+  // 获取某个职工角色下的模块权限等级
+  async findEmployeeModule (roleId: string) {
+    const pattern = { cmd: "users_role_findEmployeeModule" };
+    const data = roleId;
+
+    let status = this.userService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status
+  }
+
   // 获取某个职工角色下的用户数量
   async findEmployeeSum(roleId: string) {
     const pattern = { cmd: "users_role_findEmployeeSum" };
@@ -143,6 +158,22 @@ export class UsersRoleService {
         ))
     return status
   }
+
+    // 获取某个学生角色下的模块权限等级
+    async findStudentModule(roleId: string) {
+      const pattern = { cmd: "users_role_findStudentModule" };
+      const data = roleId;
+  
+      let status = this.userService
+        .send<any>(pattern, data)
+        .pipe(
+          map((message: any) => {
+            return message
+          }
+          ))
+      return status
+    }
+  
 
   // 获取某个学生角色下的用户信息
   async findStudent(roleId: string, page: number) {
