@@ -7,12 +7,8 @@ export class CreateRoleDto {
         description: '角色代码'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     roleNum: string
 
 
@@ -21,12 +17,8 @@ export class CreateRoleDto {
         description: '角色名称'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     roleName: string
 
 
@@ -35,12 +27,8 @@ export class CreateRoleDto {
         description: '角色身份(0为职工,1为学生)'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsInt({
-        message: "应为数字"
-    })
+    @IsNotEmpty()
+    @IsInt()
     roleIdentity: number
 
 
@@ -57,12 +45,8 @@ export class AuthEmployeeRoleDto {
         description: '角色id'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     roleId: string
 
 
@@ -71,12 +55,8 @@ export class AuthEmployeeRoleDto {
         description: '职工id'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     employeeId: string
 }
 
@@ -86,12 +66,8 @@ export class AuthStudentRoleDto {
         description: '角色id'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     roleId: string
 
 
@@ -100,11 +76,7 @@ export class AuthStudentRoleDto {
         description: '学生id'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     studentId: string
 }

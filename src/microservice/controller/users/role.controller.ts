@@ -21,8 +21,8 @@ export class UsersRoleController {
   }
 
   @ApiOperation({ summary: "角色删除接口", description: "删除角色" })
-  @Delete("/deleteRole/id=:roleId")
-  async deleteRole(@Param() deleteRoleDto: DeleteRoleDto) {
+  @Delete("/deleteRole")
+  async deleteRole(@Body() deleteRoleDto: DeleteRoleDto) {
     return await this.usersService.deleteRole(deleteRoleDto)
   }
 
@@ -49,6 +49,7 @@ export class UsersRoleController {
   async findEmployee(@Param() { roleId, page }: { roleId: string, page: number }) {
     return await this.usersService.findEmployee(roleId, page);
   }
+
   @ApiOperation({ summary: "获取某个职工角色下的模块权限等级", description: "获取某个职工角色下的模块权限等级" })
   @Get("findEmployeeModule/role=:roleId")
   async findEmployeeModule(@Param("roleId") roleId: string) {
@@ -67,7 +68,6 @@ export class UsersRoleController {
     return await this.usersService.findRoleStudentAll();
   }
 
-  // 获取某个学生角色下的模块权限等级
   @ApiOperation({ summary: "获取某个学生角色下的模块权限等级", description: "获取某个学生角色下的模块权限等级" })
   @Get('findStudentModule/role=:roleId')
   async findStudentModule(@Param("roleId") roleId: string) {
@@ -78,5 +78,11 @@ export class UsersRoleController {
   @Get("findStudent/role=:roleId/page=:page")
   async findStudent(@Param() { roleId, page }: { roleId: string, page: number }) {
     return await this.usersService.findStudent(roleId, page);
+  }
+
+  @ApiOperation({ summary: "获取学生角色下的学生总数量接口", description: "获取学生角色下的学生总数量" })
+  @Get("findStudentSum/role=:roleId")
+  async findStudentSum(@Param("roleId") roleId: string) {
+    return await this.usersService.findStudentSum(roleId);
   }
 }

@@ -115,7 +115,7 @@ export class UsersRoleService {
   }
 
   // 获取某个职工角色下的模块权限等级
-  async findEmployeeModule (roleId: string) {
+  async findEmployeeModule(roleId: string) {
     const pattern = { cmd: "users_role_findEmployeeModule" };
     const data = roleId;
 
@@ -159,26 +159,41 @@ export class UsersRoleService {
     return status
   }
 
-    // 获取某个学生角色下的模块权限等级
-    async findStudentModule(roleId: string) {
-      const pattern = { cmd: "users_role_findStudentModule" };
-      const data = roleId;
-  
-      let status = this.userService
-        .send<any>(pattern, data)
-        .pipe(
-          map((message: any) => {
-            return message
-          }
-          ))
-      return status
-    }
-  
+  // 获取某个学生角色下的模块权限等级
+  async findStudentModule(roleId: string) {
+    const pattern = { cmd: "users_role_findStudentModule" };
+    const data = roleId;
+
+    let status = this.userService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status
+  }
+
 
   // 获取某个学生角色下的用户信息
   async findStudent(roleId: string, page: number) {
     const pattern = { cmd: "users_role_findStudent" };
     const data = { roleId: roleId, page: page }
+
+    let status = this.userService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status
+  }
+
+  // 获取学生角色下的学生总数量接口
+  async findStudentSum(roleId: string) {
+    const pattern = { cmd: "users_role_findStudentSum" };
+    const data = roleId;
 
     let status = this.userService
       .send<any>(pattern, data)
