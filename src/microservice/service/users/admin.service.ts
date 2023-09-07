@@ -2,7 +2,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { ClientProxy } from "@nestjs/microservices";
 import { lastValueFrom, map } from "rxjs";
-import { AuthAdminDto, CreateAdminDto, DelAuthAdminDto, FindUserAuthDto, LoginDto } from "src/microservice/dto";
+import { AuthAdminDto, CreateAdminDto, DelAuthAdminDto, FindUserAuthDto, FindUserOneDto, LoginDto } from "src/microservice/dto";
 
 @Injectable()
 export class UserAdminService {
@@ -140,6 +140,22 @@ export class UserAdminService {
     async findModuleAdmin(moduleId: string, page: number) {
         const pattern = { cmd: "admin_findModuleAdmin" };
         const data = { moduleId: moduleId, page: page };
+
+        let status = this.userService
+            .send<any>(pattern, data)
+            .pipe(
+                map((message: any) => {
+                    return { message: message }
+                }
+                ))
+
+        return status;
+    }
+
+    // 检查用户是否存在---并返回数据
+    async findUserOne(findUserOneDto: FindUserOneDto) {
+        const pattern = { cmd: "admin_findUserOne" };
+        const data = findUserOneDto;
 
         let status = this.userService
             .send<any>(pattern, data)

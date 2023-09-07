@@ -99,11 +99,27 @@ export class FindUserAuthDto {
         description: '模块num'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     moduleNum: string
+}
+
+export class FindUserOneDto {
+    @ApiProperty({
+        required: true,
+        description: '用户身份'
+    })
+
+    @IsNotEmpty()
+    @IsInt()
+    userLevel: number
+
+    @ApiProperty({
+        required: true,
+        description: '用户工号/学号'
+    })
+
+    @IsNotEmpty()
+    @IsString()
+    userNum: string
 }

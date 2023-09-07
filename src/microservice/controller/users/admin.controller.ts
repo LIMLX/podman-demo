@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from "@nestjs/common";
 import { ApiTags } from "@nestjs/swagger";
 import { AdminRole, AdminRoleGuard } from "src/common";
-import { AuthAdminDto, CreateAdminDto, DelAuthAdminDto, FindUserAuthDto, LoginDto } from "src/microservice/dto";
+import { AuthAdminDto, CreateAdminDto, DelAuthAdminDto, FindUserAuthDto, FindUserOneDto, LoginDto } from "src/microservice/dto";
 import { UserAdminService } from "src/microservice/service";
 
 @ApiTags('usersAdmin')
@@ -60,6 +60,11 @@ export class UserAdminController {
         return await this.usersService.findModuleAdmin(moduleId, page);
     }
 
+    // 检查用户是否存在---并返回数据
+    @Post("findUserOne")
+    async findUserOne(@Body() findUserOneDto: FindUserOneDto) {
+        return await this.usersService.findUserOne(findUserOneDto);
+    }
 
     @AdminRole([{ admin: "History", level: 1 }])
     @Get('demo')
