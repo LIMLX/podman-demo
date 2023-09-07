@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { map } from "rxjs";
-import { AuthEmployeeDto, AuthStudentDto, CreateModuleDto, DeleteAuthEmployeePrivateDto, DeleteAuthEmployeeRoleDto, DeleteAuthStudentPrivateDto, DeleteAuthStudentRoleDto, DeleteModuleDto, PrivateEmployeeAuthDto, PrivateStudentAuthDto, UpdateEmployeeAuthDto, UpdateEmployeePrivateDto, UpdateModuleDto, UpdateStudentAuthDto, UpdateStudentPrivateDto } from "src/microservice/dto";
+import { AuthEmployeeDto, AuthStudentDto, CreateModuleDto, DeleteAuthEmployeePrivateDto, DeleteAuthEmployeeRoleDto, DeleteAuthStudentPrivateDto, DeleteAuthStudentRoleDto, PrivateEmployeeAuthDto, PrivateStudentAuthDto, UpdateEmployeeAuthDto, UpdateEmployeePrivateDto, UpdateModuleDto, UpdateStudentAuthDto, UpdateStudentPrivateDto } from "src/microservice/dto";
 
 @Injectable()
 export class UsersModuleService {
@@ -40,9 +40,9 @@ export class UsersModuleService {
   }
 
   // 删除模块
-  async deleteModule(deleteModuleDto: DeleteModuleDto) {
+  async deleteModule(moduleId: string) {
     const pattern = { cmd: "users_module_delete" };
-    const data = deleteModuleDto
+    const data = moduleId;
 
     let status = this.userService
       .send<any>(pattern, data)

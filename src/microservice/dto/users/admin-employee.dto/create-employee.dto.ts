@@ -40,12 +40,6 @@ export class CreateEmployeeDto {
     identification: string
 }
 
-export class AuthEmployeeRoleDto {
-    roleId: string
-    employeeId: string
-}
-
-
 export class UpdateClassTeacherDto {
     @ApiProperty({
         required: true,

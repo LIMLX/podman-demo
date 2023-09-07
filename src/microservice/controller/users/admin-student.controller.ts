@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UploadedFile, UseInterceptors } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
-import { AuthStudentRoleDto, CreateStudentDto, FindStudentDto, UpdateStudentDto, UpdateStudentPswDto } from "src/microservice/dto/users/admin-student.dto";
+import { CreateStudentDto, FindStudentDto, UpdateStudentDto, UpdateStudentPswDto } from "src/microservice/dto/users/admin-student.dto";
 import { UserAdminStudentService } from "src/microservice/service/users";
 
 @Controller('users/admin-student')
@@ -61,10 +61,5 @@ export class UserAdminStudentController {
     @Patch("changePassword")
     async changePassword(@Body() updateStudentPswDto: UpdateStudentPswDto) {
         return await this.adminStudentService.changePassword(updateStudentPswDto);
-    }
-
-    // 授权学生
-    async authStudent(@Body() authStudentRoleDto: AuthStudentRoleDto) {
-        return await this.adminStudentService.authStudent(authStudentRoleDto);
     }
 }

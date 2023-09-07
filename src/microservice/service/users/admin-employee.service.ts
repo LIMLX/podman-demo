@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { map } from "rxjs";
-import { AuthEmployeeRoleDto, CreateEmployeeDto, UpdateClassAssistantDto, UpdateClassTeacherDto, UpdateEmployeeDto, UpdateEmployeePswDto } from "src/microservice/dto/users/admin-employee.dto";
+import {  CreateEmployeeDto, UpdateClassAssistantDto, UpdateClassTeacherDto, UpdateEmployeeDto, UpdateEmployeePswDto } from "src/microservice/dto/users/admin-employee.dto";
 
 @Injectable()
 export class UserAdminEmployeeService {
@@ -135,12 +135,6 @@ export class UserAdminEmployeeService {
                 ))
         return status;
     }
-
-    // 授权给教师角色
-    async authEmployee(authEmployeeRoleDto: AuthEmployeeRoleDto) {
-
-    }
-
 
     // 授权班级辅导员
     async updateClassAssistant(updateClass: UpdateClassAssistantDto) {

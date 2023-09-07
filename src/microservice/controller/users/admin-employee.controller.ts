@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Patch, Param, Delete, Query, UseInterceptors, UploadedFile } from '@nestjs/common';
 import { UserAdminEmployeeService } from 'src/microservice/service/users';
-import { AuthEmployeeRoleDto, CreateEmployeeDto, UpdateClassAssistantDto, UpdateClassTeacherDto, UpdateEmployeeDto, UpdateEmployeePswDto } from 'src/microservice/dto/users/admin-employee.dto';
+import {  CreateEmployeeDto, UpdateClassAssistantDto, UpdateClassTeacherDto, UpdateEmployeeDto, UpdateEmployeePswDto } from 'src/microservice/dto/users/admin-employee.dto';
 import { FileInterceptor } from '@nestjs/platform-express';
 
 @Controller('users/admin-employee')
@@ -54,11 +54,6 @@ export class UserAdminEmployeeController {
     @Patch("transfer/id=:id")
     async transfer(@Param("id") employeeId: string) {
         return await this.adminEmployeeService.transfer(employeeId);
-    }
-
-    // 授权给教师角色
-    async authEmployee(@Body() authEmployeeRoleDto: AuthEmployeeRoleDto) {
-        return await this.adminEmployeeService.authEmployee(authEmployeeRoleDto);
     }
 
     // 授权班级辅导员

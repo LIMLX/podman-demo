@@ -4,6 +4,15 @@ import { IsInt, IsNotEmpty, IsString } from "class-validator"
 export class CreateRoleDto {
     @ApiProperty({
         required: true,
+        description: '角色简介标题'
+    })
+
+    @IsNotEmpty()
+    @IsString()
+    roleTitle: string
+
+    @ApiProperty({
+        required: true,
         description: '角色代码'
     })
 

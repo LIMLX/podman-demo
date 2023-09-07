@@ -135,4 +135,20 @@ export class UserAdminService {
 
         return status
     }
+
+    // 获取所有拥有管理员权限的用户
+    async findModuleAdmin(moduleId: string, page: number) {
+        const pattern = { cmd: "admin_findModuleAdmin" };
+        const data = { moduleId: moduleId, page: page };
+
+        let status = this.userService
+            .send<any>(pattern, data)
+            .pipe(
+                map((message: any) => {
+                    return { message: message }
+                }
+                ))
+
+        return status;
+    }
 }

@@ -35,7 +35,7 @@ export class UsersRoleController {
   @ApiOperation({ summary: "学生角色授权", description: "给学生授权角色" })
   @Post("/authStudentRole")
   async roleStudentAuth(@Body() authStudentRoleDto: AuthStudentRoleDto) {
-    return await this.usersService.roleStudentAuth(authStudentRoleDto)
+    return await this.usersService.roleStudentAuth(authStudentRoleDto);
   }
 
   @ApiOperation({ summary: "获取所有职工角色信息接口", description: "获取所有职工角色信息" })

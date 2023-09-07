@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { map } from "rxjs";
-import { AuthStudentRoleDto, CreateStudentDto, FindStudentDto, UpdateStudentDto, UpdateStudentPswDto } from "src/microservice/dto/users/admin-student.dto";
+import {  CreateStudentDto, FindStudentDto, UpdateStudentDto, UpdateStudentPswDto } from "src/microservice/dto/users/admin-student.dto";
 
 @Injectable()
 export class UserAdminStudentService {
@@ -150,10 +150,5 @@ export class UserAdminStudentService {
                 }
                 ))
         return status;
-    }
-
-    // 授权学生
-    async authStudent(authStudentRoleDto: AuthStudentRoleDto) {
-
     }
 }

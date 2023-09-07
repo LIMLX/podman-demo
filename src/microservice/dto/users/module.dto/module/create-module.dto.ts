@@ -4,7 +4,7 @@ import { IsNotEmpty, IsString } from "class-validator"
 export class CreateModuleDto {
     @ApiProperty({
         required: true,
-        description:'模块代码'
+        description: '模块代码'
     })
 
     @IsNotEmpty({
@@ -18,7 +18,7 @@ export class CreateModuleDto {
 
     @ApiProperty({
         required: true,
-        description:'模块名称'
+        description: '模块名称'
     })
 
     @IsNotEmpty({
@@ -33,49 +33,37 @@ export class CreateModuleDto {
 export class AuthEmployeeDto {
     @ApiProperty({
         required: true,
-        description:'模块id'
+        description: '模块id'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     moduleId: string
 
 
     @ApiProperty({
         required: true,
-        description:'授权模块 --- 职工角色id'
+        description: '授权模块 --- 职工角色id'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     roleId: string
 
     @ApiProperty({
         required: true,
-        description:'操作权限id'
+        description: '操作权限id'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     operationId: string
 }
 
 export class AuthStudentDto {
     @ApiProperty({
         required: true,
-        description:'模块id'
+        description: '模块id'
     })
 
     @IsNotEmpty({
@@ -89,7 +77,7 @@ export class AuthStudentDto {
 
     @ApiProperty({
         required: true,
-        description:'授权模块 --- 学生角色id'
+        description: '授权模块 --- 学生角色id'
     })
 
     @IsNotEmpty({
@@ -103,7 +91,7 @@ export class AuthStudentDto {
 
     @ApiProperty({
         required: true,
-        description:'操作权限id'
+        description: '操作权限id'
     })
 
     @IsNotEmpty({
@@ -118,7 +106,7 @@ export class AuthStudentDto {
 export class PrivateEmployeeAuthDto {
     @ApiProperty({
         required: true,
-        description:'模块id'
+        description: '模块id'
     })
 
     @IsNotEmpty({
@@ -132,7 +120,7 @@ export class PrivateEmployeeAuthDto {
 
     @ApiProperty({
         required: true,
-        description:'私有授权模块 --- 职工角色id'
+        description: '私有授权模块 --- 职工角色id'
     })
 
     @IsNotEmpty({
@@ -146,7 +134,7 @@ export class PrivateEmployeeAuthDto {
 
     @ApiProperty({
         required: true,
-        description:'操作权限id'
+        description: '操作权限id'
     })
 
     @IsNotEmpty({
@@ -161,7 +149,7 @@ export class PrivateEmployeeAuthDto {
 export class PrivateStudentAuthDto {
     @ApiProperty({
         required: true,
-        description:'模块id'
+        description: '模块id'
     })
 
     @IsNotEmpty({
@@ -175,7 +163,7 @@ export class PrivateStudentAuthDto {
 
     @ApiProperty({
         required: true,
-        description:'私有授权模块 --- 学生角色id'
+        description: '私有授权模块 --- 学生角色id'
     })
 
     @IsNotEmpty({
@@ -189,7 +177,7 @@ export class PrivateStudentAuthDto {
 
     @ApiProperty({
         required: true,
-        description:'操作权限id'
+        description: '操作权限id'
     })
 
     @IsNotEmpty({

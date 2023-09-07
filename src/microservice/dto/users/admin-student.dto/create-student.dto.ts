@@ -80,8 +80,3 @@ export class CreateStudentDto {
     @IsInt()
     schoolYear: number
 }
-
-export class AuthStudentRoleDto {
-    roleId: string
-    studentId: string
-}

@@ -72,7 +72,7 @@ export class UsersRoleService {
   // 授权学生的角色
   async roleStudentAuth(authStudentRoleDto: AuthStudentRoleDto) {
     const pattern = { cmd: "users_role_authStudent" };
-    const data = authStudentRoleDto
+    const data = authStudentRoleDto;
 
     let status = this.userService
       .send<any>(pattern, data)
