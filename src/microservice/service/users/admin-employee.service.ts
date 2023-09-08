@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { map } from "rxjs";
-import {  CreateEmployeeDto, UpdateClassAssistantDto, UpdateClassTeacherDto, UpdateEmployeeDto, UpdateEmployeePswDto } from "src/microservice/dto/users/admin-employee.dto";
+import { CreateEmployeeDto, UpdateClassAssistantDto, UpdateClassTeacherDto, UpdateEmployeeDto, UpdateEmployeePswDto } from "src/microservice/dto/users/admin-employee.dto";
 
 @Injectable()
 export class UserAdminEmployeeService {
@@ -12,6 +12,21 @@ export class UserAdminEmployeeService {
     async findEmployee(departmentId: string, search: string, page: number) {
         const pattern = { cmd: "users_adminEmployee_findEmployee" };
         const data = { departmentId: departmentId, search: search, page: page }
+
+        const employeeData = this.userService
+            .send<any>(pattern, data)
+            .pipe(
+                map((message: any) => {
+                    return message
+                }
+                ))
+        return employeeData;
+    }
+
+    // 查询职工详情数据
+    async findEmployeeOne(employeeId: string) {
+        const pattern = { cmd: "users_adminEmployee_findEmployeeOne" };
+        const data = employeeId;
 
         const employeeData = this.userService
             .send<any>(pattern, data)

@@ -25,7 +25,7 @@ export class AdminRoleGuard implements CanActivate {
 
     // 装饰器未赋值，或者未进行规则处理，直接返回未授权
     if (!roles || roles.length === 0) {
-      return false
+      return false;
     }
 
     //====================================JWT权限验证和token解密==================================
@@ -33,27 +33,27 @@ export class AdminRoleGuard implements CanActivate {
     const req: Request = context.switchToHttp().getRequest();
     // 截取token数据，获得jwt
     if (req.headers.authorization === undefined || req.headers.authorization.indexOf('Bearer ') === -1) {
-      return false
+      return false;
     }
-    const jwt = req.headers.authorization.split('Bearer ')[1]
+    const jwt = req.headers.authorization.split('Bearer ')[1];
     // jwt解密
-    let admin: any
+    let admin: any;
 
     try {
-      admin = this.jwtData.getJWT(jwt)
+      admin = this.jwtData.getJWT(jwt);
     } catch (error) {
-      console.log('jwt解密错误')
-      return false
+      console.log('jwt解密错误');
+      return false;
     }
 
     // 验证是否为超级管理员---超级管理员对所有权限具有使用权
     if (admin.turboAdmin) {
-      if (admin.turboAdmin.starTime && admin.turboAdmin.endTime) {
+      if (admin.turboAdmin.startTime && admin.turboAdmin.endTime) {
         // 当管理员时间过期时进行阻止
         if (admin.turboAdmin.endTime <= new Date().getTime()) {
-          return false
+          return false;
         }
-        return true
+        return true;
       }
     }
 
@@ -62,21 +62,21 @@ export class AdminRoleGuard implements CanActivate {
       // 当此角色有权限时
       if (admin.admin.module && admin.admin.module.length > 0) {
         // 获取用户jwt的数据
-        let adminAuth = []
+        let adminAuth = [];
         admin.admin.module.forEach((data: { moduleNum: string, moduleLevel: number }) => {
-          adminAuth[data.moduleNum] = data.moduleLevel
+          adminAuth[data.moduleNum] = data.moduleLevel;
         });
         // 当前守护权限值
-        let flag = true
+        let flag = true;
         roles.forEach((data) => {
           // 当有确定模块权限时，同时当adminAuth内有数据也就是有确认模块，同时等级大于约束等级时
           if (!adminAuth[data.admin] || adminAuth[data.admin] < data.level) {
-            flag = false
+            flag = false;
           }
         })
-        return flag
+        return flag;
       } else {
-        return false
+        return false;
       }
     }
 

@@ -3,7 +3,7 @@ import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { AuthEmployeeRoleDto, AuthStudentRoleDto, CreateRoleDto, DeleteRoleDto, UpdateRoleDto } from "src/microservice/dto";
 import { UsersRoleService } from "src/microservice/service";
 
-@ApiTags('usersRole')
+@ApiTags('角色')
 @Controller('users/role')
 export class UsersRoleController {
   constructor(private readonly usersService: UsersRoleService) { }

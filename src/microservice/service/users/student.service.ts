@@ -12,7 +12,7 @@ export class UserStudentService {
 
   // 学生密码修改
   async updateStudentPsw(updateStudentPswDto: UpdateStudentPswDto) {
-    const pattern = { cmd: "student_update_password" };
+    const pattern = { cmd: "users_student_studentUpdatePsw" };
     const data = updateStudentPswDto
 
     let status = this.userService
@@ -39,6 +39,7 @@ export class UserStudentService {
         ))
     return status
   }
+
   // 学生数据查询
   async getStudentData(studentId: string) {
     const pattern = { cmd: "student_getStudentData" };

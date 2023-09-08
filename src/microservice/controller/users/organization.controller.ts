@@ -3,7 +3,7 @@ import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { CreateCampusDto, CreateClassDto, CreateDepartmentDto, CreateSchoolDto, UpdateCampusDto, UpdateClassDto, UpdateDepartmentDto, UpdateSchoolDto } from "src/microservice/dto";
 import { UsersOrganizationService } from "src/microservice/service";
 
-@ApiTags('usersOrganization')
+@ApiTags('组织')
 @Controller('users/organization')
 export class UsersOrganizationController {
   constructor(private readonly organizationService: UsersOrganizationService) { }

@@ -5,7 +5,7 @@ import { AuthEmployeeDto, AuthStudentDto, CreateModuleDto, PrivateEmployeeAuthDt
 import { DeleteAuthEmployeePrivateDto, DeleteAuthEmployeeRoleDto, DeleteAuthStudentPrivateDto, DeleteAuthStudentRoleDto } from "src/microservice/dto/users/module.dto/module/delete-module.dto";
 import { UsersModuleService } from "src/microservice/service";
 
-@ApiTags('usersModule')
+@ApiTags('模块权限')
 @Controller('users/module')
 export class UsersModuleController {
   constructor(private readonly moduleService: UsersModuleService) { }

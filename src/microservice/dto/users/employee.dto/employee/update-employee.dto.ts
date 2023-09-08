@@ -5,7 +5,7 @@ import { IsNotEmpty, IsString } from 'class-validator';
 export class UpdateEmployeeDto extends CreateEmployeeDto {
     @ApiProperty({
         required: true,
-        description:'职工id'
+        description: '职工id'
     })
 
     @IsNotEmpty({
@@ -14,41 +14,21 @@ export class UpdateEmployeeDto extends CreateEmployeeDto {
     @IsString({
         message: "应为字符串"
     })
-    employeeId : string
+    employeeId: string
 }
 
 export class UpdateEmployeePswDto {
     @ApiProperty({
         required: true,
-        description:'职工id'
+        description: '职工id'
     })
+    employeeId: string
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
-    employeeId : string
-
-
-    @ApiProperty({
-        required: false,
-        description:'职工id'
-    })
-    employeeNum : string
-
-    
     @ApiProperty({
         required: true,
-        description:'职工密码'
+        description: '职工密码'
     })
-
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
-    employeePsw : string
+    @IsNotEmpty()
+    @IsString()
+    password: string
 }
