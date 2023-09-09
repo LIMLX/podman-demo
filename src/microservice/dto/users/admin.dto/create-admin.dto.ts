@@ -7,12 +7,8 @@ export class CreateAdminDto {
         description: '账号'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     account: string
 
     @ApiProperty({
@@ -20,11 +16,7 @@ export class CreateAdminDto {
         description: '密码'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     password: string
 }

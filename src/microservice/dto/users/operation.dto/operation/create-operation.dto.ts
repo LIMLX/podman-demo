@@ -11,6 +11,15 @@ export class CreateOperationDto {
     @IsString()
     operationNum: string
 
+    @ApiProperty({
+        required: true,
+        description: '操作标题'
+    })
+
+    @IsNotEmpty()
+    @IsString()
+    operationTitle: string
+
 
     @ApiProperty({
         required: true,
@@ -27,7 +36,7 @@ export class CreateOperationDto {
         description: '操作权限等级'
     })
 
-    @IsNotEmpty()
+    @IsNotEmpty() a
     @IsInt()
     operationLevel: number
 }

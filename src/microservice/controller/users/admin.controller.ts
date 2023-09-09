@@ -82,10 +82,4 @@ export class UserAdminController {
     async findUserOne(@Body() findUserOneDto: FindUserOneDto) {
         return await this.usersService.findUserOne(findUserOneDto);
     }
-
-    @AdminRole([{ admin: Admin.History, level: 1 }])
-    @Get('demo')
-    async demo() {
-        return 1
-    }
 }
