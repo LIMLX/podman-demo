@@ -66,12 +66,8 @@ export class AuthStudentDto {
         description: '模块id'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     moduleId: string
 
 
@@ -80,12 +76,8 @@ export class AuthStudentDto {
         description: '授权模块 --- 学生角色id'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     roleId: string
 
 
@@ -94,12 +86,8 @@ export class AuthStudentDto {
         description: '操作权限id'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     operationId: string
 }
 
@@ -109,12 +97,8 @@ export class PrivateEmployeeAuthDto {
         description: '模块id'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     moduleId: string
 
 
@@ -122,13 +106,8 @@ export class PrivateEmployeeAuthDto {
         required: true,
         description: '私有授权模块 --- 职工角色id'
     })
-
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     employeeId: string
 
 
@@ -136,13 +115,8 @@ export class PrivateEmployeeAuthDto {
         required: true,
         description: '操作权限id'
     })
-
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     operationId: string
 }
 
@@ -152,12 +126,8 @@ export class PrivateStudentAuthDto {
         description: '模块id'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     moduleId: string
 
 
@@ -166,12 +136,8 @@ export class PrivateStudentAuthDto {
         description: '私有授权模块 --- 学生角色id'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     studentId: string
 
 
@@ -180,11 +146,7 @@ export class PrivateStudentAuthDto {
         description: '操作权限id'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     operationId: string
 }

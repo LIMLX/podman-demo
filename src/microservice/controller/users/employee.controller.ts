@@ -1,4 +1,5 @@
 import { Body, Controller, Patch, UseGuards } from "@nestjs/common";
+import { AuthGuard } from "@nestjs/passport";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { User } from "src/common";
 import { EmployeeRoleGuard } from "src/common/guards";
@@ -14,12 +15,13 @@ export class UserEmployeeController {
   ) { }
 
   @ApiOperation({ summary: "职工密码修改接口", description: "修改职工密码" })
+  @UseGuards(AuthGuard('jwt'))
   @Patch("/updateEmployeePsw")
   async updateEmployeePsw(@Body() updateEmployeePswDto: UpdateEmployeePswDto, @User("id") employeeId: string) {
     if (!employeeId || employeeId === "abnormal") {
       return "abnormal";
     }
     updateEmployeePswDto.employeeId = employeeId;
-    return await this.usersService.updateEmployeePsw(updateEmployeePswDto)
+    return await this.usersService.updateEmployeePsw(updateEmployeePswDto);
   }
 }

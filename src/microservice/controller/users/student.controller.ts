@@ -5,6 +5,7 @@ import { StudentRoleGuard, User } from "src/common"
 import { UpdateStudentPswDto } from "src/microservice/dto"
 import { UserStudentService } from "src/microservice/service/users"
 import { Response } from "express";
+import { AuthGuard } from "@nestjs/passport"
 
 @ApiTags('学生用户')
 @Controller("users/student")
@@ -15,6 +16,7 @@ export class UserStudentController {
     ) { }
 
     @ApiOperation({ summary: "学生自己修改密码", description: "修改学生密码" })
+    @UseGuards(AuthGuard('jwt'))
     @Patch("/updatePsw")
     async updateStudentPsw(@Body() updateStudentPswDto: UpdateStudentPswDto, @User("id") studentId: string) {
         if (!studentId || studentId === "abnormal") {
@@ -25,6 +27,7 @@ export class UserStudentController {
     }
 
     @ApiOperation({ summary: "学生修改头像", description: "学生修改头像" })
+    @UseGuards(AuthGuard('jwt'))
     @Post('/updateAvatar')
     @UseInterceptors(FileInterceptor('studentAvatar'))
     async updateAvatar(@UploadedFile() file: Express.Multer.File, @User('num') stuentNum: string) {
@@ -53,6 +56,7 @@ export class UserStudentController {
     }
 
     @ApiOperation({ summary: "获取单个学生的详情数据", description: "学生详情数据查询" })
+    @UseGuards(AuthGuard('jwt'))
     @Get('getStudentData')
     async getStudentData(@User('id') studentId: string) {
         // 验证数据身份
@@ -63,6 +67,7 @@ export class UserStudentController {
     }
 
     @ApiOperation({ summary: "获取单个学生的详情数据", description: "学生详情数据查询" })
+    @UseGuards(AuthGuard('jwt'))
     @Get('getStudentAvatar')
     async getStudentAvatar(@Res() res: Response, @User('id') studentId: string) {
         // 验证数据身份

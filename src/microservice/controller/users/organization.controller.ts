@@ -1,5 +1,6 @@
 import { Body, Controller, Get, Patch, Post } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
+import { Admin, AdminRole } from "src/common";
 import { CreateCampusDto, CreateClassDto, CreateDepartmentDto, CreateSchoolDto, UpdateCampusDto, UpdateClassDto, UpdateDepartmentDto, UpdateSchoolDto } from "src/microservice/dto";
 import { UsersOrganizationService } from "src/microservice/service";
 
@@ -12,6 +13,7 @@ export class UsersOrganizationController {
 
   // 创建班级
   @ApiOperation({ summary: "班级创建接口", description: "创建新班级" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
   @Post("/classCreate")
   async createClass(@Body() createClassDto: CreateClassDto) {
     return this.organizationService.createClass(createClassDto);
@@ -19,6 +21,7 @@ export class UsersOrganizationController {
 
   // 修改班级
   @ApiOperation({ summary: "班级修改接口", description: "修改班级" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
   @Patch("/classUpdate")
   async updateClass(@Body() updateClassDto: UpdateClassDto) {
     return await this.organizationService.updateClass(updateClassDto);
@@ -26,6 +29,7 @@ export class UsersOrganizationController {
 
   // 获取所有班级
   @ApiOperation({ summary: "查询所有班级接口", description: "查询返回所有班级信息" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
   @Get("/findClassAll")
   async findClassAll() {
     return await this.organizationService.findClassAll();
@@ -35,6 +39,7 @@ export class UsersOrganizationController {
 
   // 创建学院
   @ApiOperation({ summary: "学院创建接口", description: "创建新学院" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
   @Post("/campusCreate")
   async createCampus(@Body() createCampusDto: CreateCampusDto) {
     return await this.organizationService.createCampus(createCampusDto);
@@ -42,6 +47,7 @@ export class UsersOrganizationController {
 
   // 修改学院
   @ApiOperation({ summary: "学院修改接口", description: "修改学院" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
   @Patch("/campusUpdate")
   async updateCampus(@Body() updateCampusDto: UpdateCampusDto) {
     return await this.organizationService.updateCampus(updateCampusDto);
@@ -49,6 +55,7 @@ export class UsersOrganizationController {
 
   // 获取所有学院
   @ApiOperation({ summary: "查询所有学院接口", description: "获取所有学院信息" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
   @Get("/findCampusAll")
   async findCampusAll() {
     return await this.organizationService.findCampusAll();
@@ -58,6 +65,7 @@ export class UsersOrganizationController {
 
   // 创建部门
   @ApiOperation({ summary: "部门创建接口", description: "创建新部门" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
   @Post("/departmentCreate")
   async createDepartment(@Body() createDepartmentDto: CreateDepartmentDto) {
     return await this.organizationService.createDepartment(createDepartmentDto);
@@ -65,6 +73,7 @@ export class UsersOrganizationController {
 
   // 修改部门
   @ApiOperation({ summary: "部门修改接口", description: "修改部门" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
   @Patch("/departmentUpdate")
   async updateDepartment(@Body() updateDepartmentDto: UpdateDepartmentDto) {
     return await this.organizationService.updateDepartment(updateDepartmentDto);
@@ -72,6 +81,7 @@ export class UsersOrganizationController {
 
   // 获取所有部门
   @ApiOperation({ summary: "查询所有部门接口", description: "获取所有部门信息" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
   @Get("/findDepartmentAll")
   async findDepartmentAll() {
     return await this.organizationService.findDepartmentAll();
@@ -81,6 +91,7 @@ export class UsersOrganizationController {
 
   // 创建学校
   @ApiOperation({ summary: "学校创建接口", description: "创建新学校" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
   @Post("/schoolCreate")
   async createSchool(@Body() createSchoolDto: CreateSchoolDto) {
     return await this.organizationService.createSchool(createSchoolDto);
@@ -88,6 +99,7 @@ export class UsersOrganizationController {
 
   // 修改学校
   @ApiOperation({ summary: "学校修改接口", description: "修改学校信息" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
   @Patch("/schoolUpdate")
   async updateSchool(@Body() updateSchoolDto: UpdateSchoolDto) {
     return await this.organizationService.updateSchool(updateSchoolDto);
@@ -95,6 +107,7 @@ export class UsersOrganizationController {
 
   // 获取所有学校
   @ApiOperation({ summary: "查询所有学校接口", description: "获取所有学校信息" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
   @Get("/findSchoolAll")
   async findSchoolAll() {
     return await this.organizationService.findSchoolAll();

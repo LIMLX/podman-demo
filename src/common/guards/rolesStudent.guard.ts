@@ -26,19 +26,19 @@ export class StudentRoleGuard implements CanActivate {
 
     // 装饰器未赋值，或者未进行规则处理，直接返回未授权
     if (!roles) {
-      return false
+      return false;
     }
 
     //整理守卫数据
-    let module: string[] = []
-    let leave: number[] = []
+    let module: string[] = [];
+    let leave: number[] = [];
 
     // 总模块权限量
-    let sum = 0
+    let sum = 0;
     roles.forEach((data) => {
-      sum++
-      module.push(data.module)
-      leave.push(data.level)
+      sum++;
+      module.push(data.module);
+      leave.push(data.level);
     })
 
 
@@ -47,36 +47,36 @@ export class StudentRoleGuard implements CanActivate {
     const req: Request = context.switchToHttp().getRequest();
     // 截取token数据，获得jwt
     if (req.headers.authorization === undefined || req.headers.authorization.indexOf('Bearer ') === -1) {
-      return false
+      return false;
     }
-    const jwt = req.headers.authorization.split('Bearer ')[1]
+    const jwt = req.headers.authorization.split('Bearer ')[1];
     // jwt解密
-    let studentData: StudentData
+    let studentData: StudentData;
 
     try {
       studentData = this.jwtData.getJWT(jwt)
     } catch (error) {
-      console.log('jwt解密错误')
-      return false
+      console.log('jwt解密错误');
+      return false;
     }
     // 对比查找是否有模块权限
     let indexOf: number
     studentData.module.forEach((data) => {
-      indexOf = module.indexOf(data.moduleNum)
+      indexOf = module.indexOf(data.moduleNum);
       if (indexOf >= 0) {
         // 判断权限等级是否高于或者等于
         if (data.operationLevel >= leave[indexOf]) {
           // 每当成功验证权限后减少需要的权限量
-          sum--
+          sum--;
         }
       }
     })
 
     // 当权限>0没有完全去除时权限验证失败
     if (sum > 0) {
-      return false
+      return false;
     } else {
-      return true
+      return true;
     }
   }
 }
