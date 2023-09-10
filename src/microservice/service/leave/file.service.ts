@@ -11,7 +11,7 @@ export class LeaveFileService {
 
   // 单文件上传
   async uploadFile(file: Express.Multer.File) {
-    const pattern = { cmd: "file_upload" };
+    const pattern = { cmd: "leave_file_upload" };
     const data = file
 
     let status = this.leaveService
@@ -26,7 +26,7 @@ export class LeaveFileService {
 
   // 文件删除
   async removeFile(fileName: string) {
-    const pattern = { cmd: "file_delete" };
+    const pattern = { cmd: "leave_file_delete" };
     const data = fileName
 
     let status = this.leaveService
@@ -41,7 +41,7 @@ export class LeaveFileService {
 
   // 获取文件名及其地址，然后进行返回资源
   async getFiles(@Res() res: Response, fileName: string, type: string) {
-    const pattern = { cmd: "file_getImage" };
+    const pattern = { cmd: "leave_file_getImage" };
     const payload = { fileName: fileName, type: type };
 
     this.leaveService

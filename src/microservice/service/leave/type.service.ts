@@ -267,21 +267,6 @@ export class LeaveTypeService {
     return status
   }
 
-  // 用户获取请假类型值
-  async findUserLeaveType() {
-    const pattern = { cmd: "user_getLeaveType" };
-    const data = {}
-
-    let status = this.leaveService
-      .send<any>(pattern, data)
-      .pipe(
-        map((message: any) => {
-          return message
-        }
-        ))
-    return status
-  }
-
   // 用户获取离校类型值
   async findUserLeaveSchoolType() {
     const pattern = { cmd: "user_getLeaveSchoolType" };

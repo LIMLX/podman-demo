@@ -1,4 +1,4 @@
-import { Controller, Get, Param, Post, Res, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { Controller, Get, Param, Post, Query, Res, UploadedFile, UseInterceptors } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { LeaveFileService } from "src/microservice/service";
@@ -15,9 +15,16 @@ export class LeaveFileController {
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(@UploadedFile() file: Express.Multer.File) {
     if (!file) {
-      return "sta"
+      return "文件上传错误";
     }
-    return await this.fileService.uploadFile(file)
+    // 验证大小
+    if (file.size) {
+      // 1.5MB
+      if (file.size >= (1.5 * 1024 * 1024)) {
+        return "大小超过1.5MB";
+      }
+    }
+    return await this.fileService.uploadFile(file);
   }
 
   // 文件删除
@@ -25,14 +32,14 @@ export class LeaveFileController {
   @Get('/delFile/name=:fileName')
   async removeFile(@Param('fileName') fileName: string) {
     if (!fileName) {
-      return "sta"
+      return "abnormal";
     }
-    return await this.fileService.removeFile(fileName)
+    return await this.fileService.removeFile(fileName);
   }
 
   // 查看图片文件
-  @Get('/fileName=:fileName/type=:type')
-  async getFiles(@Res() res: Response, @Param('fileName') fileName: string, @Param('type') type: string) {
-    return this.fileService.getFiles(res, fileName, type)
+  @Get('/fileName=:fileName')
+  async getFiles(@Res() res: Response, @Param('fileName') fileName: string, @Query('type') type: string) {
+    return this.fileService.getFiles(res, fileName, type);
   }
 }

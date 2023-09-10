@@ -1,33 +1,24 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { IsNotEmpty, IsString } from "class-validator"
+import { IsIn, IsNotEmpty, IsNumber, IsNumberString, IsString, Length } from "class-validator"
 
 export class CreateLeaveDto {
 
     @ApiProperty({
         required: true,
-        description: '类型id'
+        description: '类型'
     })
-
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
-    typeNum: string
+    @IsNotEmpty()
+    @IsNumber()
+    @IsIn([0, 1])
+    type: number
 
 
     @ApiProperty({
         required: true,
         description: '内容'
     })
-
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     content: string
 
 
@@ -35,10 +26,7 @@ export class CreateLeaveDto {
         required: true,
         description: '起始时间'
     })
-
-    @IsNotEmpty({
-        message: "不能为空"
-    })
+    @IsNotEmpty()
     startTime: Date
 
 
@@ -46,12 +34,9 @@ export class CreateLeaveDto {
         required: true,
         description: '结束时间'
     })
-
-    @IsNotEmpty({
-        message: "不能为空"
-    })
+    @IsNotEmpty()
     endTime: Date
-    userUUID: string
+    userId: string
 
     @ApiProperty({
         required: false,
@@ -70,12 +55,8 @@ export class CreateLeaveSchoolDto {
         description: '省级id'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     leaveSchoolTypeNum: string
 
 
@@ -84,9 +65,7 @@ export class CreateLeaveSchoolDto {
         description: '开始时间'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
+    @IsNotEmpty()
     startTime: Date
 
 
@@ -95,9 +74,7 @@ export class CreateLeaveSchoolDto {
         description: '结束时间'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
+    @IsNotEmpty()
     endTime: Date
 
 
@@ -106,12 +83,8 @@ export class CreateLeaveSchoolDto {
         description: '交通方式'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     transportationNum: string
 
 
@@ -120,12 +93,8 @@ export class CreateLeaveSchoolDto {
         description: '航班号'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     flight: string
 
 
@@ -134,12 +103,8 @@ export class CreateLeaveSchoolDto {
         description: '省级id'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     province: string
 
 
@@ -148,12 +113,8 @@ export class CreateLeaveSchoolDto {
         description: '市级id'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     city: string
 
 
@@ -162,12 +123,8 @@ export class CreateLeaveSchoolDto {
         description: '县级id'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     country: string
 
 
@@ -176,28 +133,114 @@ export class CreateLeaveSchoolDto {
         description: '内容'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     content: string
 }
 
 export class CreateReturnDto {
-    userId?: string
-    phone?: string
-    startET?: Date
+    userId: string
+
+    @ApiProperty({
+        required: true,
+        description: '手机号码'
+    })
+    @IsNotEmpty()
+    @IsNumberString()
+    @Length(10, 11)
+    phone: string
+
+
+    @ApiProperty({
+        required: true,
+        description: '预约起始时间'
+    })
+    @IsNotEmpty()
+    startET: Date
+
+
+    @ApiProperty({
+        required: true,
+        description: '预约结束时间'
+    })
+    @IsNotEmpty()
     endET?: Date
+
+    @ApiProperty({
+        required: true,
+        description: '出发时间'
+    })
+    @IsNotEmpty()
     startTime?: Date
+
+    @ApiProperty({
+        required: true,
+        description: '结束时间'
+    })
+    @IsNotEmpty()
     endTime?: Date
+
+    @ApiProperty({
+        required: true,
+        description: '交通num'
+    })
+    @IsNotEmpty()
+    @IsString()
     transportationNum?: string
+
+    @ApiProperty({
+        required: true,
+        description: '航班/车次'
+    })
+    @IsNotEmpty()
+    @IsString()
     flight?: string
+
+    @ApiProperty({
+        required: true,
+        description: '起始出发省'
+    })
+    @IsNotEmpty()
+    @IsString()
     startProvince?: string
+
+    @ApiProperty({
+        required: true,
+        description: '起始出发城市/县'
+    })
+    @IsNotEmpty()
+    @IsString()
     startCity?: string
+
+    @ApiProperty({
+        required: true,
+        description: '起始出发区/县'
+    })
+    @IsNotEmpty()
+    @IsString()
     startCountry?: string
+
+    @ApiProperty({
+        required: true,
+        description: '到达省份'
+    })
+    @IsNotEmpty()
+    @IsString()
     endProvince?: string
+
+    @ApiProperty({
+        required: true,
+        description: '到达城市/县'
+    })
+    @IsNotEmpty()
+    @IsString()
     endCity?: string
+
+    @ApiProperty({
+        required: true,
+        description: '到达区/县/镇'
+    })
+    @IsNotEmpty()
+    @IsString()
     endCountry?: string
 }

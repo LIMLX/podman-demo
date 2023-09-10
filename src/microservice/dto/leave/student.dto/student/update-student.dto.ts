@@ -8,27 +8,9 @@ export class UpdateLeaveDto extends CreateLeaveDto {
         description: '请假单id'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsInt({
-        message: "应为字符串"
-    })
-    leaveId: number
-
-
-    @ApiProperty({
-        required: true,
-        description: '请假单uuid'
-    })
-
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
-    leaveUUID: string
+    @IsNotEmpty()
+    @IsString()
+    leaveId: string
 }
 
 export class UpdateLeaveSchoolDto extends CreateLeaveSchoolDto {
@@ -37,29 +19,18 @@ export class UpdateLeaveSchoolDto extends CreateLeaveSchoolDto {
         description: '离校单id'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsInt({
-        message: "应为字符串"
-    })
+    @IsNotEmpty()
+    @IsString()
     leaveSchoolId: number
-
-
-    @ApiProperty({
-        required: true,
-        description: '离校单uuid'
-    })
-
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsString({
-        message: "应为字符串"
-    })
-    leaveSchoolUUID: string
 }
 
 export class UpdateReturnDto extends CreateReturnDto {
+    @ApiProperty({
+        required: true,
+        description: '返校单id'
+    })
+
+    @IsNotEmpty()
+    @IsString()
     returnId: string
 }

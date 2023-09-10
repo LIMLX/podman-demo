@@ -125,31 +125,23 @@ export class LeaveTypeController {
 
   // -----------------------------------用户端获取接口-----------------------------------------
   // 用户获取公共状态值
-  @UseGuards(AuthGuard('jwt'))
   @ApiOperation({ summary: "用户获取公共状态值", description: "用户状态值获取方式" })
   @Get('/getStatus')
   async findUserStatus() {
-    return await this.typeService.findUserStatus()
-  }
-
-  // 用户获取请假类型值
-  @ApiOperation({ summary: "用户获取请假类型值", description: "用户获取请假类型值" })
-  @Get('getLeaveType')
-  async findUserLeaveType() {
-    return await this.typeService.findUserLeaveType()
+    return await this.typeService.findUserStatus();
   }
 
   // 用户获取离校类型值
   @ApiOperation({ summary: "用户获取离校类型值的接口", description: "用户获取离校类型值" })
   @Get('getLeaveSchoolType')
   async findUserLeaveSchoolType() {
-    return await this.typeService.findUserLeaveSchoolType()
+    return await this.typeService.findUserLeaveSchoolType();
   }
 
   // 用户获取交通方式
   @ApiOperation({ summary: "用户获取交通方式的接口", description: "用户获取交通方式" })
   @Get('/getTransp')
   async findUserTransp() {
-    return await this.typeService.findUserTransp()
+    return await this.typeService.findUserTransp();
   }
 }

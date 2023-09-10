@@ -134,11 +134,10 @@ export class FindLeaveFilterDto {
     studentId: string
 
     statusNum: string
-
     @IsIn(['Today', 'Week', 'Month', 'HalfYear', 'Year', undefined])
     time: string
 
-    @IsIn(['leave', 'all', 'school', 'returnSchool', undefined])
+    @IsIn(['0', '1', 'leave', 'all', 'school', 'returnSchool', undefined])
     typeNum: string
 
 
@@ -146,10 +145,7 @@ export class FindLeaveFilterDto {
         required: true,
         description: '页数'
     })
-
-    @IsNotEmpty({
-        message: "不能为空"
-    })
+    @IsNotEmpty()
     @IsInt()
     @Min(1)
     page: number
