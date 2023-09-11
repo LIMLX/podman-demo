@@ -14,9 +14,9 @@ export class LeaveEmployeeController {
   @Get('/leaveAll/page=:page')
   async findLeaveAll(@User("id") employeeId: string, @Param("page") page: string) {
     if (!employeeId || employeeId === "abnormal") {
-      return "abnormal"
+      return "abnormal";
     }
-    return await this.employeeService.findLeaveAll(employeeId, +page)
+    return await this.employeeService.findLeaveAll(employeeId, +page);
   }
 
   // 查询详细请假单
@@ -38,10 +38,11 @@ export class LeaveEmployeeController {
   @Get("leaveFilter/page=:page")
   async leaveFilter(@User("id") employeeId: string, @Query() paramLeaveFilterDto: ParamLeaveFilterDto, @Param('page') page: string) {
     if (!employeeId || employeeId === "abnormal") {
-      return "abnormal"
+      return "abnormal";
     }
-    paramLeaveFilterDto.page = page
-    return await this.employeeService.leaveFilter(employeeId, paramLeaveFilterDto)
+    paramLeaveFilterDto.page = page;
+    paramLeaveFilterDto.employeeId = employeeId;
+    return await this.employeeService.leaveFilter(paramLeaveFilterDto);
   }
 
   // 高级筛选查询
@@ -49,9 +50,9 @@ export class LeaveEmployeeController {
   @Post("/leaveAdvancedFilter")
   async leaveAdvancedFilter(@User('id') employeeId: string, @Body() leaveFilterDto: FindLeaveAdvancedFilterDto) {
     if (!employeeId || employeeId === "abnormal") {
-      return "abnormal"
+      return "abnormal";
     }
-    return await this.employeeService.leaveAdvancedFilter(employeeId, leaveFilterDto)
+    return await this.employeeService.leaveAdvancedFilter(employeeId, leaveFilterDto);
   }
 
   // 获取职工所管理的班级

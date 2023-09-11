@@ -147,7 +147,6 @@ export class FindLeaveFilterDto {
     })
     @IsNotEmpty()
     @IsInt()
-    @Min(1)
     page: number
 }
 

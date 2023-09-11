@@ -1,5 +1,8 @@
+import { ApiProperty } from "@nestjs/swagger"
+import { IsIn, IsNotEmpty, IsNumber, IsString } from "class-validator"
+
 export class ClassStudentDto {
-    
+
 }
 
 export class FindLeaveAllDto {
@@ -10,7 +13,7 @@ export class FindLeaveAllDto {
 export class FindLeaveDataDto {
     leave_id: number
     leave_uuid: string
-    user_id: string     
+    user_id: string
     content: string
     start_time: Date
     end_time: Date
@@ -19,7 +22,7 @@ export class FindLeaveDataDto {
 }
 
 export class FindLeaveSchoolDataDto {
-    leave_school_id : number
+    leave_school_id: number
     leave_school_uuid: string
     leave_user_id: string
     start_time: Date
@@ -29,38 +32,61 @@ export class FindLeaveSchoolDataDto {
 }
 
 export class FindLeaveAdvancedFilterDto {
-    employeeId: string
+    @ApiProperty({
+        required: true,
+        description: '状态num'
+    })
     statusNum: string
+
+    @ApiProperty({
+        required: false,
+        description: '类型Num'
+    })
+    @IsIn(['0', '1', 'leave', 'all', 'school', 'returnSchool', undefined])
     typeNum: string
+
+    @ApiProperty({
+        required: true,
+        description: '时间'
+    })
+    @IsIn(['Today', 'Week', 'Month', 'HalfYear', 'Year', undefined])
+    Time: string
+
+    @ApiProperty({
+        required: true,
+        description: '页数'
+    })
+    @IsNotEmpty()
+    @IsNumber()
+    page: number
     startTime: Date
     endTime: Date
-    Time: string
     classId: string
     studentName: string
     studentNum: string
-    page: number
+    employeeId: string
 }
 
 export class FindStudentOneData {
     student_num: string
-    student_name:string
-    class:{
-        classes_name:string,
+    student_name: string
+    class: {
+        classes_name: string,
         campus: {
-            campus_name:string,
-            school:{
-                school_name:string
+            campus_name: string,
+            school: {
+                school_name: string
             }
         }
     }
 }
 
 export class StudentOneData {
-    studentNum:string
-    studentName:string
-    studentClassName:string
-    studentCampusName:string
-    studentSchoolName:string
+    studentNum: string
+    studentName: string
+    studentClassName: string
+    studentCampusName: string
+    studentSchoolName: string
 }
 
 export class FindLeaveOneDto {
@@ -71,11 +97,11 @@ export class FindLeaveOneDto {
     start_time: Date
     end_time: Date
     type: {
-		type_name: string
-	}
+        type_name: string
+    }
     leaveStatus: {
-		status_name: string
-	}
+        status_name: string
+    }
     file: { file_name: string; file_type: string; }[]
 }
 
@@ -87,12 +113,12 @@ export class FindLeaveSchoolOneDto {
     end_time: Date
     flight: string
     province: string
-    city:  string
+    city: string
     country: string
     leave_school_creation_time?: Date
     content: string
 
-    transportation:{
+    transportation: {
         transportation_name: string
     }
 
@@ -100,7 +126,7 @@ export class FindLeaveSchoolOneDto {
         type_name: string
     }
 
-    leaveStatus:{
+    leaveStatus: {
         status_name: string
     }
 }

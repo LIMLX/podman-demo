@@ -9,33 +9,6 @@ import { LeaveTypeService } from "src/microservice/service/leave";
 @Controller('leave/type')
 export class LeaveTypeController {
   constructor(private readonly typeService: LeaveTypeService) { }
-  // 创建请假类型
-  @ApiOperation({ summary: "创建请假类型的接口", description: "创建新的请假类型" })
-  @Post('/typeCreate')
-  async createType(@Body() createTypeDto: CreateTypeDto) {
-    return await this.typeService.createType(createTypeDto);
-  }
-
-  // 获取请假所有类型
-  @ApiOperation({ summary: "查询所有请假类型的接口", description: "获取所有请假类型" })
-  @Get('/typeAll')
-  async findTypeAll() {
-    return await this.typeService.findTypeAll();
-  }
-
-  // 修改请假类型
-  @ApiOperation({ summary: "修改请假类型的接口", description: "修改请假类型" })
-  @Patch('/typeUpdate')
-  async updateType(@Body() updateTypeDto: UpdateTypeDto) {
-    return await this.typeService.updateType(updateTypeDto);
-  }
-
-  // 删除请假类型
-  @ApiOperation({ summary: "删除请假类型的接口", description: "删除请假类型" })
-  @Delete('/typeDelete/id=:typeId')
-  async removeType(@Param() deleteTypeDto: DeleteTypeDto) {
-    return await this.typeService.removeType(deleteTypeDto);
-  }
 
   // 创建离校类型
   @ApiOperation({ summary: "创建离校类型的接口", description: "创建新的离校类型" })

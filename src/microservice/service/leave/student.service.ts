@@ -129,6 +129,20 @@ export class LeaveStudentService {
         ))
     return status
   }
+  // 获取学生的所负责的辅导员
+  async getAssistant(studentId: string) {
+    const pattern = { cmd: "leave_student_getAssistant" };
+    const data = studentId;
+
+    let status = this.leaveService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status
+  }
 
   // --------------------------------------数据操作----------------------------------------------------
 

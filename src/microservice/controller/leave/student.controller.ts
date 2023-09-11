@@ -79,6 +79,16 @@ export class LeaveStudentController {
     return await this.studentService.findLeavePresidentLike(studentId, like)
   }
 
+  // 获取学生的所负责的辅导员
+  @ApiOperation({ summary: "获取学生的所负责的辅导员", description: "获取学生的所负责的辅导员" })
+  @Get("getAssistant")
+  async getAssistant(@User("id") studentId: string) {
+    if (!studentId || studentId === "abnormal") {
+      return "abnormal";
+    }
+    return await this.studentService.getAssistant(studentId);
+  }
+
   // --------------------------------------数据操作----------------------------------------------------
 
   // 请假单创建
