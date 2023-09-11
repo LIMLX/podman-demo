@@ -2,6 +2,8 @@ import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { map } from "rxjs";
 import { CreateEmployeeExcelDto, FindLeaveAdvancedFilterDto, ParamLeaveFilterDto, UpdateLeaveDto, UpdateLeaveManyDto } from "src/microservice/dto/leave/employee.dto";
+import { Response } from "express";
+
 
 @Injectable()
 export class LeaveEmployeeService {
@@ -98,6 +100,21 @@ export class LeaveEmployeeService {
     return status
   }
 
+  // 获取职工所需处理的待处理的数量
+  async getPendingSum(employeeId: string) {
+    const pattern = { cmd: "leave_employee_getPendingSum" };
+    const data = employeeId;
+
+    let status = this.leaveService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status;
+  }
+
   // 修改请假单值(审批)
   async leaveAuditOne(updateLeaveDto: UpdateLeaveDto) {
     const pattern = { cmd: "leave_employee_leavePass" };
@@ -128,17 +145,22 @@ export class LeaveEmployeeService {
   }
 
   // Excel表下载(近返回文件路径)
-  async dowExcel(createEmployeeExcelDto: CreateEmployeeExcelDto) {
+  async dowExcel(res: Response, createEmployeeExcelDto: CreateEmployeeExcelDto) {
     const pattern = { cmd: "leave_employee_dowExcel" };
-    const data = createEmployeeExcelDto
+    const data = createEmployeeExcelDto;
 
-    let status = this.leaveService
+    this.leaveService
       .send<any>(pattern, data)
-      .pipe(
-        map((message: any) => {
-          return message
+      .subscribe(meassage => {
+        if (meassage !== "abnormal") {
+          res.download(meassage, (err) => {
+            if (err) {
+              console.log(err)
+            }
+          })
+        } else {
+          res.status(400).send(meassage);
         }
-        ))
-    return status
+      })
   }
 }

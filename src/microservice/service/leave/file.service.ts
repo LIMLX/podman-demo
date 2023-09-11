@@ -51,16 +51,17 @@ export class LeaveFileService {
           res.sendFile(meassage, (err) => {
             if (err) {
               console.log(err)
+              res.status(400).send(meassage);
             }
           })
         } else {
-          res.status(400).send(meassage)
+          res.status(400).send(meassage);
         }
       })
   }
 
   async demo() {
-    const pattern = { cmd: "demo" };
+    const pattern = { cmd: "leave_division_demo" };
     const data = {}
 
     let status = this.leaveService

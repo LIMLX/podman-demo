@@ -1,8 +1,9 @@
-import { Body, Controller, Get, Param, Patch, Post, Query } from "@nestjs/common";
+import { Body, Controller, Get, Param, Patch, Post, Query, Res } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { User } from "src/common/decorators";
 import { CreateEmployeeExcelDto, FindLeaveAdvancedFilterDto, ParamLeaveFilterDto, UpdateLeaveDto, UpdateLeaveManyDto } from "src/microservice/dto/leave/employee.dto";
 import { LeaveEmployeeService } from "src/microservice/service/leave";
+import { Response } from "express";
 
 @ApiTags("leave")
 @Controller('leave/employee')
@@ -65,15 +66,24 @@ export class LeaveEmployeeController {
     return await this.employeeService.getEmployeeClass(employeeId)
   }
 
+  // 获取职工所需处理的待处理的数量
+  @Get("/getPendingSum")
+  async getPendingSum(@User("id") employeeId: string) {
+    if (!employeeId || employeeId === "abnormal") {
+      return "abnormal";
+    }
+    return await this.employeeService.getPendingSum(employeeId);
+  }
+
   // 修改请假单值(审批)
   @ApiOperation({ summary: "职工(辅导员)批准的接口", description: "辅导员操作请假单接口" })
   @Patch('/leavePass')
   async auditLeave(@Body() updateLeaveDto: UpdateLeaveDto, @User('id') employeeId: string) {
     if (!employeeId || employeeId === "abnormal") {
-      return "abnormal"
+      return "abnormal";
     }
-    updateLeaveDto.approverId = employeeId
-    return await this.employeeService.leaveAuditOne(updateLeaveDto)
+    updateLeaveDto.approverId = employeeId;
+    return await this.employeeService.leaveAuditOne(updateLeaveDto);
   }
 
   // 批量审批
@@ -81,19 +91,20 @@ export class LeaveEmployeeController {
   @Patch('/leavePassMany')
   async auditLeaveMany(@Body() updateLeaveManyDto: UpdateLeaveManyDto[], @User('id') employeeId: string) {
     if (!employeeId || employeeId === "abnormal") {
-      return "abnormal"
+      return "abnormal";
     }
     return await this.employeeService.auditLeaveMany(updateLeaveManyDto, employeeId)
   }
 
-  // Excel表下载(近返回文件路径)
+  // Excel表下载(近返回文件路径)---利用express下载
   @ApiOperation({ summary: "职工(辅导员)下载excel表的接口", description: "辅导员下载excel文件" })
   @Post("/dowExcel")
-  async dowExcel(@User("id") employeeId: string, @Body() createEmployeeExcelDto: CreateEmployeeExcelDto) {
-    if (!employeeId || employeeId === "abnormal") {
-      return "abnormal"
+  async dowExcel(@Res() res: Response, @User("id") employeeId: string, @User("num") employeeNum: string, @Body() createEmployeeExcelDto: CreateEmployeeExcelDto) {
+    if (!employeeId || employeeId === "abnormal" || !employeeNum || employeeNum === "abnormal") {
+      return "abnormal";
     }
-    createEmployeeExcelDto.employeeId = employeeId
-    return await this.employeeService.dowExcel(createEmployeeExcelDto)
+    createEmployeeExcelDto.employeeId = employeeId;
+    createEmployeeExcelDto.employeeNum = employeeNum;
+    return await this.employeeService.dowExcel(res, createEmployeeExcelDto);
   }
 }

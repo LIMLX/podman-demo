@@ -40,6 +40,12 @@ export class LeaveFileController {
   // 查看图片文件
   @Get('/fileName=:fileName')
   async getFiles(@Res() res: Response, @Param('fileName') fileName: string, @Query('type') type: string) {
-    return this.fileService.getFiles(res, fileName, type);
+    return await this.fileService.getFiles(res, fileName, type);
+  }
+
+  // 测试是否可以删除
+  @Get("demo")
+  async demo() {
+    return await this.fileService.demo()
   }
 }

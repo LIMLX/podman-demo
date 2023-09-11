@@ -1,9 +1,13 @@
-export class CreateEmployeeDto {}
+import { IsIn } from "class-validator"
+
+export class CreateEmployeeDto { }
 
 export class CreateEmployeeExcelDto {
-    employeeId : string
+    employeeId: string
+    employeeNum: string
     startTime: Date
     endTime: Date
+    @IsIn(['Today', 'Week', 'Month', 'HalfYear', 'Year', undefined])
     Time: string
     classId: string
 }
