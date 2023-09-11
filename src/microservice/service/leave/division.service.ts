@@ -11,7 +11,7 @@ export class LeaveDivisionService {
 
   // 获取省份
   async province() {
-    const pattern = { cmd: "division_findProvince" };
+    const pattern = { cmd: "leave_division_findProvince" };
     const data = {}
 
     let status = this.leaveService
@@ -26,7 +26,7 @@ export class LeaveDivisionService {
 
   // 根据省级id获取市级方法
   async city(cityDto: CityDto) {
-    const pattern = { cmd: "division_findCity" };
+    const pattern = { cmd: "leave_division_findCity" };
     const data = cityDto
 
     let status = this.leaveService
@@ -41,7 +41,7 @@ export class LeaveDivisionService {
 
   // 根据市级id获取县级方法
   async country(countryDto: CountryDto) {
-    const pattern = { cmd: "division_findCountry" };
+    const pattern = { cmd: "leave_division_findCountry" };
     const data = countryDto
 
     let status = this.leaveService

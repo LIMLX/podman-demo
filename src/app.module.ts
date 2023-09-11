@@ -24,8 +24,8 @@ import {
   UserEmployeeService, UserStudentService, UsersModuleService,
   UsersOperationService, UsersOrganizationService, UsersRoleService, UsersService
 } from './microservice/service/users';
-import { LeaveDivisionService, LeaveEmployeeService, LeaveFileService, LeaveStudentService, LeaveTypeService } from './microservice';
-import { LeaveDivisionController, LeaveEmployeeController, LeaveFileController, LeaveStudentController, LeaveTypeController } from './microservice/controller/leave';
+import { LeaveAdminService, LeaveDivisionService, LeaveEmployeeService, LeaveFileService, LeaveStudentService, LeaveTypeService } from './microservice';
+import { LeaveAdminController, LeaveDivisionController, LeaveEmployeeController, LeaveFileController, LeaveStudentController, LeaveTypeController } from './microservice/controller/leave';
 import { RepairsAdminController, RepairsAutoDispatchController, RepairsBuildingController, RepairsFileController, RepairsMaintainerController, RepairsManagerController, RepairsRepairsController, RepairsStatusController, RepairsTypeController } from './microservice/controller/repairs';
 import { RepairsAdminService, RepairsAutoDispatchService, RepairsBuildingService, RepairsFileService, RepairsMaintainerService, RepairsManagerService, RepairsRepairsService, RepairsStatusService, RepairsTypeService } from './microservice/service/repairs';
 import { MsEpiHealth, MsHistoryHealth, MsLeaveHealth, MsRepairsHealth, MsSmsHealth, MsUserHealth, httpBlacklist } from './common';
@@ -82,6 +82,7 @@ import { HistoryAdminService, HistoryDivisionService, HistoryFileService, Histor
     LeaveStudentController,
     LeaveFileController,
     LeaveTypeController,
+    LeaveAdminController,
 
     // repair报修
     RepairsFileController,
@@ -134,6 +135,7 @@ import { HistoryAdminService, HistoryDivisionService, HistoryFileService, Histor
     LeaveStudentService,
     LeaveFileService,
     LeaveTypeService,
+    LeaveAdminService,
 
     // repair报修
     RepairsFileService,
