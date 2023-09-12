@@ -36,7 +36,6 @@ export class CreateLeaveDto {
     })
     @IsNotEmpty()
     endTime: Date
-    userId: string
 
     @ApiProperty({
         required: false,
@@ -46,10 +45,15 @@ export class CreateLeaveDto {
         file_name: string,
         file_type: string
     }[]
+
+    userId: string
+    userName: string
 }
 
 export class CreateLeaveSchoolDto {
     leaveUserId: string
+    leaveUserName: string
+
     @ApiProperty({
         required: true,
         description: '省级id'
@@ -140,6 +144,7 @@ export class CreateLeaveSchoolDto {
 
 export class CreateReturnDto {
     userId: string
+    userName: string
 
     @ApiProperty({
         required: true,

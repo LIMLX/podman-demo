@@ -1,6 +1,6 @@
-import { Controller, Get, Post, Body, Patch, Param, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query, Patch, Delete } from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
-import { FindLeaveDto } from 'src/microservice/dto/leave/admin.dto';
+import { AuditLeaveDto, DelLeaveBatchDto, DelLeaveDto, FindLeaveDto } from 'src/microservice/dto/leave/admin.dto';
 import { LeaveAdminService } from "src/microservice/service/leave";
 
 @Controller('leave/admin')
@@ -71,5 +71,35 @@ export class LeaveAdminController {
     @Post("findLeave")
     async findLeave(@Body() findLeaveDto: FindLeaveDto) {
         return await this.adminService.findLeave(findLeaveDto);
+    }
+
+    // 查询详情假条
+    @Get("findLeaveOne/id=:leaveId")
+    async findLeaveOne(@Param("leaveId") id: string, @Query("type") type: string) {
+        return await this.adminService.findLeaveOne(id, type);
+    }
+
+    // 单个审批操作
+    @Patch("auditLeave")
+    async auditLeave({ id, type, status }: AuditLeaveDto) {
+        return await this.adminService.auditLeave(id, type, status);
+    }
+
+    // 批量审批操作
+    @Patch("auditLeaveBatch")
+    async auditLeaveBatch({ leave, status }: { leave: { id: string, type: string }[], status: number }) {
+        return await this.adminService.auditLeaveBatch(leave, status);
+    }
+
+    // 单个删除操作
+    @Delete("delLeave")
+    async delLeave({ id, type }: DelLeaveDto) {
+        return await this.adminService.delLeave(id, type);
+    }
+
+    // 批量删除操作
+    @Delete("delLeaveBatch")
+    async delLeaveBatch(data: DelLeaveBatchDto[]) {
+        return await this.adminService.delLeaveBatch(data);
     }
 }

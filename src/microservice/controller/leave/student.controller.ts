@@ -94,33 +94,35 @@ export class LeaveStudentController {
   // 请假单创建
   @ApiOperation({ summary: "学生创建请假单的接口", description: "学生创建新的请假单" })
   @Post('/leaveCreate')
-  async createLeave(@Body() createLeaveDto: CreateLeaveDto, @User('id') studentId: string) {
-    if (!studentId || studentId === "abnormal") {
+  async createLeave(@Body() createLeaveDto: CreateLeaveDto, @User('id') studentId: string, @User("name") studentName: string) {
+    if (!studentId || studentId === "abnormal" || !studentName || studentName === "abnormal") {
       return "abnormal";
     }
     createLeaveDto.userId = studentId;
+    createLeaveDto.userName = studentName;
     return await this.studentService.createLeave(createLeaveDto);
   }
 
   // 修改请假单
   @ApiOperation({ summary: "学生修改请假单的接口", description: "学生修改请假单" })
   @Patch('/leaveUpdate')
-  async updateLeave(@Body() updateLeaveDto: UpdateLeaveDto, @User('id') studentId: string) {
-    if (!studentId || studentId === "abnormal") {
+  async updateLeave(@Body() updateLeaveDto: UpdateLeaveDto, @User('id') studentId: string, @User("name") studentName: string) {
+    if (!studentId || studentId === "abnormal" || !studentName || studentName === "abnormal") {
       return "abnormal";
     }
     updateLeaveDto.userId = studentId;
+    updateLeaveDto.userName = studentName;
     return await this.studentService.updateLeave(updateLeaveDto);
   }
 
   // 删除请假单(伪)
   @ApiOperation({ summary: "学生删除请假单(伪)的接口", description: "学生删除请假单(伪)" })
   @Delete('/leaveDelete/id=:id')
-  async removeLeave(@Param('id') id: string, @User('id') studentId: string) {
-    if (!studentId || studentId === "abnormal") {
+  async removeLeave(@Param('id') id: string, @User('id') studentId: string, @User("name") studentName: string) {
+    if (!studentId || studentId === "abnormal" || !studentName || studentName === "abnormal") {
       return "abnormal";
     }
-    return await this.studentService.removeLeave(+id, studentId);
+    return await this.studentService.removeLeave(+id, studentId, studentName);
   }
 
   // ----------------------------------------离校单----------------------------------------------------
@@ -128,31 +130,35 @@ export class LeaveStudentController {
   // 创建离校单
   @ApiOperation({ summary: "学生创建离校单的接口", description: "学生创建新的离校单" })
   @Post('/leaveSchoolCreate')
-  async createLeaveSchool(@Body() createLeaveSchoolDto: CreateLeaveSchoolDto, @User('id') studentId: string) {
-    if (!studentId || studentId === "abnormal") {
+  async createLeaveSchool(@Body() createLeaveSchoolDto: CreateLeaveSchoolDto, @User('id') studentId: string, @User("name") studentName: string) {
+    if (!studentId || studentId === "abnormal" || !studentName || studentName === "abnormal") {
       return "abnormal";
     }
-    return await this.studentService.createLeaveSchool(studentId, createLeaveSchoolDto);
+    createLeaveSchoolDto.leaveUserId = studentId;
+    createLeaveSchoolDto.leaveUserName = studentName;
+    return await this.studentService.createLeaveSchool(createLeaveSchoolDto);
   }
 
   // 修改离校单
   @ApiOperation({ summary: "学生修改离校单的接口", description: "学生修改离校单" })
   @Patch('/leaveSchoolUpdate')
-  async updateLeaveSchool(@Body() updateLeaveSchoolDto: UpdateLeaveSchoolDto, @User('id') studentId: string) {
-    if (!studentId || studentId === "abnormal") {
+  async updateLeaveSchool(@Body() updateLeaveSchoolDto: UpdateLeaveSchoolDto, @User('id') studentId: string, @User("name") studentName: string) {
+    if (!studentId || studentId === "abnormal" || !studentName || studentName === "abnormal") {
       return "abnormal";
     }
-    return await this.studentService.updateLeaveSchool(studentId, updateLeaveSchoolDto);
+    updateLeaveSchoolDto.leaveUserId = studentId;
+    updateLeaveSchoolDto.leaveUserName = studentName;
+    return await this.studentService.updateLeaveSchool(updateLeaveSchoolDto);
   }
 
   // 删除离校单(伪)
   @ApiOperation({ summary: "学生删除离校单(伪)的接口", description: "学生删除离校单(伪)" })
   @Delete('/leaveSchoolDelete/id=:id')
-  async removeLeaveSchool(@Param("id") leaveSchoolId: string, @User('id') studentId: string) {
-    if (!studentId || studentId === "abnormal") {
+  async removeLeaveSchool(@Param("id") leaveSchoolId: string, @User('id') studentId: string, @User("name") studentName: string) {
+    if (!studentId || studentId === "abnormal" || !studentName || studentName === "abnormal") {
       return "abnormal";
     }
-    return await this.studentService.removeLeaveSchool(leaveSchoolId, studentId);
+    return await this.studentService.removeLeaveSchool(leaveSchoolId, studentId, studentName);
   }
 
   // ----------------------------------------返校单----------------------------------------------------
@@ -160,32 +166,34 @@ export class LeaveStudentController {
   // 创建返校单
   @ApiOperation({ summary: "学生创建返校单的接口", description: "学生创建返校单" })
   @Post('/returnSchoolCreate')
-  async createReturnSchool(@Body() createDto: CreateReturnDto, @User('id') studentId: string) {
-    if (!studentId || studentId === "abnormal") {
+  async createReturnSchool(@Body() createDto: CreateReturnDto, @User('id') studentId: string, @User("name") studentName: string) {
+    if (!studentId || studentId === "abnormal" || !studentName || studentName === "abnormal") {
       return "abnormal";
     }
     createDto.userId = studentId;
+    createDto.userName = studentName;
     return await this.studentService.createReturnSchool(createDto);
   }
 
   // 修改返校单
   @ApiOperation({ summary: "学生修改返校单的接口", description: "学生修改返校单" })
   @Patch('returnSchoolUpdate')
-  async updateReturnSchool(@Body() updateDto: UpdateReturnDto, @User('id') studentId: string) {
-    if (!studentId || studentId === "abnormal") {
-      return "abnormal"
+  async updateReturnSchool(@Body() updateDto: UpdateReturnDto, @User('id') studentId: string, @User("name") studentName: string) {
+    if (!studentId || studentId === "abnormal" || !studentName || studentName === "abnormal") {
+      return "abnormal";
     }
     updateDto.userId = studentId;
+    updateDto.userName = studentName;
     return await this.studentService.updateReturnSchool(updateDto);
   }
 
   // 删除返校单(伪)
   @ApiOperation({ summary: "学生删除返校单(伪)的接口", description: "学生删除返校单(伪)" })
   @Delete('returnSchoolDelete/id=:id')
-  async reomveReturnSchool(@Param('id') id: string, @User('id') studentId: string) {
-    if (!studentId || studentId === "abnormal") {
+  async reomveReturnSchool(@Param('id') id: string, @User('id') studentId: string, @User("name") studentName: string) {
+    if (!studentId || studentId === "abnormal" || !studentName || studentName === "abnormal") {
       return "abnormal";
     }
-    return await this.studentService.reomveReturnSchool(id, studentId);
+    return await this.studentService.reomveReturnSchool(id, studentId, studentName);
   }
 }

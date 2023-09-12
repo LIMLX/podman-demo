@@ -177,9 +177,9 @@ export class LeaveStudentService {
   }
 
   // 删除请假单(伪)
-  async removeLeave(id: number, studentId: string) {
+  async removeLeave(id: number, studentId: string, studentName: string) {
     const pattern = { cmd: "leave_student_leaveDelete" };
-    const data = { id: id, studentId: studentId }
+    const data = { id: id, studentId: studentId, studentName: studentName }
 
     let status = this.leaveService
       .send<any>(pattern, data)
@@ -194,10 +194,9 @@ export class LeaveStudentService {
   // ----------------------------------------离校单----------------------------------------------------
 
   // 创建离校单
-  async createLeaveSchool(studentId: string, createLeaveSchoolDto: CreateLeaveSchoolDto) {
+  async createLeaveSchool(createLeaveSchoolDto: CreateLeaveSchoolDto) {
     const pattern = { cmd: "leave_student_leaveSchoolCreate" };
-    createLeaveSchoolDto.leaveUserId = studentId
-    const data = createLeaveSchoolDto
+    const data = createLeaveSchoolDto;
 
     let status = this.leaveService
       .send<any>(pattern, data)
@@ -210,10 +209,9 @@ export class LeaveStudentService {
   }
 
   // 修改离校单
-  async updateLeaveSchool(studentId: string, updateLeaveSchoolDto: UpdateLeaveSchoolDto) {
+  async updateLeaveSchool(updateLeaveSchoolDto: UpdateLeaveSchoolDto) {
     const pattern = { cmd: "leave_student_leaveSchoolUpdate" };
-    updateLeaveSchoolDto.leaveUserId = studentId
-    const data = updateLeaveSchoolDto
+    const data = updateLeaveSchoolDto;
 
     let status = this.leaveService
       .send<any>(pattern, data)
@@ -226,9 +224,9 @@ export class LeaveStudentService {
   }
 
   // 删除离校单(伪)
-  async removeLeaveSchool(leaveSchoolId: string, studentId: string) {
+  async removeLeaveSchool(leaveSchoolId: string, studentId: string, studentName: string) {
     const pattern = { cmd: "leave_student_leaveSchoolDelete" };
-    const data = { leaveSchoolId: leaveSchoolId, studentId: studentId }
+    const data = { leaveSchoolId: leaveSchoolId, studentId: studentId, studentName: studentName }
 
     let status = this.leaveService
       .send<any>(pattern, data)
@@ -237,7 +235,7 @@ export class LeaveStudentService {
           return message
         }
         ))
-    return status
+    return status;
   }
 
   // ----------------------------------------返校单----------------------------------------------------
@@ -260,7 +258,7 @@ export class LeaveStudentService {
   // 修改返校单
   async updateReturnSchool(updateDto: UpdateReturnDto) {
     const pattern = { cmd: "leave_student_returnSchoolUpdate" };
-    const data = updateDto
+    const data = updateDto;
 
     let status = this.leaveService
       .send<any>(pattern, data)
@@ -273,9 +271,9 @@ export class LeaveStudentService {
   }
 
   // 删除返校单(伪)
-  async reomveReturnSchool(id: string, studentId: string) {
+  async reomveReturnSchool(id: string, studentId: string, studentName: string) {
     const pattern = { cmd: "leave_student_returnSchoolDelete" };
-    const data = { id: id, studentId: studentId }
+    const data = { id: id, studentId: studentId, studentName: studentName }
 
     let status = this.leaveService
       .send<any>(pattern, data)
@@ -284,6 +282,6 @@ export class LeaveStudentService {
           return message
         }
         ))
-    return status
+    return status;
   }
 }

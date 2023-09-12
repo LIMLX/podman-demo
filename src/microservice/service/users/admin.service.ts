@@ -12,7 +12,7 @@ export class UserAdminService {
     ) { }
     // 创建管理员
     async create(createAdminDto: CreateAdminDto) {
-        const pattern = { cmd: "admin_create" };
+        const pattern = { cmd: "users_admin_create" };
         const data = createAdminDto
 
         let status = this.userService
@@ -28,7 +28,7 @@ export class UserAdminService {
 
     // 登录模块admin
     async login(loginDto: LoginDto) {
-        const pattern = { cmd: "admin_login" };
+        const pattern = { cmd: "users_admin_login" };
         const data = loginDto
         let token: any
 
@@ -58,7 +58,7 @@ export class UserAdminService {
 
     // 模块admin授权
     async authAdmin(authAdmin: AuthAdminDto) {
-        const pattern = { cmd: "admin_auth" };
+        const pattern = { cmd: "users_admin_auth" };
         const data = authAdmin
 
         let status = this.userService
@@ -74,7 +74,7 @@ export class UserAdminService {
 
     // 撤销admin授权
     async delAuthAdmin(delAuthAdminDto: DelAuthAdminDto) {
-        const pattern = { cmd: "admin_delAuth" };
+        const pattern = { cmd: "users_admin_delAuth" };
         const data = delAuthAdminDto
 
         let status = this.userService
@@ -90,7 +90,7 @@ export class UserAdminService {
 
     // 修改权限等级
     async updateAuthLevel(authAdmin: AuthAdminDto) {
-        const pattern = { cmd: "admin_updateAuth" };
+        const pattern = { cmd: "users_admin_updateAuth" };
         const data = authAdmin
 
         let status = this.userService
@@ -106,7 +106,7 @@ export class UserAdminService {
 
     // 获取所有权限值
     async findAuthAll() {
-        const pattern = { cmd: "admin_findAuthAll" };
+        const pattern = { cmd: "users_admin_findAuthAll" };
         const data = {}
 
         let status = this.userService
@@ -122,7 +122,7 @@ export class UserAdminService {
 
     // 查询当前角色是否有某种权限
     async findUserAuth(findUserAuthDto: FindUserAuthDto) {
-        const pattern = { cmd: "admin_findUserAuth" };
+        const pattern = { cmd: "users_admin_findUserAuth" };
         const data = findUserAuthDto
 
         let status = this.userService
@@ -138,7 +138,7 @@ export class UserAdminService {
 
     // 获取所有拥有管理员权限的用户
     async findModuleAdmin(moduleId: string, page: number) {
-        const pattern = { cmd: "admin_findModuleAdmin" };
+        const pattern = { cmd: "users_admin_findModuleAdmin" };
         const data = { moduleId: moduleId, page: page };
 
         let status = this.userService
@@ -154,7 +154,7 @@ export class UserAdminService {
 
     // 检查用户是否存在---并返回数据
     async findUserOne(findUserOneDto: FindUserOneDto) {
-        const pattern = { cmd: "admin_findUserOne" };
+        const pattern = { cmd: "users_admin_findUserOne" };
         const data = findUserOneDto;
 
         let status = this.userService

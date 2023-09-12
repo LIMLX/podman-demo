@@ -173,4 +173,79 @@ export class LeaveAdminService {
                 ))
         return status
     }
+
+    // 查询详情假条
+    async findLeaveOne(id: string, type: string) {
+        const pattern = { cmd: "leave_admin_findLeaveOne" };
+        const data = { id: id, type: type };
+
+        let status = this.leaveService
+            .send<any>(pattern, data)
+            .pipe(
+                map((message: any) => {
+                    return message
+                }
+                ))
+        return status;
+    }
+
+    // 单个审批操作
+    async auditLeave(id: string, type: string, statusNum: number) {
+        const pattern = { cmd: "leave_admin_auditLeave" };
+        const data = { id: id, type: type, status: statusNum };
+
+        let status = this.leaveService
+            .send<any>(pattern, data)
+            .pipe(
+                map((message: any) => {
+                    return message
+                }
+                ))
+        return status;
+    }
+
+    // 批量审批操作
+    async auditLeaveBatch(leave: { id: string, type: string }[], statusNum: number) {
+        const pattern = { cmd: "leave_admin_auditLeaveBatch" };
+        const data = { leave: leave, status: statusNum };
+
+        let status = this.leaveService
+            .send<any>(pattern, data)
+            .pipe(
+                map((message: any) => {
+                    return message
+                }
+                ))
+        return status;
+    }
+
+    // 单个删除操作
+    async delLeave(id: string, type: string) {
+        const pattern = { cmd: "leave_admin_delLeave" };
+        const data = { id: id, type: type };
+
+        let status = this.leaveService
+            .send<any>(pattern, data)
+            .pipe(
+                map((message: any) => {
+                    return message
+                }
+                ))
+        return status;
+    }
+
+    // 批量删除操作
+    async delLeaveBatch(leaveData: { id: string, type: string }[]) {
+        const pattern = { cmd: "leave_admin_delLeaveBatch" };
+        const data = leaveData;
+
+        let status = this.leaveService
+            .send<any>(pattern, data)
+            .pipe(
+                map((message: any) => {
+                    return message
+                }
+                ))
+        return status;
+    }
 }

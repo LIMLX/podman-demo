@@ -1,5 +1,5 @@
 import { createParamDecorator, ExecutionContext } from '@nestjs/common';
-import { Request } from 'express'
+import { Request } from 'express';
 import { JWTDATA } from '../encryptions';
 import { JwtModuleOptions, JwtService } from '@nestjs/jwt';
 import { ConfigService } from '@nestjs/config';
@@ -17,9 +17,9 @@ import { ConfigService } from '@nestjs/config';
 */
 
 
-export const User = createParamDecorator((data: any, ctx: ExecutionContext) => {
+export const User = createParamDecorator((data: "id" | "module" | "num" | "name" | "sex" | "type" | "phone", ctx: ExecutionContext) => {
 
-    const config = new ConfigService()
+    const config = new ConfigService();
     const request = ctx.switchToHttp().getRequest<Request>();
 
     // 配置option
@@ -28,31 +28,31 @@ export const User = createParamDecorator((data: any, ctx: ExecutionContext) => {
         signOptions: { expiresIn: config.get('JWT_TIME') }
     }
     // 创建jwtService
-    const jwtService = new JwtService(options)
+    const jwtService = new JwtService(options);
     // 注入到构造函数内(
-    const jwtData = new JWTDATA(jwtService)
+    const jwtData = new JWTDATA(jwtService);
     // 提取前端携带的token
     if (!request.headers.authorization) {
-        return undefined
+        return undefined;
     }
-    let jwt: any
+    let jwt: any;
     try {
         jwt = request.headers.authorization.split('Bearer ')[1];
     } catch (error) {
-        console.log(error)
-        return "abnormal"
+        console.log(error);
+        return "abnormal";
     }
     // 解密jwt
-    let userData: any
+    let userData: any;
     try {
-        userData = jwtData.getJWT(jwt)
+        userData = jwtData.getJWT(jwt);
     } catch (error) {
-        console.error('管道验证的jwt错误')
-        return "abnormal"
+        console.error('管道验证的jwt错误');
+        return "abnormal";
     }
     // 判断是否是职工数据
     if (userData.employee) {
-        const { employee, module } = userData
+        const { employee, module } = userData;
 
         switch (data) {
             case "id": return employee.employeeId;
@@ -66,7 +66,7 @@ export const User = createParamDecorator((data: any, ctx: ExecutionContext) => {
 
     // 判断是否是学生数据
     if (userData.student) {
-        const { student, module } = userData
+        const { student, module } = userData;
 
         switch (data) {
             case "id": return student.studentId;
