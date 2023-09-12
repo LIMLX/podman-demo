@@ -1,6 +1,6 @@
 import { Controller, Get, Post, Body, Param, Query, Patch, Delete } from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
-import { AuditLeaveDto, DelLeaveBatchDto, DelLeaveDto, FindLeaveDto } from 'src/microservice/dto/leave/admin.dto';
+import { AuditLeaveDto, CreateSchoolTypeDto, CreateStatusDto, CreateTransportationDto, DelLeaveBatchDto, DelLeaveDto, FindLeaveDto, UpdateLeaveDto, UpdateLeaveSchoolDto, UpdateReturnSchoolDto } from 'src/microservice/dto/leave/admin.dto';
 import { LeaveAdminService } from "src/microservice/service/leave";
 
 @Controller('leave/admin')
@@ -79,6 +79,42 @@ export class LeaveAdminController {
         return await this.adminService.findLeaveOne(id, type);
     }
 
+    // 创建状态
+    @Post("createStatus")
+    async createStatus(@Body() createStatus: CreateStatusDto) {
+        return await this.adminService.createStatus(createStatus);
+    }
+
+    // 查询所有状态
+    @Get("findStatus")
+    async findStatus() {
+        return await this.adminService.findStatus();
+    }
+
+    // 创建离校类型
+    @Post("createSchoolType")
+    async createSchoolType(@Body() createSchoolType: CreateSchoolTypeDto) {
+        return await this.adminService.createSchoolType(createSchoolType);
+    }
+
+    // 查询所有离校类型
+    @Get("findSchoolType")
+    async findSchoolType() {
+        return await this.adminService.findSchoolType();
+    }
+
+    // 创建交通方式
+    @Post("createTransportation")
+    async createTransportation(@Body() createTransportation: CreateTransportationDto) {
+        return await this.adminService.createTransportation(createTransportation);
+    }
+
+    // 查询所有交通方式
+    @Get("findTransportation")
+    async findTransportation() {
+        return await this.adminService.findTransportation();
+    }
+
     // 单个审批操作
     @Patch("auditLeave")
     async auditLeave({ id, type, status }: AuditLeaveDto) {
@@ -101,5 +137,23 @@ export class LeaveAdminController {
     @Delete("delLeaveBatch")
     async delLeaveBatch(data: DelLeaveBatchDto[]) {
         return await this.adminService.delLeaveBatch(data);
+    }
+
+    // 请假单编辑操作
+    @Patch("updateLeave")
+    async updateLeave(@Body() updateLeaveDto: UpdateLeaveDto) {
+        return await this.adminService.updateLeave(updateLeaveDto);
+    }
+
+    // 离校单编辑操作
+    @Patch("updateLeaveSchool")
+    async updateLeaveSchool(@Body() updateLeaveSchoolDto: UpdateLeaveSchoolDto) {
+        return await this.adminService.updateLeaveSchool(updateLeaveSchoolDto);
+    }
+
+    // 返校单编辑操作
+    @Patch("updateReturnSchool")
+    async updateReturnSchool(@Body() updateReturnSchoolDto: UpdateReturnSchoolDto) {
+        return await this.adminService.updateReturnSchool(updateReturnSchoolDto);
     }
 }
