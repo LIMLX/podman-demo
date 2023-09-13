@@ -100,6 +100,6 @@ export class DowLeaveExcelDto {
         required: false,
         description: '状态'
     })
-    @IsIn([0, 1, 2])
+    @IsIn([0, 1, 2, undefined])
     statusNum: number
 }

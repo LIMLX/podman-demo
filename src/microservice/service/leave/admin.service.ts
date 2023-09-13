@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { map } from "rxjs";
-import { CreateSchoolTypeDto, CreateStatusDto, CreateTransportationDto, FindLeaveDto, UpdateLeaveDto, UpdateLeaveSchoolDto, UpdateReturnSchoolDto } from "src/microservice/dto/leave/admin.dto";
+import { CreateSchoolTypeDto, CreateStatusDto, CreateTransportationDto, DowLeaveExcelDto, FindLeaveDto, UpdateLeaveDto, UpdateLeaveSchoolDto, UpdateReturnSchoolDto } from "src/microservice/dto/leave/admin.dto";
 
 @Injectable()
 export class LeaveAdminService {
@@ -419,6 +419,21 @@ export class LeaveAdminService {
     async findClass(campusId: string) {
         const pattern = { cmd: "leave_admin_findClass" };
         const data = campusId;
+
+        let status = this.leaveService
+            .send<any>(pattern, data)
+            .pipe(
+                map((message: any) => {
+                    return message
+                }
+                ))
+        return status;
+    }
+
+    // 下载excel文件
+    async dowLeaveExcel(dowLeaveExcelDto: DowLeaveExcelDto) {
+        const pattern = { cmd: "leave_admin_dowLeaveExcel" };
+        const data = dowLeaveExcelDto;
 
         let status = this.leaveService
             .send<any>(pattern, data)
