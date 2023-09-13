@@ -1,5 +1,6 @@
 import { Controller, Get, Post, Body, Param, Query, Patch, Delete } from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
+import { AdminData } from 'src/common';
 import { AuditLeaveDto, CreateSchoolTypeDto, CreateStatusDto, CreateTransportationDto, DelLeaveBatchDto, DelLeaveDto, FindLeaveDto, UpdateLeaveDto, UpdateLeaveSchoolDto, UpdateReturnSchoolDto } from 'src/microservice/dto/leave/admin.dto';
 import { LeaveAdminService } from "src/microservice/service/leave";
 
@@ -117,43 +118,82 @@ export class LeaveAdminController {
 
     // 单个审批操作
     @Patch("auditLeave")
-    async auditLeave({ id, type, status }: AuditLeaveDto) {
-        return await this.adminService.auditLeave(id, type, status);
+    async auditLeave(@Body() { id, type, status }: AuditLeaveDto, @AdminData("id") adminId: string, @AdminData("name") adminName: string) {
+        if (!adminId || adminId === "abnormal" || !adminName || adminName === "abnormal") {
+            return "abnormal";
+        }
+        return await this.adminService.auditLeave(id, type, status, adminId, adminName);
     }
 
     // 批量审批操作
     @Patch("auditLeaveBatch")
-    async auditLeaveBatch({ leave, status }: { leave: { id: string, type: string }[], status: number }) {
-        return await this.adminService.auditLeaveBatch(leave, status);
+    async auditLeaveBatch(@Body() { leave, status }: { leave: { id: string, type: string }[], status: number }, @AdminData("id") adminId: string, @AdminData("name") adminName: string) {
+        if (!adminId || adminId === "abnormal" || !adminName || adminName === "abnormal") {
+            return "abnormal";
+        }
+        return await this.adminService.auditLeaveBatch(leave, status, adminId, adminName);
     }
 
     // 单个删除操作
     @Delete("delLeave")
-    async delLeave({ id, type }: DelLeaveDto) {
-        return await this.adminService.delLeave(id, type);
+    async delLeave(@Body() { id, type }: DelLeaveDto, @AdminData("id") adminId: string, @AdminData("name") adminName: string) {
+        if (!adminId || adminId === "abnormal" || !adminName || adminName === "abnormal") {
+            return "abnormal";
+        }
+        return await this.adminService.delLeave(id, type, adminId, adminName);
     }
 
     // 批量删除操作
     @Delete("delLeaveBatch")
-    async delLeaveBatch(data: DelLeaveBatchDto[]) {
-        return await this.adminService.delLeaveBatch(data);
+    async delLeaveBatch(@Body() data: DelLeaveBatchDto[], @AdminData("id") adminId: string, @AdminData("name") adminName: string) {
+        if (!adminId || adminId === "abnormal" || !adminName || adminName === "abnormal") {
+            return "abnormal";
+        }
+        return await this.adminService.delLeaveBatch(data, adminId, adminName);
     }
 
     // 请假单编辑操作
     @Patch("updateLeave")
-    async updateLeave(@Body() updateLeaveDto: UpdateLeaveDto) {
-        return await this.adminService.updateLeave(updateLeaveDto);
+    async updateLeave(@Body() updateLeaveDto: UpdateLeaveDto, @AdminData("id") adminId: string, @AdminData("name") adminName: string) {
+        if (!adminId || adminId === "abnormal" || !adminName || adminName === "abnormal") {
+            return "abnormal";
+        }
+        return await this.adminService.updateLeave(updateLeaveDto, adminId, adminName);
     }
 
     // 离校单编辑操作
     @Patch("updateLeaveSchool")
-    async updateLeaveSchool(@Body() updateLeaveSchoolDto: UpdateLeaveSchoolDto) {
-        return await this.adminService.updateLeaveSchool(updateLeaveSchoolDto);
+    async updateLeaveSchool(@Body() updateLeaveSchoolDto: UpdateLeaveSchoolDto, @AdminData("id") adminId: string, @AdminData("name") adminName: string) {
+        if (!adminId || adminId === "abnormal" || !adminName || adminName === "abnormal") {
+            return "abnormal";
+        }
+        return await this.adminService.updateLeaveSchool(updateLeaveSchoolDto, adminId, adminName);
     }
 
     // 返校单编辑操作
     @Patch("updateReturnSchool")
-    async updateReturnSchool(@Body() updateReturnSchoolDto: UpdateReturnSchoolDto) {
-        return await this.adminService.updateReturnSchool(updateReturnSchoolDto);
+    async updateReturnSchool(@Body() updateReturnSchoolDto: UpdateReturnSchoolDto, @AdminData("id") adminId: string, @AdminData("name") adminName: string) {
+        if (!adminId || adminId === "abnormal" || !adminName || adminName === "abnormal") {
+            return "abnormal";
+        }
+        return await this.adminService.updateReturnSchool(updateReturnSchoolDto, adminId, adminName);
+    }
+
+    // 获取辅导员信息---筛选(学院id+班级id)
+    @Get("findFilterAssistant")
+    async findFilterAssistant(@Query("campusId") campusId: string, @Query("classId") classId: string) {
+        return await this.adminService.findFilterAssistant(campusId, classId);
+    }
+
+    // 获取学院数据
+    @Get("findCampus")
+    async findCampus() {
+        return await this.adminService.findCampus();
+    }
+
+    // 获取根据学院获取班级
+    @Get("findClass/campusId=:campusId")
+    async findClass(@Param("campusId") campusId: string) {
+        return await this.adminService.findClass(campusId);
     }
 }

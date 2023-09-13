@@ -281,9 +281,9 @@ export class LeaveAdminService {
     }
 
     // 单个审批操作
-    async auditLeave(id: string, type: string, statusNum: number) {
+    async auditLeave(id: string, type: string, statusNum: number, adminId: string, adminName: string) {
         const pattern = { cmd: "leave_admin_auditLeave" };
-        const data = { id: id, type: type, status: statusNum };
+        const data = { id: id, type: type, status: statusNum, adminId: adminId, adminName: adminName };
 
         let status = this.leaveService
             .send<any>(pattern, data)
@@ -296,9 +296,9 @@ export class LeaveAdminService {
     }
 
     // 批量审批操作
-    async auditLeaveBatch(leave: { id: string, type: string }[], statusNum: number) {
+    async auditLeaveBatch(leave: { id: string, type: string }[], statusNum: number, adminId: string, adminName: string) {
         const pattern = { cmd: "leave_admin_auditLeaveBatch" };
-        const data = { leave: leave, status: statusNum };
+        const data = { leave: leave, status: statusNum, adminId: adminId, adminName: adminName };
 
         let status = this.leaveService
             .send<any>(pattern, data)
@@ -311,9 +311,9 @@ export class LeaveAdminService {
     }
 
     // 单个删除操作
-    async delLeave(id: string, type: string) {
+    async delLeave(id: string, type: string, adminId: string, adminName: string) {
         const pattern = { cmd: "leave_admin_delLeave" };
-        const data = { id: id, type: type };
+        const data = { id: id, type: type, adminId: adminId, adminName: adminName };
 
         let status = this.leaveService
             .send<any>(pattern, data)
@@ -326,9 +326,9 @@ export class LeaveAdminService {
     }
 
     // 批量删除操作
-    async delLeaveBatch(leaveData: { id: string, type: string }[]) {
+    async delLeaveBatch(leaveData: { id: string, type: string }[], adminId: string, adminName: string) {
         const pattern = { cmd: "leave_admin_delLeaveBatch" };
-        const data = leaveData;
+        const data = { data: leaveData, adminId: adminId, adminName: adminName };
 
         let status = this.leaveService
             .send<any>(pattern, data)
@@ -341,9 +341,9 @@ export class LeaveAdminService {
     }
 
     // 请假单编辑操作
-    async updateLeave(updateLeaveDto: UpdateLeaveDto) {
+    async updateLeave(updateLeaveDto: UpdateLeaveDto, adminId: string, adminName: string) {
         const pattern = { cmd: "leave_admin_updateLeave" };
-        const data = updateLeaveDto;
+        const data = { updateLeaveDto: updateLeaveDto, adminId: adminId, adminName: adminName };
 
         let status = this.leaveService
             .send<any>(pattern, data)
@@ -356,9 +356,9 @@ export class LeaveAdminService {
     }
 
     // 离校单编辑操作
-    async updateLeaveSchool(updateLeaveSchoolDto: UpdateLeaveSchoolDto) {
+    async updateLeaveSchool(updateLeaveSchoolDto: UpdateLeaveSchoolDto, adminId: string, adminName: string) {
         const pattern = { cmd: "leave_admin_updateLeaveSchool" };
-        const data = updateLeaveSchoolDto;
+        const data = { updateLeaveSchoolDto: updateLeaveSchoolDto, adminId: adminId, adminName: adminName };
 
         let status = this.leaveService
             .send<any>(pattern, data)
@@ -371,9 +371,54 @@ export class LeaveAdminService {
     }
 
     // 返校单编辑操作
-    async updateReturnSchool(updateReturnSchoolDto: UpdateReturnSchoolDto) {
+    async updateReturnSchool(updateReturnSchoolDto: UpdateReturnSchoolDto, adminId: string, adminName: string) {
         const pattern = { cmd: "leave_admin_updateReturnSchool" };
-        const data = updateReturnSchoolDto;
+        const data = { updateReturnSchoolDto: updateReturnSchoolDto, adminId: adminId, adminName: adminName };
+
+        let status = this.leaveService
+            .send<any>(pattern, data)
+            .pipe(
+                map((message: any) => {
+                    return message
+                }
+                ))
+        return status;
+    }
+
+    // 获取辅导员信息---筛选(学院id+班级id)
+    async findFilterAssistant(campusId: string, classId: string) {
+        const pattern = { cmd: "leave_admin_findFilterAssistant" };
+        const data = { campusId: campusId, classId: classId };
+
+        let status = this.leaveService
+            .send<any>(pattern, data)
+            .pipe(
+                map((message: any) => {
+                    return message
+                }
+                ))
+        return status;
+    }
+
+    // 获取学院数据
+    async findCampus() {
+        const pattern = { cmd: "leave_admin_findCampus" };
+        const data = {};
+
+        let status = this.leaveService
+            .send<any>(pattern, data)
+            .pipe(
+                map((message: any) => {
+                    return message
+                }
+                ))
+        return status;
+    }
+
+    // 获取根据学院获取班级
+    async findClass(campusId: string) {
+        const pattern = { cmd: "leave_admin_findClass" };
+        const data = campusId;
 
         let status = this.leaveService
             .send<any>(pattern, data)
