@@ -102,4 +102,6 @@ export class DowLeaveExcelDto {
     })
     @IsIn([0, 1, 2, undefined])
     statusNum: number
+
+    adminNum: string
 }

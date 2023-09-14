@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Param, Query, Patch, Delete } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Query, Patch, Delete, Res } from '@nestjs/common';
 import { ApiOperation } from '@nestjs/swagger';
-import { AdminData } from 'src/common';
+import { Admin, AdminData } from 'src/common';
 import { AuditLeaveDto, CreateSchoolTypeDto, CreateStatusDto, CreateTransportationDto, DelLeaveBatchDto, DelLeaveDto, DowLeaveExcelDto, FindLeaveDto, UpdateLeaveDto, UpdateLeaveSchoolDto, UpdateReturnSchoolDto } from 'src/microservice/dto/leave/admin.dto';
 import { LeaveAdminService } from "src/microservice/service/leave";
+import { Response } from "express";
 
 @Controller('leave/admin')
 export class LeaveAdminController {
@@ -199,7 +200,11 @@ export class LeaveAdminController {
 
     // 下载excel文件
     @Post("dowLeaveExcel")
-    async dowLeaveExcel(@Body() dowLeaveExcelDto: DowLeaveExcelDto) {
-        return await this.adminService.dowLeaveExcel(dowLeaveExcelDto);
+    async dowLeaveExcel(@Res() res: Response, @Body() dowLeaveExcelDto: DowLeaveExcelDto, @AdminData("num") adminNum: string) {
+        if (!adminNum || adminNum === "abnormal") {
+            return "abnormal";
+        }
+        dowLeaveExcelDto.adminNum = adminNum;
+        return await this.adminService.dowLeaveExcel(res, dowLeaveExcelDto);
     }
 }

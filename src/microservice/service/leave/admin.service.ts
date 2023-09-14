@@ -1,7 +1,8 @@
-import { Inject, Injectable } from "@nestjs/common";
+import { Inject, Injectable, Res } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { map } from "rxjs";
 import { CreateSchoolTypeDto, CreateStatusDto, CreateTransportationDto, DowLeaveExcelDto, FindLeaveDto, UpdateLeaveDto, UpdateLeaveSchoolDto, UpdateReturnSchoolDto } from "src/microservice/dto/leave/admin.dto";
+import { Response } from "express";
 
 @Injectable()
 export class LeaveAdminService {
@@ -431,17 +432,22 @@ export class LeaveAdminService {
     }
 
     // 下载excel文件
-    async dowLeaveExcel(dowLeaveExcelDto: DowLeaveExcelDto) {
+    async dowLeaveExcel(@Res() res: Response, dowLeaveExcelDto: DowLeaveExcelDto) {
         const pattern = { cmd: "leave_admin_dowLeaveExcel" };
         const data = dowLeaveExcelDto;
 
-        let status = this.leaveService
+        this.leaveService
             .send<any>(pattern, data)
-            .pipe(
-                map((message: any) => {
-                    return message
+            .subscribe(meassage => {
+                if (meassage !== "abnormal") {
+                    res.download(meassage, (err) => {
+                        if (err) {
+                            console.log(err)
+                        }
+                    })
+                } else {
+                    res.status(400).send(meassage);
                 }
-                ))
-        return status;
+            })
     }
 }
