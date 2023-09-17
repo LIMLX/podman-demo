@@ -1,18 +1,70 @@
-import { ApiProperty } from '@nestjs/swagger';
-import { CreateMaintainerDto } from './create-maintainer.dto';
-import { IsNotEmpty, IsString } from 'class-validator';
+import { ApiProperty } from "@nestjs/swagger"
+import { IsNotEmpty, IsString } from "class-validator"
 
-export class UpdateMaintainerDto extends CreateMaintainerDto {
+export class TransferRepairsDto {
+    mtrId: string
+    mtrName: string
+
     @ApiProperty({
         required: true,
-        description: '工人id'
+        description: '单号/维修单单号'
     })
+    @IsNotEmpty()
+    @IsString()
+    repairId: string
 
-    @IsNotEmpty({
-        message: "不能为空"
+    @ApiProperty({
+        required: true,
+        description: '转单对象num工号'
     })
-    @IsString({
-        message: "应为字符串"
+    @IsNotEmpty()
+    @IsString()
+    transferMtrNum: string
+
+
+    @ApiProperty({
+        required: true,
+        description: '转单理由'
     })
-    maintainerId: string
+    @IsNotEmpty()
+    @IsString()
+    cause: string
+}
+
+export class SendBackRepairsDto {
+    userId: string
+    userName: string
+
+    @ApiProperty({
+        required: true,
+        description: '单号/维修单单号'
+    })
+    @IsNotEmpty()
+    @IsString()
+    repairId: string
+
+    @ApiProperty({
+        required: true,
+        description: '退单理由'
+    })
+    @IsNotEmpty()
+    @IsString()
+    cause: string
+}
+
+export class FulfilRepairsDto {
+    @ApiProperty({
+        required: true,
+        description: '单号/维修单单号'
+    })
+    @IsNotEmpty()
+    @IsString()
+    repairId: string
+    userId: string
+    userName: string
+
+    file: {
+        file_site: string
+        file_type: string
+    }[]
 }

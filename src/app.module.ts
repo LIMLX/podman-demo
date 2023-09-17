@@ -2,7 +2,7 @@ import { CacheModule, MiddlewareConsumer, Module, NestModule, RequestMethod } fr
 import { ConfigModule } from '@nestjs/config';
 import baseConfig from 'config/base';
 import { AuthModule } from './auth/auth.module';
-import { ClientProxyFactory, ClientsModule } from '@nestjs/microservices';
+import { ClientProxyFactory } from '@nestjs/microservices';
 import { PassportModule } from '@nestjs/passport';
 import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
@@ -26,8 +26,8 @@ import {
 } from './microservice/service/users';
 import { LeaveAdminService, LeaveDivisionService, LeaveEmployeeService, LeaveFileService, LeaveStudentService, LeaveTypeService } from './microservice';
 import { LeaveAdminController, LeaveDivisionController, LeaveEmployeeController, LeaveFileController, LeaveStudentController, LeaveTypeController } from './microservice/controller/leave';
-import { RepairsAdminController, RepairsAutoDispatchController, RepairsBuildingController, RepairsFileController, RepairsMaintainerController, RepairsManagerController, RepairsRepairsController, RepairsStatusController, RepairsTypeController } from './microservice/controller/repairs';
-import { RepairsAdminService, RepairsAutoDispatchService, RepairsBuildingService, RepairsFileService, RepairsMaintainerService, RepairsManagerService, RepairsRepairsService, RepairsStatusService, RepairsTypeService } from './microservice/service/repairs';
+import { RepairsAdminController, RepairsAutoDispatchController, RepairsFileController, RepairsMaintainerController, RepairsManagerController, RepairsUserController } from './microservice/controller/repairs';
+import { RepairsAdminService, RepairsAutoDispatchService, RepairsFileService, RepairsMaintainerService, RepairsManagerService, RepairsUserService } from './microservice/service/repairs';
 import { MsEpiHealth, MsHistoryHealth, MsLeaveHealth, MsRepairsHealth, MsSmsHealth, MsUserHealth, httpBlacklist } from './common';
 import { EpiEmployeeController, EpiClockTypeController, EpiClockController } from './microservice/controller/epi';
 import { EpiClockService, EpiClockTypeService, EpiEmployeeService } from './microservice/service/epi';
@@ -87,13 +87,11 @@ import { HistoryAdminService, HistoryDivisionService, HistoryFileService, Histor
     // repair报修
     RepairsFileController,
     RepairsAutoDispatchController,
-    RepairsTypeController,
-    RepairsStatusController,
     RepairsManagerController,
-    RepairsRepairsController,
-    RepairsBuildingController,
     RepairsMaintainerController,
     RepairsAdminController,
+    RepairsUserController,
+
 
     // Epi报备
     EpiClockController,
@@ -140,13 +138,10 @@ import { HistoryAdminService, HistoryDivisionService, HistoryFileService, Histor
     // repair报修
     RepairsFileService,
     RepairsAutoDispatchService,
-    RepairsTypeService,
-    RepairsStatusService,
     RepairsManagerService,
-    RepairsRepairsService,
-    RepairsBuildingService,
     RepairsMaintainerService,
     RepairsAdminService,
+    RepairsUserService,
     MtrRepairsSocket,
 
     // epi报备

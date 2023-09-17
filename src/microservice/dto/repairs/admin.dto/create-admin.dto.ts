@@ -1,45 +1,79 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { IsNotEmpty, IsString } from "class-validator"
+import { IsIn, IsInt, IsNotEmpty, IsString } from "class-validator"
 
-export class CreateAdminDto {
+export class CreateBuildingDto {
     @ApiProperty({
         required: true,
-        description: '创建的管理员名称'
+        description: '楼栋名称'
     })
 
-    @IsNotEmpty({
-        message: "名称为空"
+    @IsNotEmpty()
+    @IsString()
+    buildingName: string
+
+    @ApiProperty({
+        required: true,
+        description: '楼栋等级---0为其它，1为学生宿舍，2为教职工宿舍，3位教学设施，4为文娱设施'
     })
-    @IsString({
-        message: "名称不符合格式"
+
+    @IsNotEmpty()
+    @IsInt()
+    buildingLevel: number
+
+    @ApiProperty({
+        required: true,
+        description: '是否启用 (0为未启用,1为启用)'
     })
+
+    @IsNotEmpty()
+    @IsIn([0, 1])
+    @IsInt()
+    buildingStatus: number
+
+
+    adminId: string
     adminName: string
+}
 
+export class CreateManagerDto {
+    @ApiProperty({
+        required: true,
+        description: '楼栋管理员工号'
+    })
+
+    @IsNotEmpty()
+    @IsString()
+    managerNum: string
 
     @ApiProperty({
         required: true,
-        description: '管理员账号'
+        description: '楼栋管理员名称'
     })
 
-    @IsNotEmpty({
-        message: "账号为空"
-    })
-    @IsString({
-        message: "账号格式错误"
-    })
-    adminNum: string
-
+    @IsNotEmpty()
+    @IsString()
+    managerName: string
 
     @ApiProperty({
         required: true,
-        description: '管理员密码'
+        description: '楼栋管理员电话'
     })
 
-    @IsNotEmpty({
-        message: "密码为空"
+    @IsNotEmpty()
+    @IsString()
+    managerPhone: string
+
+    @ApiProperty({
+        required: true,
+        description: '楼栋管理员是否启用(1在职,0撤职)'
     })
-    @IsString({
-        message: "密码格式错误"
-    })
-    adminPsw: string
+
+    @IsNotEmpty()
+    @IsIn([0, 1])
+    @IsInt()
+    managerStatus: number
+    buildAuth: string[]
+
+    adminId: string
+    adminName: string
 }

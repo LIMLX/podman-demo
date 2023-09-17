@@ -8,23 +8,23 @@ export class RepairsFileService {
     constructor(@Inject("REPAIRS_SERVICE") private readonly repairsService: ClientProxy) { }
     // 单文件上传
     async uploadFile(file: Express.Multer.File) {
-        const pattern = { cmd: "repairs_upload_file" };
-        const data = file
-        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }))
-        return status
+        const pattern = { cmd: "repairs_file_uploadFile" };
+        const data = file;
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
     }
 
     // 文件删除
-    async removeFile(fileName: string) {
-        const pattern = { cmd: "repairs_delete_file" };
-        const data = fileName
-        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }))
-        return status
+    async removeFile(fileName: string, type: boolean) {
+        const pattern = { cmd: "repairs_file_removeFile" };
+        const data = { fileName: fileName, type: type };
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
     }
 
     // 文件查看
     async getFiles(res: Response, fileName: string, type: string) {
-        const pattern = { cmd: "repairs_find_file" };
+        const pattern = { cmd: "repairs_file_getFiles" };
         const data = { fileName: fileName, type: type }
         let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => {
             if (message !== "Unknown resource") {
@@ -34,9 +34,9 @@ export class RepairsFileService {
                     }
                 })
             } else {
-                res.status(400).send(message)
+                res.status(400).send(message);
             }
         }))
-        return status
+        return status;
     }
 }
