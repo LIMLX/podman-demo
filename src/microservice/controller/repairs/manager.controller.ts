@@ -10,6 +10,7 @@ export class RepairsManagerController {
     constructor(private readonly managerService: RepairsManagerService) { }
 
     // 验证是否为楼栋管理员
+    @Get("managerLogin")
     async managerLogin(@User("num") managerNum: string) {
         if (!managerNum || managerNum === "abnormal") {
             return "abnormal";
@@ -18,17 +19,28 @@ export class RepairsManagerController {
     }
 
     // 查询维修单数据
-    async findRepairs(findRepairsDto: FindRepairsDto) {
+    @Get("findRepairs/page=:page")
+    async findRepairs(@Param("page") page: string, @Query() findRepairsDto: FindRepairsDto, @User("id") managerId: string) {
+        if (!/^[0-9]*$/.test(page)) {
+            return "abnormal";
+        }
+        if (!managerId || managerId === "abnormal") {
+            return "abnormal";
+        }
+        findRepairsDto.page = Number(page);
+        findRepairsDto.managerId = managerId;
         return await this.managerService.findRepairs(findRepairsDto);
     }
 
     // 查询详细维修单
-    async findRepairsOne(repairsId: string) {
+    @Get("findRepairsOne/id=:repairsId")
+    async findRepairsOne(@Param("repairsId") repairsId: string) {
         return await this.managerService.findRepairsOne(repairsId);
     }
 
     // 查询报修单--状态日志
-    async findRepairsStatusLog(repairId: string) {
+    @Get("findRepairsStatusLog/id=:repairId")
+    async findRepairsStatusLog(@Param("repairsId") repairId: string) {
         return await this.managerService.findRepairsStatusLog(repairId);
     }
 }

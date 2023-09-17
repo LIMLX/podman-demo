@@ -45,8 +45,8 @@ export class RepairsUserController {
   }
 
   // 撤回报修单
-  @Delete("revocationRepairs")
-  async revocationRepairs(repairId: string, @User("id") userId: string, @User("name") userName: string) {
+  @Delete("revocationRepairs/id=:repairId")
+  async revocationRepairs(@Param("repairId") repairId: string, @User("id") userId: string, @User("name") userName: string) {
     if (!userId || userId === "abnormal" || !userName || userName === "abnormal") {
       return "abnormal";
     }
@@ -55,7 +55,7 @@ export class RepairsUserController {
 
   // 编辑报修单
   @Patch("updateRepairs")
-  async updateRepairs(updateRepairsDto: UpdateRepairsDto) {
+  async updateRepairs(@Body() updateRepairsDto: UpdateRepairsDto) {
     return await this.userService.updateRepairs(updateRepairsDto);
   }
 }

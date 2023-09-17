@@ -41,6 +41,12 @@ export class RepairsAdminController {
         return await this.adminService.createBuilding(createBuildingDto);
     }
 
+    // 获取楼栋的基础数据
+    @Get("findBuildingSum")
+    async findBuildingSum() {
+        return await this.adminService.findBuildingSum();
+    }
+
     // 查询所有楼栋数据
     @Get("findBuildingAll/page=:page")
     async findBuildingAll(@Param("page") page: string, @Query() findBuildingDto: FindBuildingDto) {
@@ -101,8 +107,15 @@ export class RepairsAdminController {
     }
 
     // 查询楼栋管理员
-    @Post("findManagerSum")
-    async findManager(@Body() findManagerDto: FindManagerDto) {
+    @Get("findManager/page=:page")
+    async findManager(@Param("page") page: string, @Query() findManagerDto: FindManagerDto) {
+        if (!/^[0-9]*$/.test(page)) {
+            return "abnormal";
+        }
+        findManagerDto.page = Number(page);
+        if (findManagerDto.status) {
+            findManagerDto.status = Number(findManagerDto.status);
+        }
         return await this.adminService.findManager(findManagerDto);
     }
 
@@ -199,7 +212,12 @@ export class RepairsAdminController {
 
     // 报修派单
     @Patch("dispatch")
-    async dispatch(@Body() dispatchDto: DispatchDto) {
+    async dispatch(@Body() dispatchDto: DispatchDto, @AdminData("id") adminId: string, @AdminData("name") adminName: string) {
+        if (!adminId || adminId === "abnormal" || !adminName || adminName === "abnormal") {
+            return "abnormal";
+        }
+        dispatchDto.adminId = adminId;
+        dispatchDto.adminName = adminName;
         return await this.adminService.dispatch(dispatchDto);
     }
 

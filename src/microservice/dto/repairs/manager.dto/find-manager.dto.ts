@@ -1,16 +1,15 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { IsInt, IsNotEmpty } from "class-validator"
+import { IsIn } from "class-validator"
 
 export class FindRepairsDto {
     managerId: string
     typeNum: string
-    status: number
 
     @ApiProperty({
         required: true,
-        description: '页数'
+        description: '状态'
     })
-    @IsNotEmpty()
-    @IsInt()
+    @IsIn([-1, 1, 2, 3, "-1", "1", "2", "3", undefined])
+    status: number
     page: number
 }

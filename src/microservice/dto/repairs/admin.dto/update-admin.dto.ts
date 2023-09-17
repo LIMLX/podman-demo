@@ -36,7 +36,7 @@ export class DispatchDto {
 
     @ApiProperty({
         required: true,
-        description: '转单对象id'
+        description: '派单对象id'
     })
 
     @IsNotEmpty()
@@ -47,7 +47,6 @@ export class DispatchDto {
         required: true,
         description: '预计时间'
     })
-
     @IsNotEmpty()
     etTime: Date
     adminId: string

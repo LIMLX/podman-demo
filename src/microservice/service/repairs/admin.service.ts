@@ -42,6 +42,14 @@ export class RepairsAdminService {
         return status;
     }
 
+    // 获取楼栋的基础数据
+    async findBuildingSum() {
+        const pattern = { cmd: "repairs_admin_findBuildingSum" };
+        const data = {};
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
+    }
+
     // 查询所有楼栋数据
     async findBuildingAll(findBuildingDto: FindBuildingDto) {
         const pattern = { cmd: "repairs_admin_findBuildingAll" };

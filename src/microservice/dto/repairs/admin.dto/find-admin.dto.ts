@@ -44,17 +44,10 @@ export class FindBuildingDto {
 export class FindManagerDto {
     @ApiProperty({
         required: true,
-        description: '页数'
-    })
-    @IsNotEmpty()
-    @IsInt()
-    page: number
-
-    @ApiProperty({
-        required: true,
         description: '状态'
     })
-    @IsIn([0, 1, undefined])
+    @IsIn([0, 1, "0", "1", undefined])
     status: number
+    page: number
     like: string
 }

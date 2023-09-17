@@ -19,8 +19,18 @@ export class RepairsMaintainerController {
 
     // 查询自己负责的维修单
     @Get("findRepairs/page=:page")
-    async findRepairs(@Param("page") page: number, @Query() findRepairsDto: FindRepairsDto) {
+    async findRepairs(@Param("page") page: string, @Query() findRepairsDto: FindRepairsDto, @User("id") mtrId: string) {
+        if (!mtrId || mtrId === "abnormal") {
+            return "abnormal";
+        }
+        if (!/^[0-9]*$/.test(page)) {
+            return "abnormal";
+        }
         findRepairsDto.page = Number(page);
+        if (findRepairsDto.time) {
+            findRepairsDto.time = Number(findRepairsDto.time);
+        }
+        findRepairsDto.mtrId = mtrId;
         return await this.maintainerService.findRepairs(findRepairsDto);
     }
 

@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { IsNotEmpty, IsNumber, IsString } from "class-validator"
+import { IsIn, IsNotEmpty, IsNumber, IsString } from "class-validator"
 
 export class MaintainerLoginDto {
     @ApiProperty({
@@ -22,7 +22,18 @@ export class MaintainerLoginDto {
 export class FindRepairsDto {
     mtrId: string
     typeNum: string
+
+    @ApiProperty({
+        required: true,
+        description: 'time天前的数据'
+    })
     time: number
+
+    @ApiProperty({
+        required: true,
+        description: '状态'
+    })
+    @IsIn([-1, 1, 2, 3, "-1", "1", "2", "3", undefined])
     status: number
     page: number
 }

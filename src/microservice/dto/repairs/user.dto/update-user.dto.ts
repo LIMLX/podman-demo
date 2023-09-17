@@ -6,7 +6,7 @@ import { IsNotEmpty, IsString } from "class-validator";
 export class UpdateRepairsDto extends CreateRepairsDto {
     @ApiProperty({
         required: true,
-        description: '电话号码'
+        description: '维修单id'
     })
     @IsNotEmpty()
     @IsString()
