@@ -9,8 +9,11 @@ export class RepairsUserController {
   constructor(private readonly userService: RepairsUserService) { }
   // 用户查询个人的维修单
   @Get("findRepairs")
-  async findRepairs(@User("id") userId: string, @Query("status") status: number) {
+  async findRepairs(@User("id") userId: string, @Query("status") status: any) {
     if (!userId || userId === "abnormal") {
+      return "abnormal";
+    }
+    if (status === "" || status && !/^[-10-9]*$/.test(status)) {
       return "abnormal";
     }
     return await this.userService.findRepairs(userId, status);
@@ -50,7 +53,7 @@ export class RepairsUserController {
     if (!userId || userId === "abnormal" || !userName || userName === "abnormal") {
       return "abnormal";
     }
-    await this.userService.revocationRepairs(repairId, userId, userName);
+    return await this.userService.revocationRepairs(repairId, userName, userId);
   }
 
   // 编辑报修单

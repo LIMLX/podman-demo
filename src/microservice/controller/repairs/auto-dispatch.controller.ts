@@ -11,13 +11,13 @@ export class RepairsAutoDispatchController {
     @ApiOperation({ summary: "自动派单开关", description: "自动派单开关" })
     @Post("settingAuto")
     async settingAuto() {
-        return await this.autoDispatchService.settingAuto()
+        return await this.autoDispatchService.settingAuto();
     }
 
     // 获取当前开关状态
     @ApiOperation({ summary: "自动派单状态", description: "当前开关状态" })
     @Get('findSetting')
     async findSetting() {
-        return await this.autoDispatchService.findSetting()
+        return await this.autoDispatchService.findSetting();
     }
 }

@@ -31,7 +31,7 @@ export class RepairsFileController {
     // 文件删除
     @ApiOperation({ summary: "单文件删除的接口", description: "单个文件删除" })
     @Delete('/delFile/fileName=:fileName')
-    async removeFile(@Param('fileName') fileName: string, @Query("type") type: boolean) {
+    async removeFile(@Param('fileName') fileName: string, @Query("type") type: string) {
         if (!fileName) {
             return "abnormal"
         }
@@ -42,8 +42,8 @@ export class RepairsFileController {
     }
 
     // 查看图片文件
-    @Get('getFile/fileName=:fileName/type=:type')
-    async getFiles(@Res() res: Response, @Param('fileName') fileName: string, @Param('type') type: string) {
+    @Get('getFile/fileName=:fileName')
+    async getFiles(@Res() res: Response, @Param('fileName') fileName: string, @Query('type') type: string) {
         if (!fileName) {
             return "abnormal";
         }

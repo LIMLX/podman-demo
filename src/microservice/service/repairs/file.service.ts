@@ -15,7 +15,7 @@ export class RepairsFileService {
     }
 
     // 文件删除
-    async removeFile(fileName: string, type: boolean) {
+    async removeFile(fileName: string, type: string) {
         const pattern = { cmd: "repairs_file_removeFile" };
         const data = { fileName: fileName, type: type };
         let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
