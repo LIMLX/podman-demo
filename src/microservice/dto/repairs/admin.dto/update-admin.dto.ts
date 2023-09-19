@@ -1,5 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { CreateBuildingDto, CreateManagerDto } from './create-admin.dto';
+import { CreateBuildingDto, CreateManagerDto, CreateMtrDto, CreateTypeDto } from './create-admin.dto';
 import { IsNotEmpty, IsString } from 'class-validator';
 
 export class UpdateBuildingDto extends CreateBuildingDto {
@@ -51,4 +51,24 @@ export class DispatchDto {
     etTime: Date
     adminId: string
     adminName: string
+}
+
+export class UpdateMtrDto extends CreateMtrDto {
+    @ApiProperty({
+        required: true,
+        description: '维修工id'
+    })
+    @IsNotEmpty()
+    @IsString()
+    mtrId: string
+}
+
+export class UpdateTypeDto extends CreateTypeDto {
+    @ApiProperty({
+        required: true,
+        description: '类型id'
+    })
+    @IsNotEmpty()
+    @IsString()
+    typeId: string
 }

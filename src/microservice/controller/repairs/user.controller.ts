@@ -34,6 +34,18 @@ export class RepairsUserController {
     return await this.userService.findRepairsStatusLog(repairId);
   }
 
+  // 获取报修类别
+  @Get("findType")
+  async findType() {
+    return await this.userService.findType();
+  }
+
+  // 获取宿舍楼栋
+  @Get("findBuilding")
+  async findBuilding() {
+    return await this.userService.findBuilding();
+  }
+
   // 创建报修单
   @Post("createRepairs")
   async createRepairs(@Body() createRepairsDto: CreateRepairsDto, @User("id") userId: string, @User("num") userNum: string, @User("name") userName: string, @User("type") userType: string) {

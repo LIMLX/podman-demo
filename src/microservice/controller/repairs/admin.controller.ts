@@ -2,13 +2,23 @@ import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } f
 import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { AdminData } from 'src/common';
-import { CreateBuildingDto, CreateManagerDto, DispatchDto, FindBuildingDto, FindManagerDto, FindRepairsDto, UpdateBuildingDto, UpdateManagerDto } from 'src/microservice/dto/repairs/admin.dto';
+import { CreateBuildingDto, CreateManagerDto, CreateMtrDto, CreateTypeDto, DispatchDto, FindBuildingDto, FindManagerDto, FindMtrDto, FindRepairsDto, FindTypeDto, UpdateBuildingDto, UpdateManagerDto, UpdateMtrDto, UpdateTypeDto } from 'src/microservice/dto/repairs/admin.dto';
 import { RepairsAdminService } from 'src/microservice/service/repairs';
 
 @ApiTags("admin")
 @Controller('repairs/admin')
 export class RepairsAdminController {
     constructor(private readonly adminService: RepairsAdminService) { }
+
+    // 验证是否有超级管理员权限
+    @Post("superAdminLogin")
+    async superAdminLogin(@AdminData("id") adminId: string) {
+        if (!adminId || adminId === "abnormal") {
+            return "abnormal";
+        }
+        return await this.adminService.superAdminLogin(adminId);
+    }
+
     // --------------------------------------日志查看--------------------------------------------------
     // 维修动态查看
     @Get("findRepairsMtrLog")
@@ -161,7 +171,109 @@ export class RepairsAdminController {
         return await this.adminService.delManagerArr(managerIdArr, adminId, adminName);
     }
 
-    // -------------------------------------类型操作--------------------------------------------
+    // -----------------------------------维修工管理操作-----------------------------------------
+    // 获取所有维修工数据
+    @Get("findMtr/page=:page")
+    async findMtr(@Param("page") page: string, @Query() findMtrDto: FindMtrDto) {
+        if (!/^[0-9]*$/.test(page)) {
+            return "abnormal";
+        }
+        findMtrDto.page = Number(page);
+        return await this.adminService.findMtr(findMtrDto);
+    }
+
+    // 获取维修工详细数据
+    @Get("findMtrOne/id=:mtrId")
+    async findMtrOne(@Param("mtrId") mtrId: string) {
+        return await this.adminService.findMtrOne(mtrId);
+    }
+
+    // 创建维修工
+    @Post("createMtr")
+    async createMtr(@Body() createMtrDto: CreateMtrDto, @AdminData("id") adminId: string, @AdminData("name") adminName: string) {
+        if (!adminId || adminId === "abnormal" || !adminName || adminName === "abnormal") {
+            return "abnormal";
+        }
+        createMtrDto.adminId = adminId;
+        createMtrDto.adminName = adminName;
+        return await this.adminService.createMtr(createMtrDto);
+    }
+
+    // 修改(编辑)维修工
+    @Patch("updateMtr")
+    async updateMtr(@Body() updateMtrDto: UpdateMtrDto, @AdminData("id") adminId: string, @AdminData("name") adminName: string) {
+        if (!adminId || adminId === "abnormal" || !adminName || adminName === "abnormal") {
+            return "abnormal";
+        }
+        updateMtrDto.adminId = adminId;
+        updateMtrDto.adminName = adminName;
+        return await this.adminService.updateMtr(updateMtrDto);
+    }
+
+    // 删除维修工/撤职(单个)
+    @Delete("delMtr/id=:mtrId")
+    async delMtr(@Param("mtrId") mtrId: string, @AdminData("id") adminId: string, @AdminData("name") adminName: string) {
+        if (!adminId || adminId === "abnormal" || !adminName || adminName === "abnormal") {
+            return "abnormal";
+        }
+        return await this.adminService.delMtr(mtrId, adminId, adminName);
+    }
+
+    // 删除维修工/撤职(多个)
+    @Delete("delMtrArr")
+    async delMtrArr(@Body("mtrId") mtrId: string[], @AdminData("id") adminId: string, @AdminData("name") adminName: string) {
+        if (!adminId || adminId === "abnormal" || !adminName || adminName === "abnormal") {
+            return "abnormal";
+        }
+        return await this.adminService.delMtrArr(mtrId, adminId, adminName);
+    }
+
+    // ------------------------------------类型管理操作------------------------------------------
+    // 获取类型工种
+    @Get("findType/page=:page")
+    async findType(@Param("page") page: string, @Query() findTypeDto: FindTypeDto) {
+        if (!/^[0-9]*$/.test(page)) {
+            return "abnormal";
+        }
+        findTypeDto.page = Number(page);
+        return await this.adminService.findType(findTypeDto);
+    }
+
+    // 创建类型工种
+    @Post("createType")
+    async createType(@Body() createTypeDto: CreateTypeDto, @AdminData("id") adminId: string, @AdminData("name") adminName: string) {
+        if (!adminId || adminId === "abnormal" || !adminName || adminName === "abnormal") {
+            return "abnormal";
+        }
+        return await this.adminService.createType(createTypeDto);
+    }
+
+    // 修改/编辑类型工种
+    @Patch("updateType")
+    async updateType(@Body() updateTypeDto: UpdateTypeDto, @AdminData("id") adminId: string, @AdminData("name") adminName: string) {
+        if (!adminId || adminId === "abnormal" || !adminName || adminName === "abnormal") {
+            return "abnormal";
+        }
+        return await this.adminService.updateType(updateTypeDto);
+    }
+
+    // 删除类型工种(单个)
+    @Delete("delType/id=:typeId")
+    async delType(@Param("typeId") typeId: string, @AdminData("id") adminId: string, @AdminData("name") adminName: string) {
+        if (!adminId || adminId === "abnormal" || !adminName || adminName === "abnormal") {
+            return "abnormal";
+        }
+        return await this.adminService.delType(typeId, adminId, adminName);
+    }
+
+    // 删除类型工种(多个)
+    @Delete("delTypeArr")
+    async delTypeArr(@Body("typeId") typeId: string[], @AdminData("id") adminId: string, @AdminData("name") adminName: string) {
+        if (!adminId || adminId === "abnormal" || !adminName || adminName === "abnormal") {
+            return "abnormal";
+        }
+        return await this.adminService.delTypeArr(typeId, adminId, adminName);
+    }
 
     // ------------------------------------报修管理操作------------------------------------------
     // 获取基础数据
@@ -239,27 +351,27 @@ export class RepairsAdminController {
         return await this.adminService.sendBack(repairId, adminId, adminName);
     }
 
-    // 查询所有地点/楼栋
-    @Get("findBuilding")
-    async findBuilding() {
-        return await this.adminService.findBuilding();
+    // 查询所有地点/楼栋---编辑功能
+    @Get("findRepairsBuilding")
+    async findRepairsBuilding() {
+        return await this.adminService.findRepairsBuilding();
     }
 
-    // 查询所有类型
-    @Get("findType")
-    async findType() {
-        return await this.adminService.findType();
+    // 查询所有类型---编辑功能
+    @Get("findRepairsType")
+    async findRepairsType() {
+        return await this.adminService.findRepairsType();
     }
 
-    // 查询所有维修工
-    @Get("findMtr")
-    async findMtr() {
-        return await this.adminService.findMtr();
+    // 查询所有维修工---派单(编辑)功能
+    @Get("findRepairsMtr")
+    async findRepairsMtr() {
+        return await this.adminService.findRepairsMtr();
     }
 
-    // 查询详细维修工
-    @Get("findMtrOne/id=:mtrId")
-    async findMtrOne(@Param("mtrId") mtrId: string) {
-        return await this.adminService.findMtrOne(mtrId);
+    // 查询详细维修工---派单功能
+    @Get("findRepairsMtrOne/id=:mtrId")
+    async findRepairsMtrOne(@Param("mtrId") mtrId: string) {
+        return await this.adminService.findRepairsMtrOne(mtrId);
     }
 }

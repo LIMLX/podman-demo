@@ -30,6 +30,22 @@ export class RepairsUserService {
         return status;
     }
 
+    // 获取报修类别
+    async findType() {
+        const pattern = { cmd: "repairs_user_findType" };
+        const data = {};
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
+    }
+
+    // 获取宿舍楼栋
+    async findBuilding() {
+        const pattern = { cmd: "repairs_user_findBuilding" };
+        const data = {};
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
+    }
+
     // 创建报修单
     async createRepairs(createRepairsDto: CreateRepairsDto) {
         const pattern = { cmd: "repairs_user_createRepairs" };

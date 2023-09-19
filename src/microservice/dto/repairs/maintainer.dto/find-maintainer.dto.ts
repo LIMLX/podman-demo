@@ -34,6 +34,6 @@ export class FindRepairsDto {
         description: '状态'
     })
     @IsIn([-1, 1, 2, 3, "-1", "1", "2", "3", undefined])
-    status: number
+    status: any
     page: number
 }

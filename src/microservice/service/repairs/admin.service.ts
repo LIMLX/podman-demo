@@ -2,12 +2,20 @@ import { Inject } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { ClientProxy } from "@nestjs/microservices";
 import { lastValueFrom, map } from "rxjs";
-import { CreateBuildingDto, CreateManagerDto, DispatchDto, FindBuildingDto, FindManagerDto, FindRepairsDto, UpdateBuildingDto, UpdateManagerDto } from "src/microservice/dto/repairs/admin.dto";
+import { CreateBuildingDto, CreateManagerDto, CreateMtrDto, CreateTypeDto, DispatchDto, FindBuildingDto, FindManagerDto, FindMtrDto, FindRepairsDto, FindTypeDto, UpdateBuildingDto, UpdateManagerDto, UpdateMtrDto, UpdateTypeDto } from "src/microservice/dto/repairs/admin.dto";
 
 export class RepairsAdminService {
     constructor(
         @Inject("REPAIRS_SERVICE") private readonly repairsService: ClientProxy,
     ) { }
+    // 验证是否有超级管理员权限
+    async superAdminLogin(adminId: string) {
+        const pattern = { cmd: "repairs_admin_superAdminLogin" };
+        const data = adminId;
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
+    }
+
     // --------------------------------------日志查看--------------------------------------------------
     // 维修动态查看
     async findRepairsMtrLog() {
@@ -139,7 +147,95 @@ export class RepairsAdminService {
         return status;
     }
 
-    // -------------------------------------类型操作--------------------------------------------
+    // -----------------------------------维修工管理操作-----------------------------------------
+    // 获取所有维修工数据
+    async findMtr(findMtrDto: FindMtrDto) {
+        const pattern = { cmd: "repairs_admin_findMtr" };
+        const data = findMtrDto;
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
+    }
+
+    // 获取维修工详细数据
+    async findMtrOne(mtrId: string) {
+        const pattern = { cmd: "repairs_admin_findMtrOne" };
+        const data = mtrId;
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
+    }
+
+    // 创建维修工
+    async createMtr(createMtrDto: CreateMtrDto) {
+        const pattern = { cmd: "repairs_admin_createMtr" };
+        const data = createMtrDto;
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
+    }
+
+    // 修改(编辑)维修工
+    async updateMtr(updateMtrDto: UpdateMtrDto) {
+        const pattern = { cmd: "repairs_admin_updateMtr" };
+        const data = updateMtrDto;
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
+    }
+
+    // 删除维修工/撤职(单个)
+    async delMtr(mtrId: string, adminId: string, adminName: string) {
+        const pattern = { cmd: "repairs_admin_delMtr" };
+        const data = { mtrId: mtrId, adminId: adminId, adminName: adminName };
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
+    }
+
+    // 删除维修工/撤职(多个)
+    async delMtrArr(mtrId: string[], adminId: string, adminName: string) {
+        const pattern = { cmd: "repairs_admin_delMtrArr" };
+        const data = { mtrId: mtrId, adminId: adminId, adminName: adminName };
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
+    }
+
+    // ------------------------------------类型管理操作------------------------------------------
+    // 获取类型工种
+    async findType(findTypeDto: FindTypeDto) {
+        const pattern = { cmd: "repairs_admin_findType" };
+        const data = findTypeDto;
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
+    }
+
+    // 创建类型工种
+    async createType(createTypeDto: CreateTypeDto) {
+        const pattern = { cmd: "repairs_admin_createType" };
+        const data = createTypeDto;
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
+    }
+
+    // 修改/编辑类型工种
+    async updateType(updateTypeDto: UpdateTypeDto) {
+        const pattern = { cmd: "repairs_admin_updateType" };
+        const data = updateTypeDto;
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
+    }
+
+    // 删除类型工种(单个)
+    async delType(typeId: string, adminId: string, adminName: string) {
+        const pattern = { cmd: "repairs_admin_delType" };
+        const data = { typeId: typeId, adminId: adminId, adminName: adminName };
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
+    }
+
+    // 删除类型工种(多个)
+    async delTypeArr(typeId: string[], adminId: string, adminName: string) {
+        const pattern = { cmd: "repairs_admin_delTypeArr" };
+        const data = { typeId: typeId, adminId: adminId, adminName: adminName };
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
+    }
 
     // ------------------------------------报修管理操作------------------------------------------
     // 获取基础数据
@@ -214,33 +310,33 @@ export class RepairsAdminService {
         return status;
     }
 
-    // 查询所有地点/楼栋
-    async findBuilding() {
-        const pattern = { cmd: "repairs_admin_findBuilding" };
+    // 查询所有地点/楼栋---编辑功能
+    async findRepairsBuilding() {
+        const pattern = { cmd: "repairs_admin_findRepairsBuilding" };
         const data = {};
         let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
         return status;
     }
 
-    // 查询所有类型
-    async findType() {
-        const pattern = { cmd: "repairs_admin_findType" };
+    // 查询所有类型---编辑功能
+    async findRepairsType() {
+        const pattern = { cmd: "repairs_admin_findRepairsType" };
         const data = {};
         let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
         return status;
     }
 
-    // 查询所有维修工
-    async findMtr() {
-        const pattern = { cmd: "repairs_admin_findMtr" };
+    // 查询所有维修工---派单(编辑)功能
+    async findRepairsMtr() {
+        const pattern = { cmd: "repairs_admin_findRepairsMtr" };
         const data = {};
         let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
         return status;
     }
 
-    // 查询详细维修工
-    async findMtrOne(mtrId: string) {
-        const pattern = { cmd: "repairs_admin_findMtrOne" };
+    // 查询详细维修工---派单功能
+    async findRepairsMtrOne(mtrId: string) {
+        const pattern = { cmd: "repairs_admin_findRepairsMtrOne" };
         const data = mtrId;
         let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
         return status;

@@ -31,6 +31,9 @@ export class RepairsMaintainerController {
             findRepairsDto.time = Number(findRepairsDto.time);
         }
         findRepairsDto.mtrId = mtrId;
+        if (findRepairsDto.status === 0 || findRepairsDto.status === "0" || findRepairsDto.status) {
+            findRepairsDto.status = Number(findRepairsDto.status);
+        }
         return await this.maintainerService.findRepairs(findRepairsDto);
     }
 

@@ -20,15 +20,18 @@ export class RepairsManagerController {
 
     // 查询维修单数据
     @Get("findRepairs/page=:page")
-    async findRepairs(@Param("page") page: string, @Query() findRepairsDto: FindRepairsDto, @User("id") managerId: string) {
+    async findRepairs(@Param("page") page: string, @Query() findRepairsDto: FindRepairsDto, @User("num") managerNum: string) {
         if (!/^[0-9]*$/.test(page)) {
             return "abnormal";
         }
-        if (!managerId || managerId === "abnormal") {
+        findRepairsDto.page = Number(page);
+        if (!managerNum || managerNum === "abnormal") {
             return "abnormal";
         }
-        findRepairsDto.page = Number(page);
-        findRepairsDto.managerId = managerId;
+        findRepairsDto.managerNum = managerNum;
+        if (findRepairsDto.status === 0 || findRepairsDto.status === "0" || findRepairsDto.status) {
+            findRepairsDto.status = Number(findRepairsDto.status);
+        }
         return await this.managerService.findRepairs(findRepairsDto);
     }
 

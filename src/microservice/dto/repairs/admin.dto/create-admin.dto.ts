@@ -77,3 +77,24 @@ export class CreateManagerDto {
     adminId: string
     adminName: string
 }
+
+export class CreateMtrDto {
+    adminId: string
+    adminName: string
+    mtrNum: string
+    mtrName: string
+    mtrPhone: string
+    mtrPsw: string
+    mtrStatus: number
+
+    buildAuth: string[]
+    typeAuth: string[]
+}
+
+export class CreateTypeDto {
+    adminId: string
+    adminName: string
+    typeName: string
+    typeLevel: number
+    typeStatus: number
+}

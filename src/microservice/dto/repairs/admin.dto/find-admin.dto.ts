@@ -51,3 +51,24 @@ export class FindManagerDto {
     page: number
     like: string
 }
+
+export class FindMtrDto {
+    @ApiProperty({
+        required: true,
+        description: '状态'
+    })
+    @IsIn([0, 1, "0", "1", undefined])
+    status: number
+    like: string
+    page: number
+}
+
+export class FindTypeDto {
+    @ApiProperty({
+        required: true,
+        description: '状态'
+    })
+    @IsIn([0, 1, "0", "1", undefined])
+    status: number
+    page: number
+}
