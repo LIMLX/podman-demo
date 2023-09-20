@@ -10,6 +10,12 @@ export class UpdateStudentDto extends CreateStudentDto {
     @IsNotEmpty()
     @IsString()
     studentId: string
+
+    @ApiProperty({
+        required: true,
+        description: '授权管理员权限id'
+    })
+    adminRole: string[]
 }
 
 export class UpdateStudentPswDto {

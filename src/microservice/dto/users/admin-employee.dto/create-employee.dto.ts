@@ -36,6 +36,11 @@ export class CreateEmployeeDto {
     @IsString()
     departmentId: string
 
+    @ApiProperty({
+        required: false,
+        description: '角色id'
+    })
+    role: string[]
     phone: string
     identification: string
 }

@@ -35,6 +35,30 @@ export class UserAdminEmployeeController {
         return await this.adminEmployeeService.findEmployeeSum(departmentId, search);
     }
 
+    // 查询部门
+    @ApiOperation({ summary: "查询部门", description: "查询部门" })
+    @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
+    @Get("findDepartment")
+    async findDepartment() {
+        return await this.adminEmployeeService.findDepartment();
+    }
+
+    // 职工角色查询
+    @ApiOperation({ summary: "职工角色查询", description: "职工角色查询" })
+    @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
+    @Get("findEmployeeRole")
+    async findEmployeeRole(@Body() { role, like }: { role: string[], like: string }) {
+        return await this.adminEmployeeService.findEmployeeRole(role, like);
+    }
+
+    // 管理员(模块)查询
+    @ApiOperation({ summary: "管理员(模块)查询", description: "管理员(模块)查询" })
+    @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
+    @Get("findAdminRole")
+    async findAdminRole(@Body() { role, like }: { role: string[], like: string }) {
+        return await this.adminEmployeeService.findAdminRole(role, like);
+    }
+
     // 创建职工
     @ApiOperation({ summary: "创建职工", description: "创建新职工数据" })
     @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])

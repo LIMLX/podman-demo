@@ -2,7 +2,7 @@ import { Inject, Injectable } from "@nestjs/common";
 import { JwtService } from "@nestjs/jwt";
 import { ClientProxy } from "@nestjs/microservices";
 import { lastValueFrom, map } from "rxjs";
-import { FindRepairsDto, FulfilRepairsDto, MaintainerLoginDto, SendBackRepairsDto, TransferRepairsDto } from "src/microservice/dto/repairs/maintainer.dto";
+import { FindAppRepairsDto, FindRepairsDto, FulfilRepairsDto, MaintainerLoginDto, SendBackRepairsDto, TransferRepairsDto } from "src/microservice/dto/repairs/maintainer.dto";
 
 @Injectable()
 export class RepairsMaintainerService {
@@ -92,6 +92,14 @@ export class RepairsMaintainerService {
     async fulfilRepairs(fulfilRepairsDto: FulfilRepairsDto) {
         const pattern = { cmd: "repairs_maintainer_fulfilRepairs" };
         const data = fulfilRepairsDto;
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
+    }
+
+    // app进行查询操作
+    async findAppRepairs(findAppRepairsDto: FindAppRepairsDto) {
+        const pattern = { cmd: "repairs_maintainer_findAppRepairs" };
+        const data = findAppRepairsDto;
         let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
         return status;
     }

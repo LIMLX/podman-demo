@@ -79,4 +79,10 @@ export class CreateStudentDto {
     @IsNotEmpty()
     @IsInt()
     schoolYear: number
+
+    @ApiProperty({
+        required: false,
+        description: '角色id'
+    })
+    role: []
 }

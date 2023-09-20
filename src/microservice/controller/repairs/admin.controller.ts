@@ -52,9 +52,21 @@ export class RepairsAdminController {
     }
 
     // 获取楼栋的基础数据
+    @Get("findBuildingBasicsSum")
+    async findBuildingBasicsSum() {
+        return await this.adminService.findBuildingBasicsSum();
+    }
+
+    // 查询所有楼栋数据总数
     @Get("findBuildingSum")
-    async findBuildingSum() {
-        return await this.adminService.findBuildingSum();
+    async findBuildingSum(@Query() findBuildingDto: FindBuildingDto) {
+        if (findBuildingDto.status) {
+            findBuildingDto.status = Number(findBuildingDto.status);
+        }
+        if (findBuildingDto.type) {
+            findBuildingDto.type = Number(findBuildingDto.type);
+        }
+        return await this.adminService.findBuildingSum(findBuildingDto);
     }
 
     // 查询所有楼栋数据
@@ -112,8 +124,11 @@ export class RepairsAdminController {
 
     // 获取楼栋管理员数量
     @Get("findManagerSum")
-    async findManagerSum() {
-        return await this.adminService.findManagerSum();
+    async findManagerSum(@Query() findManagerDto: FindManagerDto) {
+        if (findManagerDto.status) {
+            findManagerDto.status = Number(findManagerDto.status);
+        }
+        return await this.adminService.findManagerSum(findManagerDto);
     }
 
     // 查询楼栋管理员
@@ -172,6 +187,15 @@ export class RepairsAdminController {
     }
 
     // -----------------------------------维修工管理操作-----------------------------------------
+    // 获取维修工总数
+    @Get("findMtrSum")
+    async findMtrSum(@Query() findMtrDto: FindMtrDto) {
+        if (findMtrDto.status) {
+            findMtrDto.status = Number(findMtrDto.status);
+        }
+        return await this.adminService.findMtrSum(findMtrDto);
+    }
+
     // 获取所有维修工数据
     @Get("findMtr/page=:page")
     async findMtr(@Param("page") page: string, @Query() findMtrDto: FindMtrDto) {
@@ -232,6 +256,15 @@ export class RepairsAdminController {
     }
 
     // ------------------------------------类型管理操作------------------------------------------
+    // 获取类型总数
+    @Get("findTypeSum")
+    async findTypeSum(@Query() findTypeDto: FindTypeDto) {
+        if (findTypeDto.status) {
+            findTypeDto.status = Number(findTypeDto.status);
+        }
+        return await this.adminService.findTypeSum(findTypeDto);
+    }
+
     // 获取类型工种
     @Get("findType/page=:page")
     async findType(@Param("page") page: string, @Query() findTypeDto: FindTypeDto) {
@@ -282,10 +315,19 @@ export class RepairsAdminController {
     }
 
     // ------------------------------------报修管理操作------------------------------------------
-    // 获取基础数据
+    // 获取报修单总数
     @Get("findRepairsSum")
-    async findRepairsSum() {
-        return await this.adminService.findRepairsSum();
+    async findRepairsSum(@Query() findRepairsDto: FindRepairsDto) {
+        if (findRepairsDto.status) {
+            findRepairsDto.status = Number(findRepairsDto.status);
+        }
+        return await this.adminService.findRepairsSum(findRepairsDto);
+    }
+
+    // 获取基础数据
+    @Get("findRepairsBasicsSum")
+    async findRepairsBasicsSum() {
+        return await this.adminService.findRepairsBasicsSum();
     }
 
     // 获取基础数据的趋势

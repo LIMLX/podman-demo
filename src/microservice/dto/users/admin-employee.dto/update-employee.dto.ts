@@ -10,6 +10,12 @@ export class UpdateEmployeeDto extends CreateEmployeeDto {
     @IsNotEmpty()
     @IsString()
     employeeId: string
+
+    @ApiProperty({
+        required: true,
+        description: '授权管理员权限id'
+    })
+    adminRole: string[]
 }
 
 export class UpdateEmployeePswDto {

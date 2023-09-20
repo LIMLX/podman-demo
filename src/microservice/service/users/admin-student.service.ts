@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { map } from "rxjs";
-import {  CreateStudentDto, FindStudentDto, UpdateStudentDto, UpdateStudentPswDto } from "src/microservice/dto/users/admin-student.dto";
+import { CreateStudentDto, FindStudentDto, UpdateStudentDto, UpdateStudentPswDto } from "src/microservice/dto/users/admin-student.dto";
 
 @Injectable()
 export class UserAdminStudentService {
@@ -58,6 +58,66 @@ export class UserAdminStudentService {
     async createStudent(reateStudentDto: CreateStudentDto) {
         const pattern = { cmd: "users_adminStudent_createStudent" };
         const data = reateStudentDto;
+
+        const status = this.userService
+            .send<any>(pattern, data)
+            .pipe(
+                map((message: any) => {
+                    return message
+                }
+                ))
+        return status;
+    }
+
+    // 查询所有学院
+    async findCampus() {
+        const pattern = { cmd: "users_adminStudent_findCampus" };
+        const data = {};
+
+        const status = this.userService
+            .send<any>(pattern, data)
+            .pipe(
+                map((message: any) => {
+                    return message
+                }
+                ))
+        return status;
+    }
+
+    // 根据学院查询所处的班级
+    async findCampusClass(campusId: string) {
+        const pattern = { cmd: "users_adminStudent_findCampusClass" };
+        const data = campusId;
+
+        const status = this.userService
+            .send<any>(pattern, data)
+            .pipe(
+                map((message: any) => {
+                    return message
+                }
+                ))
+        return status;
+    }
+
+    // 学生角色查询
+    async findStudentRole(role: string[], like: string) {
+        const pattern = { cmd: "users_adminStudent_findStudentRole" };
+        const data = { role: role, like: like };
+
+        const status = this.userService
+            .send<any>(pattern, data)
+            .pipe(
+                map((message: any) => {
+                    return message
+                }
+                ))
+        return status;
+    }
+
+    // 管理员(模块)查询
+    async findAdminRole(role: string[], like: string) {
+        const pattern = { cmd: "users_adminStudent_findAdminRole" };
+        const data = { role: role, like: like };
 
         const status = this.userService
             .send<any>(pattern, data)

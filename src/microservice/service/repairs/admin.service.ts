@@ -51,9 +51,17 @@ export class RepairsAdminService {
     }
 
     // 获取楼栋的基础数据
-    async findBuildingSum() {
-        const pattern = { cmd: "repairs_admin_findBuildingSum" };
+    async findBuildingBasicsSum() {
+        const pattern = { cmd: "repairs_admin_findBuildingBasicsSum" };
         const data = {};
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
+    }
+
+    // 查询所有楼栋数据总数
+    async findBuildingSum(findBuildingDto: FindBuildingDto) {
+        const pattern = { cmd: "repairs_admin_findBuildingSum" };
+        const data = findBuildingDto;
         let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
         return status;
     }
@@ -100,9 +108,9 @@ export class RepairsAdminService {
     }
 
     // 获取楼栋管理员数量
-    async findManagerSum() {
+    async findManagerSum(findManagerDto: FindManagerDto) {
         const pattern = { cmd: "repairs_admin_findManagerSum" };
-        const data = {};
+        const data = findManagerDto;
         let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
         return status;
     }
@@ -148,6 +156,14 @@ export class RepairsAdminService {
     }
 
     // -----------------------------------维修工管理操作-----------------------------------------
+    // 获取维修工总数
+    async findMtrSum(findMtrDto: FindMtrDto) {
+        const pattern = { cmd: "repairs_admin_findMtrSum" };
+        const data = findMtrDto;
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
+    }
+
     // 获取所有维修工数据
     async findMtr(findMtrDto: FindMtrDto) {
         const pattern = { cmd: "repairs_admin_findMtr" };
@@ -197,6 +213,15 @@ export class RepairsAdminService {
     }
 
     // ------------------------------------类型管理操作------------------------------------------
+    // 获取类型总数
+    async findTypeSum(findTypeDto: FindTypeDto) {
+        const pattern = { cmd: "repairs_admin_findTypeSum" };
+        const data = findTypeDto;
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
+    }
+
+
     // 获取类型工种
     async findType(findTypeDto: FindTypeDto) {
         const pattern = { cmd: "repairs_admin_findType" };
@@ -238,9 +263,17 @@ export class RepairsAdminService {
     }
 
     // ------------------------------------报修管理操作------------------------------------------
-    // 获取基础数据
-    async findRepairsSum() {
+    // 获取报修单总数
+    async findRepairsSum(findRepairsDto: FindRepairsDto) {
         const pattern = { cmd: "repairs_admin_findRepairsSum" };
+        const data = findRepairsDto;
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
+    }
+
+    // 获取基础数据
+    async findRepairsBasicsSum() {
+        const pattern = { cmd: "repairs_admin_findRepairsBasicsSum" };
         const data = {};
         let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
         return status;

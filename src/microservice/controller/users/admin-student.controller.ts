@@ -11,12 +11,16 @@ import { UserAdminStudentService } from "src/microservice/service/users";
 export class UserAdminStudentController {
     constructor(private readonly adminStudentService: UserAdminStudentService) { }
 
+
     // 查询学生
     @ApiOperation({ summary: "查询学生", description: "获取学生数据" })
     @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
     @Get("findStudent/page=:page")
-    async findStudent(@Query() findStudentDto: FindStudentDto, @Param("page") page: number) {
-        findStudentDto.page = page;
+    async findStudent(@Query() findStudentDto: FindStudentDto, @Param("page") page: string) {
+        if (!/^[0-9]*$/.test(page)) {
+            return "abnormal";
+        }
+        findStudentDto.page = Number(page);
         return await this.adminStudentService.findStudent(findStudentDto);
     }
 
@@ -34,6 +38,39 @@ export class UserAdminStudentController {
     @Get("findStudentSum")
     async findStudentSum(@Query() findStudentDto: FindStudentDto) {
         return await this.adminStudentService.findStudentSum(findStudentDto);
+    }
+
+    // 查询所有学院
+    @ApiOperation({ summary: "查询所有学院", description: "查询所有学院" })
+    @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
+    @Get("findCampus")
+    async findCampus() {
+        return await this.adminStudentService.findCampus();
+    }
+
+    // 根据学院查询所处的班级
+    @ApiOperation({ summary: "根据学院查询所处的班级", description: "根据学院查询所处的班级" })
+    @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
+    @Get("findCampusClass/id=:campusId")
+    async findCampusClass(@Param("campusId") campusId: string) {
+        return await this.adminStudentService.findCampusClass(campusId);
+    }
+
+
+    // 学生角色查询
+    @ApiOperation({ summary: "学生角色查询", description: "学生角色查询" })
+    @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
+    @Get("findStudentRole")
+    async findStudentRole(@Body() { role, like }: { role: string[], like: string }) {
+        return await this.adminStudentService.findStudentRole(role, like);
+    }
+
+    // 管理员(模块)查询
+    @ApiOperation({ summary: "管理员(模块)查询", description: "管理员(模块)查询" })
+    @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
+    @Get("findAdminRole")
+    async findAdminRole(@Body() { role, like }: { role: string[], like: string }) {
+        return await this.adminStudentService.findAdminRole(role, like);
     }
 
     // 创建学生

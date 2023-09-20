@@ -53,6 +53,51 @@ export class UserAdminEmployeeService {
         return employeeData;
     }
 
+    // 查询部门
+    async findDepartment() {
+        const pattern = { cmd: "users_adminEmployee_findDepartment" };
+        const data = {};
+
+        const status = this.userService
+            .send<any>(pattern, data)
+            .pipe(
+                map((message: any) => {
+                    return message
+                }
+                ))
+        return status;
+    }
+
+    // 职工角色查询
+    async findEmployeeRole(role: string[], like: string) {
+        const pattern = { cmd: "users_adminEmployee_findEmployeeRole" };
+        const data = { role: role, like: like };
+
+        const status = this.userService
+            .send<any>(pattern, data)
+            .pipe(
+                map((message: any) => {
+                    return message
+                }
+                ))
+        return status;
+    }
+
+    // 管理员(模块)查询
+    async findAdminRole(role: string[], like: string) {
+        const pattern = { cmd: "users_adminEmployee_findAdminRole" };
+        const data = { role: role, like: like };
+
+        const status = this.userService
+            .send<any>(pattern, data)
+            .pipe(
+                map((message: any) => {
+                    return message
+                }
+                ))
+        return status;
+    }
+
     // 创建职工
     async createEmployee(createEmployeeDto: CreateEmployeeDto) {
         const pattern = { cmd: "users_adminEmployee_createEmployee" };

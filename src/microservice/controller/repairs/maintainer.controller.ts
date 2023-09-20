@@ -2,7 +2,7 @@ import { Controller, Get, Post, Body, Param, Query, UseGuards, Patch } from '@ne
 import { AuthGuard } from '@nestjs/passport';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { RepairsMtrRoleGuard, RepiarsMtrRole, User } from 'src/common';
-import { FindRepairsDto, FulfilRepairsDto, MaintainerLoginDto, SendBackRepairsDto, TransferRepairsDto } from 'src/microservice/dto/repairs/maintainer.dto';
+import { FindAppRepairsDto, FindRepairsDto, FulfilRepairsDto, MaintainerLoginDto, SendBackRepairsDto, TransferRepairsDto } from 'src/microservice/dto/repairs/maintainer.dto';
 import { RepairsMaintainerService } from 'src/microservice/service/repairs';
 
 @ApiTags("repairs")
@@ -89,5 +89,15 @@ export class RepairsMaintainerController {
         fulfilRepairsDto.userId = userId;
         fulfilRepairsDto.userName = userName;
         return await this.maintainerService.fulfilRepairs(fulfilRepairsDto);
+    }
+
+    // app进行查询操作
+    @Get("findAppRepairs")
+    async findAppRepairs(@Query() findAppRepairsDto: FindAppRepairsDto, @User("id") userId: string) {
+        if (!userId || userId === "abnormal") {
+            return "abnormal";
+        }
+        findAppRepairsDto.mtrId = userId;
+        return await this.maintainerService.findAppRepairs(findAppRepairsDto);
     }
 }

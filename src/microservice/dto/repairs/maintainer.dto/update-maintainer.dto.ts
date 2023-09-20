@@ -68,3 +68,4 @@ export class FulfilRepairsDto {
         file_type: string
     }[]
 }
+

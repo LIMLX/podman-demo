@@ -37,3 +37,8 @@ export class FindRepairsDto {
     status: any
     page: number
 }
+
+export class FindAppRepairsDto {
+    mtrId: string
+    updateTime: Date
+}
