@@ -47,7 +47,7 @@ export class FindManagerDto {
         description: '状态'
     })
     @IsIn([0, 1, "0", "1", undefined])
-    status: number
+    status: any
     page: number
     like: string
 }

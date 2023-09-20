@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { IsIn, IsInt, IsNotEmpty, IsString } from "class-validator"
+import { IsIn, IsInt, IsNotEmpty, IsString, Length } from "class-validator"
 
 export class CreateBuildingDto {
     @ApiProperty({
@@ -81,10 +81,43 @@ export class CreateManagerDto {
 export class CreateMtrDto {
     adminId: string
     adminName: string
+    @ApiProperty({
+        required: true,
+        description: '维修工工号'
+    })
+    @IsNotEmpty()
+    @IsString()
     mtrNum: string
+
+    @ApiProperty({
+        required: true,
+        description: '维修工名称'
+    })
+    @IsNotEmpty()
+    @IsString()
     mtrName: string
+
+    @ApiProperty({
+        required: true,
+        description: '维修工电话'
+    })
+    @IsNotEmpty()
+    @IsString()
+    @Length(10, 11)
     mtrPhone: string
+
+    @ApiProperty({
+        required: false,
+        description: '维修工密码'
+    })
     mtrPsw: string
+
+    @ApiProperty({
+        required: true,
+        description: '维修工状态'
+    })
+    @IsNotEmpty()
+    @IsIn([0, 1, undefined])
     mtrStatus: number
 
     buildAuth: string[]
@@ -94,7 +127,28 @@ export class CreateMtrDto {
 export class CreateTypeDto {
     adminId: string
     adminName: string
+
+    @ApiProperty({
+        required: true,
+        description: '状态名称'
+    })
+    @IsNotEmpty()
+    @IsString()
     typeName: string
+
+    @ApiProperty({
+        required: true,
+        description: '状态等级'
+    })
+    @IsNotEmpty()
+    @IsInt()
     typeLevel: number
+
+    @ApiProperty({
+        required: true,
+        description: '状态状态'
+    })
+    @IsNotEmpty()
+    @IsIn([0, 1, undefined])
     typeStatus: number
 }

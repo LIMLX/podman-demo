@@ -179,6 +179,9 @@ export class RepairsAdminController {
             return "abnormal";
         }
         findMtrDto.page = Number(page);
+        if (findMtrDto.status) {
+            findMtrDto.status = Number(findMtrDto.status);
+        }
         return await this.adminService.findMtr(findMtrDto);
     }
 
@@ -236,6 +239,9 @@ export class RepairsAdminController {
             return "abnormal";
         }
         findTypeDto.page = Number(page);
+        if (findTypeDto.status) {
+            findTypeDto.status = Number(findTypeDto.status);
+        }
         return await this.adminService.findType(findTypeDto);
     }
 
