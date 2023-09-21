@@ -3,3 +3,9 @@ export class FindEmployeeDto {
     like: string
     page: any
 }
+
+export class FindAdminUserDto {
+    moduleId: string
+    like: string
+    page: number
+}

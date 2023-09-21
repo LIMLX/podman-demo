@@ -13,16 +13,6 @@ export class CreateRoleDto {
 
     @ApiProperty({
         required: true,
-        description: '角色代码'
-    })
-
-    @IsNotEmpty()
-    @IsString()
-    roleNum: string
-
-
-    @ApiProperty({
-        required: true,
         description: '角色名称'
     })
 

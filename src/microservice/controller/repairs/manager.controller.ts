@@ -43,7 +43,7 @@ export class RepairsManagerController {
 
     // 查询报修单--状态日志
     @Get("findRepairsStatusLog/id=:repairId")
-    async findRepairsStatusLog(@Param("repairsId") repairId: string) {
+    async findRepairsStatusLog(@Param("repairId") repairId: string) {
         return await this.managerService.findRepairsStatusLog(repairId);
     }
 }

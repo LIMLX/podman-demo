@@ -35,7 +35,7 @@ export class RepairsManagerService {
     // 查询报修单--状态日志
     async findRepairsStatusLog(repairId: string) {
         const pattern = { cmd: "repairs_manager_findRepairsStatusLog" };
-        const data = repairId;
+        const data = { repairId: repairId };
         let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
         return status;
     }

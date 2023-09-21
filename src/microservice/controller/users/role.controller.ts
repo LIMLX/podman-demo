@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { Admin, AdminRole } from "src/common";
-import { AuthEmployeeRoleDto, AuthStudentRoleDto, CreateRoleDto, DeleteRoleDto, FindEmployeeDto, UpdateRoleDto } from "src/microservice/dto";
+import { AuthEmployeeRoleDto, AuthStudentRoleDto, CreateRoleDto, DeleteRoleDto, FindAdminUserDto, FindEmployeeDto, UpdateAdminUserDto, UpdateRoleDto } from "src/microservice/dto";
 import { UsersRoleService } from "src/microservice/service";
 
 @ApiTags('角色')
@@ -70,6 +70,14 @@ export class UsersRoleController {
     return await this.usersService.findEmployeeModule(roleId);
   }
 
+  // 根据工号/姓名查询职工
+  @ApiOperation({ summary: "根据工号/姓名查询职工", description: "根据工号/姓名查询职工" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
+  @Get("findEmployeeAdd")
+  async findEmployeeAdd(@Query("like") like: string) {
+    return await this.usersService.findEmployeeAdd(like);
+  }
+
   @ApiOperation({ summary: "获取职工角色下的职工总数量接口", description: "获取职工角色下的职工总数量" })
   @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
   @Get("findEmployeeSum/role=:roleId")
@@ -91,17 +99,72 @@ export class UsersRoleController {
     return await this.usersService.findStudentModule(roleId);
   }
 
-  @ApiOperation({ summary: "获取学生角色下的职工信息接口", description: "获取学生角色下的职工信息" })
+  @ApiOperation({ summary: "获取学生角色下的学生信息接口", description: "获取学生角色下的学生信息" })
   @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
   @Get("findStudent/role=:roleId/page=:page")
-  async findStudent(@Param() { roleId, page }: { roleId: string, page: number }) {
-    return await this.usersService.findStudent(roleId, page);
+  async findStudent(@Param() { roleId, page }: { roleId: string, page: number }, @Query("like") like: string) {
+    return await this.usersService.findStudent(roleId, like, page);
   }
 
   @ApiOperation({ summary: "获取学生角色下的学生总数量接口", description: "获取学生角色下的学生总数量" })
   @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
   @Get("findStudentSum/role=:roleId")
-  async findStudentSum(@Param("roleId") roleId: string) {
-    return await this.usersService.findStudentSum(roleId);
+  async findStudentSum(@Param("roleId") roleId: string, @Query("like") like: string) {
+    return await this.usersService.findStudentSum(roleId, like);
+  }
+
+  @ApiOperation({ summary: "根据学号/姓名获取学生数据", description: "根据学号/姓名获取学生数据" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
+  @Get("findStudentAdd")
+  async findStudentAdd(@Query("like") like: string) {
+    return await this.usersService.findStudentAdd(like);
+  }
+
+  @ApiOperation({ summary: "获取所有管理员类", description: "获取所有管理员类" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
+  @Get("findAdminType")
+  async findAdminType() {
+    return await this.usersService.findAdminType();
+  }
+
+  @ApiOperation({ summary: "获取管理员下的用户数据", description: "获取管理员下的用户数据" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
+  @Get("findAdminUser/role=:moduleId/page=:page")
+  async findAdminUser(@Param("moduleId") moduleId: string, @Param("page") page: string, @Query() findAdminUserDto: FindAdminUserDto) {
+    findAdminUserDto.moduleId = moduleId;
+    if (!/^[0-9]*$/.test(page)) {
+      return "abnormal";
+    }
+    findAdminUserDto.page = Number(page);
+    return await this.usersService.findAdminUser(findAdminUserDto);
+  }
+
+  @ApiOperation({ summary: "获取管理员下的用户数量", description: "获取管理员下的用户数量" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
+  @Get("findAdminUserSum/role=:moduleId")
+  async findAdminUserSum(@Param("moduleId") moduleId: string, @Query() findAdminUserDto: FindAdminUserDto) {
+    findAdminUserDto.moduleId = moduleId;
+    return await this.usersService.findAdminUserSum(findAdminUserDto);
+  }
+
+  @ApiOperation({ summary: "编辑管理员权限", description: "编辑管理员权限" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
+  @Patch("updateAdminUser")
+  async updateAdminUser(@Body() updateAdminUserDto: UpdateAdminUserDto) {
+    return await this.usersService.updateAdminUser(updateAdminUserDto);
+  }
+
+  @ApiOperation({ summary: "获取所有模块", description: "获取所有模块" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
+  @Get("findMoudle")
+  async findMoudle() {
+    return await this.usersService.findMoudle();
+  }
+
+  @ApiOperation({ summary: "获取所有权限等级", description: "获取所有权限等级" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
+  @Get("findOperation")
+  async findOperation() {
+    return await this.usersService.findOperation();
   }
 }

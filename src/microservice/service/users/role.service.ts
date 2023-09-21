@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { map } from "rxjs";
-import { AuthEmployeeRoleDto, AuthStudentRoleDto, CreateRoleDto, DeleteRoleDto, FindEmployeeDto, UpdateRoleDto } from "src/microservice/dto";
+import { AuthEmployeeRoleDto, AuthStudentRoleDto, CreateRoleDto, DeleteRoleDto, FindAdminUserDto, FindEmployeeDto, UpdateAdminUserDto, UpdateRoleDto } from "src/microservice/dto";
 
 @Injectable()
 export class UsersRoleService {
@@ -144,6 +144,23 @@ export class UsersRoleService {
     return status
   }
 
+
+  // 根据工号/姓名查询职工
+  async findEmployeeAdd(like: string) {
+    const pattern = { cmd: "users_role_findEmployeeAdd" };
+    const data = { like: like };
+
+    let status = this.userService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status
+  }
+
+
   // 获取所有学生角色信息
   async findRoleStudentAll() {
     const pattern = { cmd: "users_role_findStudentAll" };
@@ -176,9 +193,9 @@ export class UsersRoleService {
 
 
   // 获取某个学生角色下的用户信息
-  async findStudent(roleId: string, page: number) {
+  async findStudent(roleId: string, like: string, page: number) {
     const pattern = { cmd: "users_role_findStudent" };
-    const data = { roleId: roleId, page: page }
+    const data = { roleId: roleId, page: page, like: like }
 
     let status = this.userService
       .send<any>(pattern, data)
@@ -191,9 +208,9 @@ export class UsersRoleService {
   }
 
   // 获取学生角色下的学生总数量接口
-  async findStudentSum(roleId: string) {
+  async findStudentSum(roleId: string, like: string) {
     const pattern = { cmd: "users_role_findStudentSum" };
-    const data = roleId;
+    const data = { roleId: roleId, like: like };
 
     let status = this.userService
       .send<any>(pattern, data)
@@ -203,5 +220,110 @@ export class UsersRoleService {
         }
         ))
     return status
+  }
+
+  // 根据学号/姓名获取学生数据
+  async findStudentAdd(like: string) {
+    const pattern = { cmd: "users_role_findStudentAdd" };
+    const data = { like: like };
+
+    let status = this.userService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status
+  }
+
+  // 获取所有管理员类
+  async findAdminType() {
+    const pattern = { cmd: "users_role_findAdminType" };
+    const data = {};
+
+    let status = this.userService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status;
+  }
+
+  // 获取管理员下的用户数据
+  async findAdminUser(findAdminUserDto: FindAdminUserDto) {
+    const pattern = { cmd: "users_role_findAdminUser" };
+    const data = findAdminUserDto;
+
+    let status = this.userService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status;
+  }
+
+  // 获取管理员下的用户数量
+  async findAdminUserSum(findAdminUserDto: FindAdminUserDto) {
+    const pattern = { cmd: "users_role_findAdminUserSum" };
+    const data = findAdminUserDto;
+
+    let status = this.userService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status;
+  }
+
+  // 编辑管理员权限
+  async updateAdminUser(updateAdminUserDto: UpdateAdminUserDto) {
+    const pattern = { cmd: "users_role_updateAdminUser" };
+    const data = updateAdminUserDto;
+
+    let status = this.userService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status;
+  }
+
+  // 获取所有模块
+  async findMoudle() {
+    const pattern = { cmd: "users_role_findMoudle" };
+    const data = {};
+
+    let status = this.userService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status;
+  }
+
+  // 获取所有权限等级
+  async findOperation() {
+    const pattern = { cmd: "users_role_findOperation" };
+    const data = {};
+
+    let status = this.userService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status;
   }
 }
