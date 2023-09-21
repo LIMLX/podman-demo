@@ -1,7 +1,7 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { Admin, AdminRole } from "src/common";
-import { AuthEmployeeRoleDto, AuthStudentRoleDto, CreateRoleDto, DeleteRoleDto, UpdateRoleDto } from "src/microservice/dto";
+import { AuthEmployeeRoleDto, AuthStudentRoleDto, CreateRoleDto, DeleteRoleDto, FindEmployeeDto, UpdateRoleDto } from "src/microservice/dto";
 import { UsersRoleService } from "src/microservice/service";
 
 @ApiTags('角色')
@@ -54,8 +54,13 @@ export class UsersRoleController {
   @ApiOperation({ summary: "获取职工角色下的职工信息接口", description: "获取职工角色下的职工信息" })
   @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
   @Get("findEmployee/role=:roleId/page=:page")
-  async findEmployee(@Param() { roleId, page }: { roleId: string, page: number }) {
-    return await this.usersService.findEmployee(roleId, page);
+  async findEmployee(@Param() findEmployeeDto: FindEmployeeDto, @Query("like") like: string) {
+    if (!/^[0-9]*$/.test(findEmployeeDto.page)) {
+      return "abnormal";
+    }
+    findEmployeeDto.page = Number(findEmployeeDto.page);
+    findEmployeeDto.like = like;
+    return await this.usersService.findEmployee(findEmployeeDto);
   }
 
   @ApiOperation({ summary: "获取某个职工角色下的模块权限等级", description: "获取某个职工角色下的模块权限等级" })
@@ -68,8 +73,8 @@ export class UsersRoleController {
   @ApiOperation({ summary: "获取职工角色下的职工总数量接口", description: "获取职工角色下的职工总数量" })
   @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
   @Get("findEmployeeSum/role=:roleId")
-  async findEmployeeSum(@Param("roleId") roleId: string) {
-    return await this.usersService.findEmployeeSum(roleId);
+  async findEmployeeSum(@Param("roleId") roleId: string, @Query("like") like: string) {
+    return await this.usersService.findEmployeeSum(roleId, like);
   }
 
   @ApiOperation({ summary: "获取所有学生角色信息接口", description: "获取所有学生角色信息" })

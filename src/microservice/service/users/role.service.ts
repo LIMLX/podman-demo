@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { map } from "rxjs";
-import { AuthEmployeeRoleDto, AuthStudentRoleDto, CreateRoleDto, DeleteRoleDto, UpdateRoleDto } from "src/microservice/dto";
+import { AuthEmployeeRoleDto, AuthStudentRoleDto, CreateRoleDto, DeleteRoleDto, FindEmployeeDto, UpdateRoleDto } from "src/microservice/dto";
 
 @Injectable()
 export class UsersRoleService {
@@ -100,22 +100,22 @@ export class UsersRoleService {
   }
 
   // 获取某个职工角色下的用户信息
-  async findEmployee(roleId: string, page: number) {
+  async findEmployee(findEmployeeDto: FindEmployeeDto) {
     const pattern = { cmd: "users_role_findEmployee" };
-    const data = { roleId: roleId, page: page }
+    const data = findEmployeeDto;
 
     let status = this.userService
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
-    return status
+    return status;
   }
 
   // 获取某个职工角色下的模块权限等级
-  async findEmployeeModule(roleId: string) {
+  async findEmployeeModule(roleId: String) {
     const pattern = { cmd: "users_role_findEmployeeModule" };
     const data = roleId;
 
@@ -126,13 +126,13 @@ export class UsersRoleService {
           return message
         }
         ))
-    return status
+    return status;
   }
 
   // 获取某个职工角色下的用户数量
-  async findEmployeeSum(roleId: string) {
+  async findEmployeeSum(roleId: string, like: string) {
     const pattern = { cmd: "users_role_findEmployeeSum" };
-    const data = roleId
+    const data = { roleId: roleId, like: like };
 
     let status = this.userService
       .send<any>(pattern, data)
