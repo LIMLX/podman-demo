@@ -117,3 +117,24 @@ export class AuthStudentRoleDto {
     @IsString()
     studentId: string
 }
+
+export class AuthRoleDto {
+    @ApiProperty({
+        required: true,
+        description: '模块id'
+    })
+
+    @IsNotEmpty()
+    @IsString()
+    moduleId: string
+
+    @ApiProperty({
+        required: true,
+        description: '角色id'
+    })
+
+    @IsNotEmpty()
+    @IsString()
+    roleId: string
+    operationId: string
+}

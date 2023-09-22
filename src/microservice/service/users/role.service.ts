@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { map } from "rxjs";
-import { AuthEmployeeRoleDto, AuthStudentRoleDto, CreateAdminUserDto, CreateRoleDto, DeleteRoleDto, FindAdminUserDto, FindEmployeeDto, UpdateAdminUserDto, UpdateRoleDto } from "src/microservice/dto";
+import { AuthEmployeeRoleDto, AuthRoleDto, AuthStudentRoleDto, CreateAdminUserDto, CreateRoleDto, DeleteRoleDto, FindAdminUserDto, FindEmployeeDto, UpdateAdminUserDto, UpdateRoleDto } from "src/microservice/dto";
 
 @Injectable()
 export class UsersRoleService {
@@ -55,9 +55,9 @@ export class UsersRoleService {
   }
 
   // 授权职工的角色
-  async roleEmployeeAuth(authEmployeeRoleDto: AuthEmployeeRoleDto) {
+  async authEmployee(authEmployeeRoleDto: AuthEmployeeRoleDto) {
     const pattern = { cmd: "users_role_authEmployee" };
-    const data = authEmployeeRoleDto
+    const data = authEmployeeRoleDto;
 
     let status = this.userService
       .send<any>(pattern, data)
@@ -66,11 +66,71 @@ export class UsersRoleService {
           return message
         }
         ))
-    return status
+    return status;
+  }
+
+  // 授权职工角色模块权限
+  async authEmployeeRole(authRoleDto: AuthRoleDto) {
+    const pattern = { cmd: "users_role_authEmployeeRole" };
+    const data = authRoleDto;
+
+    let status = this.userService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status;
+  }
+
+  // 删除/撤销职工角色权限
+  async delEmployeeRole(authRoleDto: AuthRoleDto) {
+    const pattern = { cmd: "users_role_delEmployeeRole" };
+    const data = authRoleDto;
+
+    let status = this.userService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status;
+  }
+
+  // 授权学生角色模块权限
+  async authStudentRole(authRoleDto: AuthRoleDto) {
+    const pattern = { cmd: "users_role_authStudentRole" };
+    const data = authRoleDto;
+
+    let status = this.userService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status;
+  }
+
+  // 删除/撤销学生角色权限
+  async delStudentRole(authRoleDto: AuthRoleDto) {
+    const pattern = { cmd: "users_role_delStudentRole" };
+    const data = authRoleDto;
+
+    let status = this.userService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status;
   }
 
   // 授权学生的角色
-  async roleStudentAuth(authStudentRoleDto: AuthStudentRoleDto) {
+  async authStudent(authStudentRoleDto: AuthStudentRoleDto) {
     const pattern = { cmd: "users_role_authStudent" };
     const data = authStudentRoleDto;
 
@@ -81,7 +141,7 @@ export class UsersRoleService {
           return message
         }
         ))
-    return status
+    return status;
   }
 
   // 获取所有职工角色信息

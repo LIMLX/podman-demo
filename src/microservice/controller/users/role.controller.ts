@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { Admin, AdminRole } from "src/common";
-import { AuthEmployeeRoleDto, AuthStudentRoleDto, CreateAdminUserDto, CreateRoleDto, DeleteRoleDto, FindAdminUserDto, FindEmployeeDto, UpdateAdminUserDto, UpdateRoleDto } from "src/microservice/dto";
+import { AuthEmployeeRoleDto, AuthRoleDto, AuthStudentRoleDto, CreateAdminUserDto, CreateRoleDto, DeleteRoleDto, FindAdminUserDto, FindEmployeeDto, UpdateAdminUserDto, UpdateRoleDto } from "src/microservice/dto";
 import { UsersRoleService } from "src/microservice/service";
 
 @ApiTags('角色')
@@ -30,18 +30,48 @@ export class UsersRoleController {
     return await this.usersService.deleteRole(deleteRoleDto)
   }
 
+  @ApiOperation({ summary: "授权职工角色模块权限", description: "授权职工角色模块权限" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
+  @Post("authEmployeeRole")
+  async authEmployeeRole(@Body() authRoleDto: AuthRoleDto) {
+    return await this.usersService.authEmployeeRole(authRoleDto);
+  }
+
+  @ApiOperation({ summary: "删除/撤销职工角色权限", description: "删除/撤销职工角色权限" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
+  @Delete("delEmployeeRole")
+  async delEmployeeRole(@Body() authRoleDto: AuthRoleDto) {
+    return await this.usersService.delEmployeeRole(authRoleDto);
+  }
+
   @ApiOperation({ summary: "职工角色授权", description: "给职工授权角色" })
   @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
-  @Post("/authEmployeeRole")
-  async roleEmployeeAuth(@Body() authEmployeeRoleDto: AuthEmployeeRoleDto) {
-    return await this.usersService.roleEmployeeAuth(authEmployeeRoleDto)
+  @Post("authEmployee")
+  async authEmployee(@Body() authEmployeeRoleDto: AuthEmployeeRoleDto) {
+    return await this.usersService.authEmployee(authEmployeeRoleDto)
+  }
+
+  // 授权学生角色模块权限
+  @ApiOperation({ summary: "授权学生角色模块权限", description: "授权学生角色模块权限" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
+  @Post("authStudentRole")
+  async authStudentRole(authRoleDto: AuthRoleDto) {
+    return await this.usersService.authStudentRole(authRoleDto);
+  }
+
+  // 删除/撤销学生角色权限
+  @ApiOperation({ summary: "删除/撤销学生角色权限", description: "删除/撤销学生角色权限" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
+  @Delete("delStudentRole")
+  async delStudentRole(authRoleDto: AuthRoleDto) {
+    return await this.usersService.delStudentRole(authRoleDto);
   }
 
   @ApiOperation({ summary: "学生角色授权", description: "给学生授权角色" })
   @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
-  @Post("/authStudentRole")
+  @Post("authStudent")
   async roleStudentAuth(@Body() authStudentRoleDto: AuthStudentRoleDto) {
-    return await this.usersService.roleStudentAuth(authStudentRoleDto);
+    return await this.usersService.authStudent(authStudentRoleDto);
   }
 
   @ApiOperation({ summary: "获取所有职工角色信息接口", description: "获取所有职工角色信息" })
