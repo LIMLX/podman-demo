@@ -71,8 +71,8 @@ export class UsersOrganizationController {
 
   @ApiOperation({ summary: "获取学院下的所有班级总数", description: "获取学院下的所有班级总数" })
   @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
-  @Get("/findCampusClassSum/campusId=:campusId/page=:page")
-  async findCampusClassSum(@Param() { campusId, like }: { campusId: string, like: string }) {
+  @Get("/findCampusClassSum/campusId=:campusId")
+  async findCampusClassSum(@Param("campusId") campusId: string, @Query("like") like: string) {
     return await this.organizationService.findCampusClassSum(campusId, like);
   }
 
