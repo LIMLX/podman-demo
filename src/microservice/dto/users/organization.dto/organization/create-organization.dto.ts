@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { IsDate, IsInt, IsNotEmpty, IsString } from "class-validator"
+import { IsDate, IsIn, IsInt, IsNotEmpty, IsString } from "class-validator"
 
 export class CreateClassDto {
     @ApiProperty({
@@ -18,14 +18,6 @@ export class CreateClassDto {
     @IsNotEmpty()
     classStartTime: Date
 
-
-    @ApiProperty({
-        required: true,
-        description: '班级结束时间'
-    })
-    @IsNotEmpty()
-    classEndTime: Date
-
     @ApiProperty({
         required: true,
         description: '学院id'
@@ -34,6 +26,18 @@ export class CreateClassDto {
     @IsNotEmpty()
     @IsString()
     campusId: string
+
+    @ApiProperty({
+        required: true,
+        description: '学年制'
+    })
+
+    @IsNotEmpty()
+    @IsInt()
+    schoolYear: number
+
+    teacherId: string
+    assistantId: string
 }
 
 export class CreateCampusDto {
@@ -54,17 +58,6 @@ export class CreateCampusDto {
     @IsNotEmpty()
     @IsString()
     campusTitle: string
-
-
-    @ApiProperty({
-        required: true,
-        description: '校区代码'
-    })
-
-    @IsNotEmpty()
-    @IsString()
-    campusNum: string
-
 
     @ApiProperty({
         required: true,
