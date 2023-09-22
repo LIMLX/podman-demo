@@ -1,7 +1,7 @@
 import { Inject, Injectable } from "@nestjs/common";
 import { ClientProxy } from "@nestjs/microservices";
 import { map } from "rxjs";
-import { AuthEmployeeRoleDto, AuthStudentRoleDto, CreateRoleDto, DeleteRoleDto, FindAdminUserDto, FindEmployeeDto, UpdateAdminUserDto, UpdateRoleDto } from "src/microservice/dto";
+import { AuthEmployeeRoleDto, AuthStudentRoleDto, CreateAdminUserDto, CreateRoleDto, DeleteRoleDto, FindAdminUserDto, FindEmployeeDto, UpdateAdminUserDto, UpdateRoleDto } from "src/microservice/dto";
 
 @Injectable()
 export class UsersRoleService {
@@ -282,10 +282,40 @@ export class UsersRoleService {
     return status;
   }
 
+  // 创建新管理员
+  async createAdminUser(createAdminUserDto: CreateAdminUserDto) {
+    const pattern = { cmd: "users_role_createAdminUser" };
+    const data = createAdminUserDto;
+
+    let status = this.userService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status;
+  }
+
   // 编辑管理员权限
   async updateAdminUser(updateAdminUserDto: UpdateAdminUserDto) {
     const pattern = { cmd: "users_role_updateAdminUser" };
     const data = updateAdminUserDto;
+
+    let status = this.userService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status;
+  }
+
+  // 删除管理员
+  async delAdminUser(moduleId: string, userId: string) {
+    const pattern = { cmd: "users_role_delAdminUserDto" };
+    const data = { moduleId: moduleId, userId: userId };
 
     let status = this.userService
       .send<any>(pattern, data)

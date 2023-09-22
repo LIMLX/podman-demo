@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { IsInt, IsNotEmpty, IsString } from "class-validator"
+import { IsIn, IsInt, IsNotEmpty, IsString } from "class-validator"
 
 export class CreateRoleDto {
     @ApiProperty({
@@ -36,6 +36,44 @@ export class CreateRoleDto {
         description: '部门id'
     })
     roleDepartmentId?: string
+}
+
+export class CreateAdminUserDto {
+    @ApiProperty({
+        required: true,
+        description: '模块id'
+    })
+
+    @IsNotEmpty()
+    @IsString()
+    moduleId: string
+
+    @ApiProperty({
+        required: true,
+        description: '授权等级'
+    })
+
+    @IsNotEmpty()
+    @IsInt()
+    moduleLevel: number
+
+    @ApiProperty({
+        required: true,
+        description: '用户id'
+    })
+
+    @IsNotEmpty()
+    @IsString()
+    userId: string
+
+    @ApiProperty({
+        required: true,
+        description: '用户等级'
+    })
+
+    @IsNotEmpty()
+    @IsIn([0, 1])
+    userLevel: number
 }
 
 export class AuthEmployeeRoleDto {

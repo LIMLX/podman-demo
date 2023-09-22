@@ -1,7 +1,7 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { Admin, AdminRole } from "src/common";
-import { AuthEmployeeRoleDto, AuthStudentRoleDto, CreateRoleDto, DeleteRoleDto, FindAdminUserDto, FindEmployeeDto, UpdateAdminUserDto, UpdateRoleDto } from "src/microservice/dto";
+import { AuthEmployeeRoleDto, AuthStudentRoleDto, CreateAdminUserDto, CreateRoleDto, DeleteRoleDto, FindAdminUserDto, FindEmployeeDto, UpdateAdminUserDto, UpdateRoleDto } from "src/microservice/dto";
 import { UsersRoleService } from "src/microservice/service";
 
 @ApiTags('角色')
@@ -147,11 +147,25 @@ export class UsersRoleController {
     return await this.usersService.findAdminUserSum(findAdminUserDto);
   }
 
+  @ApiOperation({ summary: "创建新管理员", description: "创建新管理员" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
+  @Post("createAdminUser")
+  async createAdminUser(@Body() createAdminUserDto: CreateAdminUserDto) {
+    return await this.usersService.createAdminUser(createAdminUserDto);
+  }
+
   @ApiOperation({ summary: "编辑管理员权限", description: "编辑管理员权限" })
   @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
   @Patch("updateAdminUser")
   async updateAdminUser(@Body() updateAdminUserDto: UpdateAdminUserDto) {
     return await this.usersService.updateAdminUser(updateAdminUserDto);
+  }
+
+  @ApiOperation({ summary: "删除管理员", description: "删除管理员" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
+  @Delete("delAdminUserDto/module=:moduleId/user=:userId")
+  async delAdminUser(@Param() { moduleId, userId }: { moduleId: string, userId: string }) {
+    return await this.usersService.delAdminUser(moduleId, userId);
   }
 
   @ApiOperation({ summary: "获取所有模块", description: "获取所有模块" })
