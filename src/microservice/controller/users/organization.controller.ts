@@ -108,6 +108,13 @@ export class UsersOrganizationController {
     return await this.organizationService.updateDepartment(updateDepartmentDto);
   }
 
+  @ApiOperation({ summary: "删除职工部门", description: "删除职工部门" })
+  @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
+  @Delete("delDepartment/departmenId=:departmenId")
+  async delDepartment(@Param("departmenId") departmenId: string) {
+    return await this.organizationService.delDepartment(departmenId);
+  }
+
   @ApiOperation({ summary: "获取所有职工部门", description: "获取所有职工部门" })
   @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
   @Get("findDepartment")

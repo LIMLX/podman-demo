@@ -204,6 +204,21 @@ export class UsersOrganizationService {
     return status;
   }
 
+  // 删除职工部门
+  async delDepartment(departmenId: string) {
+    const pattern = { cmd: "users_organization_delDepartment" };
+    const data = { departmenId: departmenId };
+
+    let status = this.userService
+      .send<any>(pattern, data)
+      .pipe(
+        map((message: any) => {
+          return message
+        }
+        ))
+    return status;
+  }
+
   // 获取所有职工部门
   async findDepartment() {
     const pattern = { cmd: "users_organization_findDepartment" };

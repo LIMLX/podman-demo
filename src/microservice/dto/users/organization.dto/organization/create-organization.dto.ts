@@ -36,6 +36,7 @@ export class CreateClassDto {
     @IsInt()
     schoolYear: number
 
+    classTitle: string
     teacherId: string
     assistantId: string
 }
