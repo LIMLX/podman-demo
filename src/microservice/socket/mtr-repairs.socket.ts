@@ -5,36 +5,37 @@ import { ConfigService } from "@nestjs/config";
 import { JwtModuleOptions, JwtService } from "@nestjs/jwt";
 import { JWTDATA } from '../../common';
 
-@WebSocketGateway(13005, { namespace: "repairs" })
+@WebSocketGateway(13005)
 export class MtrRepairsSocket implements OnGatewayInit {
     @WebSocketServer() server: Server;
-    connection: amqp.Connection
-    channels: amqp.Channel
-    config: ConfigService
-    connectSum = 0
-    jwtData: JWTDATA
+    connection: amqp.Connection;
+    channels: amqp.Channel;
+    config: ConfigService;
+    connectSum = 0;
+    jwtData: JWTDATA;
 
     // 初始连接
     async handleConnection(client: Socket) {
         // 客户端连接事件
         console.log('客户端连接id ： ' + client.id);
-        const token = client.handshake.headers.authorization
+        const token = client.handshake.headers.authorization;
         if (!token) {
-            console.log('未携带token连接')
+            console.log('未携带token连接');
             client.disconnect();
-            return
+            return;
         }
-        const userData = await this.authentication(token)
+        const userData = await this.authentication(token);
         if (!userData) {
-            console.log('身份验证错误或过期')
+            console.log('身份验证错误或过期');
             client.disconnect();
-            return
+            return;
         }
         // 添加当前连接人数
         this.connectSum++
         if (this.connectSum === 1) {
-            console.log('再一次有人访问开启')
+            console.log('再一次有人访问开启');
         }
+        this.server.emit('message', true);
     }
 
     // 断开连接
@@ -44,8 +45,8 @@ export class MtrRepairsSocket implements OnGatewayInit {
         // 记录是否还有消费者在内
         this.connectSum--
         if (this.connectSum <= 0) {
-            console.log('无人访问关闭')
-            this.connectSum = 0
+            console.log('无人访问关闭');
+            this.connectSum = 0;
         }
     }
 
@@ -53,7 +54,7 @@ export class MtrRepairsSocket implements OnGatewayInit {
         // WebSocket服务器初始化事件
         console.log('socket用户初始化');
         // rabbitMQ服务初始化
-        this.config = new ConfigService()
+        this.config = new ConfigService();
         const mqOptions = {
             protocol: this.config.get('RabbitMQ_protocol'),
             username: this.config.get('RabbitMQ_username'),
@@ -68,7 +69,7 @@ export class MtrRepairsSocket implements OnGatewayInit {
             console.log("RabbitMQ连接建立成功");
         } catch (error) {
             console.log("RabbitMQ连接错误");
-            console.error(error)
+            console.error(error);
         }
         // JWT初始化配置
         // 配置option
@@ -76,19 +77,19 @@ export class MtrRepairsSocket implements OnGatewayInit {
             secret: this.config.get('JWT_ENC'),
             signOptions: { expiresIn: this.config.get('JWT_TIME') }
         }
-        this.jwtData = new JWTDATA(new JwtService(options))
+        this.jwtData = new JWTDATA(new JwtService(options));
         // MQ消费者监听
         try {
             // 检测是否存在此队列，存在不进行操作，不存在则进行持久化创建
-            await this.channels.assertQueue(this.config.get('RabbitMQ_socketQueueName'), { durable: true })
+            await this.channels.assertQueue(this.config.get('RabbitMQ_socketQueueName'), { durable: true });
             // 队列监听
             await this.channels.consume(this.config.get('RabbitMQ_socketQueueName'), (msg) => {
                 // 当有传递1时
                 if (msg.content.toString() === "1") {
-                    this.channels.ack(msg)
+                    this.channels.ack(msg);
                     // 使用socket发送true
                     if (this.connectSum > 0) {
-                        this.server.emit('message', true)
+                        this.server.emit('message', true);
                     }
                 }
             })
@@ -107,7 +108,7 @@ export class MtrRepairsSocket implements OnGatewayInit {
     // 身份验证
     async authentication(token: string) {
         try {
-            return await this.jwtData.getJWT(token)
+            return await this.jwtData.getJWT(token);
         } catch (error) {
         }
     }
