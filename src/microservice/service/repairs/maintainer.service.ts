@@ -103,4 +103,12 @@ export class RepairsMaintainerService {
         let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
         return status;
     }
+
+    // app进行查询详情操作
+    async findAppRepairsOne(repairsId: string, updateTime: Date) {
+        const pattern = { cmd: "repairs_maintainer_findAppRepairsOne" };
+        const data = { repairsId: repairsId, updateTime: updateTime };
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
+    }
 }

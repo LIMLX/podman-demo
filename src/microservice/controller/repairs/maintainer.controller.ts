@@ -100,4 +100,10 @@ export class RepairsMaintainerController {
         findAppRepairsDto.mtrId = userId;
         return await this.maintainerService.findAppRepairs(findAppRepairsDto);
     }
+
+    // app进行查询详情操作
+    @Get("findAppRepairsOne/id=:repairsId")
+    async findAppRepairsOne(@Param("repairsId") repairsId: string, @Query("updateTime") updateTime: Date) {
+        return await this.maintainerService.findAppRepairsOne(repairsId, updateTime);
+    }
 }
