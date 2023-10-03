@@ -17,6 +17,12 @@ export class RepairsMaintainerController {
         return await this.maintainerService.maintainerLogin(maintainerLoginDto);
     }
 
+    // 获取类型颜色
+    @Get("findTypeColour")
+    async findTypeColour() {
+        return await this.maintainerService.findTypeColour();
+    }
+
     // 查询自己负责的维修单
     @Get("findRepairs/page=:page")
     async findRepairs(@Param("page") page: string, @Query() findRepairsDto: FindRepairsDto, @User("id") mtrId: string) {

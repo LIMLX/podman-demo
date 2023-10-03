@@ -6,6 +6,14 @@ import { CreateRepairsDto, UpdateRepairsDto } from "src/microservice/dto/repairs
 @Injectable()
 export class RepairsUserService {
     constructor(@Inject("REPAIRS_SERVICE") private readonly repairsService: ClientProxy) { }
+    // 获取类型颜色
+    async findTypeColour() {
+        const pattern = { cmd: "repairs_user_findTypeColour" };
+        const data = {};
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
+    }
+
     // 用户查询个人的维修单
     async findRepairs(userId: string, statusNum: number) {
         const pattern = { cmd: "repairs_user_findRepairs" };

@@ -40,6 +40,14 @@ export class RepairsMaintainerService {
         return token;
     }
 
+    // 获取类型颜色
+    async findTypeColour() {
+        const pattern = { cmd: "repairs_maintainer_findTypeColour" };
+        const data = {};
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
+    }
+
     // 查询自己负责的维修单
     async findRepairs(findRepairsDto: FindRepairsDto) {
         const pattern = { cmd: "repairs_maintainer_findRepairs" };

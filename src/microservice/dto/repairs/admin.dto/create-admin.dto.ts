@@ -146,6 +146,14 @@ export class CreateTypeDto {
 
     @ApiProperty({
         required: true,
+        description: '状态颜色'
+    })
+    @IsNotEmpty()
+    @IsString()
+    typeColour: string
+
+    @ApiProperty({
+        required: true,
         description: '状态状态'
     })
     @IsNotEmpty()

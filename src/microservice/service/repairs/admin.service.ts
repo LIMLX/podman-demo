@@ -221,6 +221,13 @@ export class RepairsAdminService {
         return status;
     }
 
+    // 获取类型颜色
+    async findTypeColour() {
+        const pattern = { cmd: "repairs_admin_findTypeColour" };
+        const data = {};
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
+    }
 
     // 获取类型工种
     async findType(findTypeDto: FindTypeDto) {

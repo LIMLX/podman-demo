@@ -7,6 +7,12 @@ import { RepairsUserService } from 'src/microservice/service/repairs';
 @Controller('repairs/user')
 export class RepairsUserController {
   constructor(private readonly userService: RepairsUserService) { }
+  // 获取类型颜色
+  @Get("findTypeColour")
+  async findTypeColour() {
+    return await this.userService.findTypeColour();
+  }
+
   // 用户查询个人的维修单
   @Get("findRepairs")
   async findRepairs(@User("id") userId: string, @Query("status") status: any) {

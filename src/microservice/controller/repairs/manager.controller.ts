@@ -18,6 +18,12 @@ export class RepairsManagerController {
         return await this.managerService.managerLogin(managerNum);
     }
 
+    // 获取类型颜色
+    @Get("findTypeColour")
+    async findTypeColour() {
+        return await this.managerService.findTypeColour();
+    }
+
     // 查询维修单数据
     @Get("findRepairs/page=:page")
     async findRepairs(@Param("page") page: string, @Query() findRepairsDto: FindRepairsDto, @User("num") managerNum: string) {

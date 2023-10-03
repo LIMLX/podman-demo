@@ -265,6 +265,12 @@ export class RepairsAdminController {
         return await this.adminService.findTypeSum(findTypeDto);
     }
 
+    // 获取类型颜色
+    @Get("findTypeColour")
+    async findTypeColour() {
+        return await this.adminService.findTypeColour();
+    }
+
     // 获取类型工种
     @Get("findType/page=:page")
     async findType(@Param("page") page: string, @Query() findTypeDto: FindTypeDto) {
