@@ -1,3 +1,6 @@
 export * from './clock-type.service'
-export * from './clock.service'
 export * from './employee.service'
+export * from './admin.service'
+export * from './student.service'
+export * from './division.service'
+export * from './file.service'

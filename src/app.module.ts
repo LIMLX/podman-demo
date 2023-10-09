@@ -10,27 +10,15 @@ import { JWTDATA } from './common/encryptions';
 import { SmsCodeService } from './microservice/service/sms';
 import { NoticeController, NoticeFileController, SmsCodeController } from './microservice/controller';
 import { NoticeFileService, NoticeService } from './microservice/service/notice';
-import {
-  UserAdminController,
-  UserAdminEmployeeController,
-  UserController,
-  UserEmployeeController, UserStudentController, UsersModuleController,
-  UsersOperationController, UsersOrganizationController, UsersRoleController
-} from './microservice/controller/users';
-import {
-  UserAdminEmployeeService,
-  UserAdminService,
-  UserAdminStudentService,
-  UserEmployeeService, UserStudentService, UsersModuleService,
-  UsersOperationService, UsersOrganizationService, UsersRoleService, UsersService
-} from './microservice/service/users';
+import { UserAdminController, UserAdminEmployeeController, UserController, UserEmployeeController, UserStudentController, UsersModuleController, UsersOperationController, UsersOrganizationController, UsersRoleController } from './microservice/controller/users';
+import { UserAdminEmployeeService, UserAdminService, UserAdminStudentService, UserEmployeeService, UserStudentService, UsersModuleService, UsersOperationService, UsersOrganizationService, UsersRoleService, UsersService } from './microservice/service/users';
 import { LeaveAdminService, LeaveDivisionService, LeaveEmployeeService, LeaveFileService, LeaveStudentService, LeaveTypeService } from './microservice';
 import { LeaveAdminController, LeaveDivisionController, LeaveEmployeeController, LeaveFileController, LeaveStudentController, LeaveTypeController } from './microservice/controller/leave';
 import { RepairsAdminController, RepairsAutoDispatchController, RepairsFileController, RepairsMaintainerController, RepairsManagerController, RepairsUserController } from './microservice/controller/repairs';
 import { RepairsAdminService, RepairsAutoDispatchService, RepairsFileService, RepairsMaintainerService, RepairsManagerService, RepairsUserService } from './microservice/service/repairs';
 import { MsEpiHealth, MsHistoryHealth, MsLeaveHealth, MsRepairsHealth, MsSmsHealth, MsUserHealth, httpBlacklist } from './common';
-import { EpiEmployeeController, EpiClockTypeController, EpiClockController } from './microservice/controller/epi';
-import { EpiClockService, EpiClockTypeService, EpiEmployeeService } from './microservice/service/epi';
+import { EpiEmployeeController, EpiClockTypeController, EpiAdminController, EpiStudentController, EpiFileController, EpiDivisionController } from './microservice/controller/epi';
+import { EpiClockAdminService, EpiClockTypeService, EpiDivisionService, EpiEmployeeService, EpiFileService, EpiStudentService } from './microservice/service/epi';
 import { MtrRepairsSocket } from './microservice/socket';
 import { UserAdminStudentController } from './microservice/controller/users/admin-student.controller';
 import { HistoryAdminController, HistoryDivisionController, HistoryFileController, HistoryUserController } from './microservice/controller/history';
@@ -94,9 +82,12 @@ import { HistoryAdminService, HistoryDivisionService, HistoryFileService, Histor
 
 
     // Epi报备
-    EpiClockController,
+    EpiAdminController,
     EpiClockTypeController,
     EpiEmployeeController,
+    EpiStudentController,
+    EpiFileController,
+    EpiDivisionController,
 
     // history党史
     HistoryAdminController,
@@ -145,9 +136,12 @@ import { HistoryAdminService, HistoryDivisionService, HistoryFileService, Histor
     MtrRepairsSocket,
 
     // epi报备
-    EpiClockService,
+    EpiClockAdminService,
     EpiEmployeeService,
     EpiClockTypeService,
+    EpiStudentService,
+    EpiDivisionService,
+    EpiFileService,
 
     // history党史
     HistoryAdminService,

@@ -1,5 +1,0 @@
-export * from './employee.controller'
-export * from './file.controller'
-export * from './status.controller'
-export * from './student.controller'
-export * from './type.controller'

@@ -10,9 +10,7 @@ export class CreateClockExcelDto {
         description: '起始时间'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
+    @IsNotEmpty()
     @IsDateString()
     startTime: string
 
@@ -22,16 +20,12 @@ export class CreateClockExcelDto {
         description: '结束时间'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
+    @IsNotEmpty()
     @IsDateString()
     endTime: string
 
-
-    @ApiProperty({
-        required: false,
-        description: '班级名称'
-    })
+    @ApiProperty()
+    @IsNotEmpty()
+    @IsString()
     className: string
 }

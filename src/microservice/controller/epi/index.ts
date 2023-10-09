@@ -1,3 +1,6 @@
 export * from './clock-type.controller'
-export * from './clock.controller'
 export * from './employee.controller'
+export * from './admin.controller'
+export * from './student.controller'
+export * from './division.controller'
+export * from './file.controller'

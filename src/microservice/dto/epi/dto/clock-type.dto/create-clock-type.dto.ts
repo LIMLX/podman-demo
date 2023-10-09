@@ -1,5 +1,5 @@
 import { ApiProperty } from "@nestjs/swagger"
-import { IsNotEmpty, IsNumber, IsString } from "class-validator"
+import { IsIn, IsNotEmpty, IsNumber, IsString } from "class-validator"
 
 export class CreateClockTypeDto {
     @ApiProperty({
@@ -7,33 +7,23 @@ export class CreateClockTypeDto {
         description: '状态名'
     })
 
-    @IsNotEmpty({
-        message: "不能为空"
-    })
+    @IsNotEmpty()
     @IsString()
     typeName: string
 
 
     @ApiProperty({
         required: true,
-        description: '当前状态类型名'
+        description: '状态类型(分异常)'
     })
-
-    @IsNotEmpty({
-        message: "不能为空"
-    })
+    @IsNotEmpty()
     @IsNumber()
-    val: number
-
+    @IsIn([0, 1])
+    typeStatus: number
 
     @ApiProperty({
         required: true,
-        description: '状态类型(分异常)'
+        description: '类型备注'
     })
-
-    @IsNotEmpty({
-        message: "不能为空"
-    })
-    @IsNumber()
-    typeStatus: number
+    typeTitle: string
 }

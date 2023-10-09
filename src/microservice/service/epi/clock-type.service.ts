@@ -11,7 +11,7 @@ export class EpiClockTypeService {
 
     // 创建新类型
     async createType(createClockTypeDto: CreateClockTypeDto) {
-        const pattern = { cmd: "clock-type-create" };
+        const pattern = { cmd: "ep_clockType_createType" };
         const data = createClockTypeDto
 
         let status = this.epiService.send<any>(pattern, data).pipe(
@@ -24,7 +24,7 @@ export class EpiClockTypeService {
 
     // 查询所有类型
     async findTypeAll() {
-        const pattern = { cmd: "clock-tpye-findAll" };
+        const pattern = { cmd: "ep_clockType_findTypeAll" };
         const data = {}
 
         let status = this.epiService.send<any>(pattern, data).pipe(
@@ -37,7 +37,7 @@ export class EpiClockTypeService {
 
     // 修改数据
     async updateType(updateTypeDto: CreateClockTypeDto) {
-        const pattern = { cmd: "clock-tpye-update" };
+        const pattern = { cmd: "ep_clockType_updateType" };
         const data = updateTypeDto
 
         let status = this.epiService.send<any>(pattern, data).pipe(
@@ -50,7 +50,7 @@ export class EpiClockTypeService {
 
     // 删除数据
     async deleteType(typeId: string) {
-        const pattern = { cmd: "clock-tpye-delete" };
+        const pattern = { cmd: "ep_clockType_deleteType" };
         const data = { typeId: typeId }
 
         let status = this.epiService.send<any>(pattern, data).pipe(
