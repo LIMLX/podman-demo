@@ -1,2 +1,3 @@
 export * from './file.controller'
-export * from './notice.controller'
+export * from './admin.controller'
+export * from './user.controller'

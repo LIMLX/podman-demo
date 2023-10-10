@@ -8,8 +8,8 @@ import { ConfigService } from '@nestjs/config';
 import { JwtModule } from '@nestjs/jwt';
 import { JWTDATA } from './common/encryptions';
 import { SmsCodeService } from './microservice/service/sms';
-import { NoticeController, NoticeFileController, SmsCodeController } from './microservice/controller';
-import { NoticeFileService, NoticeService } from './microservice/service/notice';
+import { NoticeAdminController, NoticeFileController, NoticeUserController, SmsCodeController } from './microservice/controller';
+import { NoticeAdminService, NoticeFileService, NoticeUserService } from './microservice/service/notice';
 import { UserAdminController, UserAdminEmployeeController, UserController, UserEmployeeController, UserStudentController, UsersModuleController, UsersOperationController, UsersOrganizationController, UsersRoleController } from './microservice/controller/users';
 import { UserAdminEmployeeService, UserAdminService, UserAdminStudentService, UserEmployeeService, UserStudentService, UsersModuleService, UsersOperationService, UsersOrganizationService, UsersRoleService, UsersService } from './microservice/service/users';
 import { LeaveAdminService, LeaveDivisionService, LeaveEmployeeService, LeaveFileService, LeaveStudentService, LeaveTypeService } from './microservice';
@@ -61,7 +61,8 @@ import { HistoryAdminService, HistoryDivisionService, HistoryFileService, Histor
     UserAdminStudentController,
 
     // notice通知
-    NoticeController,
+    NoticeAdminController,
+    NoticeUserController,
     NoticeFileController,
 
     // leave请假
@@ -115,7 +116,8 @@ import { HistoryAdminService, HistoryDivisionService, HistoryFileService, Histor
     UserAdminStudentService,
 
     // notice通知
-    NoticeService,
+    NoticeAdminService,
+    NoticeUserService,
     NoticeFileService,
 
     // leave请假
@@ -194,20 +196,11 @@ import { HistoryAdminService, HistoryDivisionService, HistoryFileService, Histor
       },
       inject: [ConfigService]
     },
-    // 打卡模块
+    // 防疫模块
     {
       provide: 'EPI_SERVICE',
       useFactory: (configService: ConfigService) => {
         const mathSvcOptions = configService.get('epiService');
-        return ClientProxyFactory.create(mathSvcOptions);
-      },
-      inject: [ConfigService]
-    },
-    // 报备模块
-    {
-      provide: 'REPORT_SERVICE',
-      useFactory: (configService: ConfigService) => {
-        const mathSvcOptions = configService.get('reportService');
         return ClientProxyFactory.create(mathSvcOptions);
       },
       inject: [ConfigService]
