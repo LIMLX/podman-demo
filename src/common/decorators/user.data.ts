@@ -17,7 +17,7 @@ import { ConfigService } from '@nestjs/config';
 */
 
 
-export const User = createParamDecorator((data: "id" | "module" | "num" | "name" | "sex" | "type" | "phone", ctx: ExecutionContext) => {
+export const User = createParamDecorator((data: "id" | "module" | "num" | "name" | "sex" | "type" | "phone" | "organization", ctx: ExecutionContext) => {
 
     const config = new ConfigService();
     const request = ctx.switchToHttp().getRequest<Request>();
@@ -26,7 +26,7 @@ export const User = createParamDecorator((data: "id" | "module" | "num" | "name"
     const options: JwtModuleOptions = {
         secret: config.get('JWT_ENC'),
         signOptions: { expiresIn: config.get('JWT_TIME') }
-    }
+    };
     // 创建jwtService
     const jwtService = new JwtService(options);
     // 注入到构造函数内(
@@ -59,7 +59,8 @@ export const User = createParamDecorator((data: "id" | "module" | "num" | "name"
             case "module": return module;
             case "num": return employee.employeeNum;
             case "name": return employee.employeeName;
-            case "sex": return employee.employeeSex
+            case "sex": return employee.employeeSex;
+            case "organization": return employee.employeeDepartment;
             case "type": return "employee";
         }
     }
@@ -73,7 +74,8 @@ export const User = createParamDecorator((data: "id" | "module" | "num" | "name"
             case "module": return module;
             case "num": return student.studentNum;
             case "name": return student.studentName;
-            case "sex": return student.studentSex
+            case "sex": return student.studentSex;
+            case "organization": return student.class.campusName;
             case "type": return "student";
         }
     }
@@ -86,7 +88,8 @@ export const User = createParamDecorator((data: "id" | "module" | "num" | "name"
             case "num": return maintainer.maintainerNum;
             case "name": return maintainer.maintainerName;
             case "sex": return maintainer.maintainerSex;
-            case "phone": return maintainer.maintainerPhone
+            case "phone": return maintainer.maintainerPhone;
+            case "organization": return "后勤处";
             case "type": return "mtr";
         }
     }

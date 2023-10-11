@@ -25,7 +25,7 @@ export class UsersService {
                     if (message && message !== "login error" && message !== "abnormal") {
                         token = { token: this.jwtService.sign(message) }
                         return token
-                    } else if (message === "login error") {
+                    } else if (message === "login error" || message === "abnormal") {
                         token = "账号或密码错误";
                     } else {
                         return token = { "message": "Unauthorized" };
@@ -40,5 +40,10 @@ export class UsersService {
         }
 
         return token
+    }
+
+    // 用户获取有权限模块的数据
+    async findUserModule(module: any) {
+        return module;
     }
 }

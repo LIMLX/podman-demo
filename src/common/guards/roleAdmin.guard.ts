@@ -69,6 +69,11 @@ export class AdminRoleGuard implements CanActivate {
         // 当前守护权限值
         let flag = true;
         roles.forEach((data) => {
+          // 如果是基础权限
+          if (data.admin === "admin") {
+            flag = true;
+            return;
+          }
           // 当有确定模块权限时，同时当adminAuth内有数据也就是有确认模块，同时等级大于约束等级时
           if (!adminAuth[data.admin] || adminAuth[data.admin] < data.level) {
             flag = false;

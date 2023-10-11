@@ -22,8 +22,18 @@ export class UserAdminService {
                     return { message: message }
                 }
                 ))
-
         return status
+    }
+
+    // 获取当前管理员基础信息
+    async findAdminData(adminId: string, adminNum: string, adminName: string, organization: string, module: any) {
+        return {
+            adminId: adminId,
+            adminNum: adminNum,
+            adminName: adminName,
+            organization: organization,
+            module: module
+        }
     }
 
     // 登录模块admin
@@ -39,7 +49,7 @@ export class UserAdminService {
                     if (message && message !== "login error" && message !== "abnormal") {
                         token = { token: this.jwtService.sign(message) }
                         return token
-                    } else if (message === "login error") {
+                    } else if (message === "login error" || message === "abnormal") {
                         token = "账号或密码错误"
                     } else {
                         return token = { "message": "Unauthorized" }

@@ -1,6 +1,6 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post, UseGuards } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
-import { AdminRole, AdminRoleGuard, Admin } from "src/common";
+import { AdminRole, AdminRoleGuard, Admin, AdminData } from "src/common";
 import { AuthAdminDto, CreateAdminDto, DelAuthAdminDto, FindUserAuthDto, FindUserOneDto, LoginDto } from "src/microservice/dto";
 import { UserAdminService } from "src/microservice/service";
 
@@ -17,6 +17,17 @@ export class UserAdminController {
     @Post("login")
     async login(@Body() loginDto: LoginDto) {
         return await this.usersService.login(loginDto);
+    }
+
+    // 获取当前管理员基础信息
+    @ApiOperation({ summary: "获取管理员数据", description: "获取管理员数据" })
+    @AdminRole([{ admin: Admin.Admin, level: 1 }])
+    @Get("findAdminData")
+    async findAdminData(@AdminData("id") adminId: string, @AdminData("num") adminNum: string, @AdminData("name") adminName: string, @AdminData("organization") organization: string, @AdminData("module") module: any) {
+        if (!adminId || adminId === "abnormal" || !adminNum || adminNum === "abnormal" || !adminName || adminName === "abnormal" || !organization || organization === "abnormal" || !module || module === "abnormal") {
+            return "abnormal";
+        }
+        return await this.usersService.findAdminData(adminId, adminNum, adminName, organization, module);
     }
 
     // 创建超级管理员

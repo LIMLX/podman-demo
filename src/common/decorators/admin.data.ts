@@ -4,7 +4,7 @@ import { Request } from 'express';
 import { JwtModuleOptions, JwtService } from "@nestjs/jwt";
 import { JWTDATA } from "../encryptions";
 
-export const AdminData = createParamDecorator((data: "id" | "module" | "num" | "name" | "role", ctx: ExecutionContext) => {
+export const AdminData = createParamDecorator((data: "id" | "module" | "num" | "name" | "role" | "organization", ctx: ExecutionContext) => {
     const config = new ConfigService();
     const request = ctx.switchToHttp().getRequest<Request>();
 
@@ -44,6 +44,7 @@ export const AdminData = createParamDecorator((data: "id" | "module" | "num" | "
             case "id": return turbo;
             case "num": return turbo;
             case "name": return turbo;
+            case "organization": return turbo;
             case "role": return turbo;
             case "module": return turbo;
         }
@@ -56,6 +57,7 @@ export const AdminData = createParamDecorator((data: "id" | "module" | "num" | "
                 case "id": return adminData.admin.employeeId;
                 case "num": return adminData.admin.employeeNum;
                 case "name": return adminData.admin.employeeName;
+                case "organization": return adminData.admin.employeeDepartment;
                 case "role": return adminData.admin.role;
                 case "module": return adminData.admin.module;
             }
@@ -66,6 +68,7 @@ export const AdminData = createParamDecorator((data: "id" | "module" | "num" | "
                 case "id": return adminData.admin.studentId;
                 case "num": return adminData.admin.studentNum;
                 case "name": return adminData.admin.studentName;
+                case "organization": return adminData.admin.studentCampus;
                 case "role": return adminData.admin.role;
                 case "module": return adminData.admin.module;
             }

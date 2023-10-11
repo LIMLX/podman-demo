@@ -1,5 +1,6 @@
-import { Body, Controller, Post } from "@nestjs/common";
+import { Body, Controller, Get, Post } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
+import { User } from "src/common";
 import { LoginDto } from "src/microservice/dto/users/user.dto";
 import { UsersService } from "src/microservice/service/users/user.service";
 
@@ -14,5 +15,11 @@ export class UserController {
     @Post('login')
     async login(@Body() loginDto: LoginDto) {
         return await this.usersService.login(loginDto);
+    }
+
+    // 用户获取有权限模块的数据
+    @Get('/findUserModule')
+    async findUserModule(@User("module") module: any) {
+        return await this.usersService.findUserModule(module);
     }
 }
