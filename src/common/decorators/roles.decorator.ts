@@ -2,6 +2,11 @@ import { SetMetadata } from '@nestjs/common';
 
 // 角色权限划分装饰器
 
+// 公共角色
+export const UserRole = (roles: { module: string, level: number }[]) => {
+    return SetMetadata("userRole", roles);
+}
+
 // 学生角色
 export const StudentRole = (roles: { module: string, level: number }[]) => {
     return SetMetadata("studentRole", roles);

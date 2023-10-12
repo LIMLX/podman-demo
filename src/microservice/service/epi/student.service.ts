@@ -74,7 +74,7 @@ export class EpiStudentService {
     return status;
   }
 
-  // 报备记录查看
+  // 报备记录详情查看
   async findReportOne(reportId: string) {
     const pattern = { cmd: "ep_student_findReportOne" };
     const data = { reportId: reportId };

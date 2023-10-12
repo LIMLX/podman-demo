@@ -1,16 +1,19 @@
-import { Controller, Get, Param, Post, Query, Res, UploadedFile, UseInterceptors } from "@nestjs/common";
+import { Controller, Get, Param, Post, Query, Res, UploadedFile, UseGuards, UseInterceptors } from "@nestjs/common";
 import { FileInterceptor } from "@nestjs/platform-express";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { LeaveFileService } from "src/microservice/service";
 import { Response } from "express";
+import { UserEnum, UserRole, UserRoleGuard } from "src/common";
 
-@ApiTags("leave")
+@ApiTags("请假文件")
 @Controller('leave/file')
+@UseGuards(UserRoleGuard)
 export class LeaveFileController {
   constructor(private readonly fileService: LeaveFileService) { }
 
   // 单文件上传
   @ApiOperation({ summary: "单文件上传的接口", description: "上传单个文件" })
+  @UserRole([{ module: UserEnum.Leave, level: 1 }])
   @Post('/upload')
   @UseInterceptors(FileInterceptor('file'))
   async uploadFile(@UploadedFile() file: Express.Multer.File) {
@@ -29,6 +32,7 @@ export class LeaveFileController {
 
   // 文件删除
   @ApiOperation({ summary: "单文件删除的接口", description: "单个文件删除" })
+  @UserRole([{ module: UserEnum.Leave, level: 1 }])
   @Get('/delFile/name=:fileName')
   async removeFile(@Param('fileName') fileName: string) {
     if (!fileName) {
@@ -38,12 +42,14 @@ export class LeaveFileController {
   }
 
   // 查看图片文件
+  @UserRole([{ module: UserEnum.Leave, level: 1 }])
   @Get('/fileName=:fileName')
   async getFiles(@Res() res: Response, @Param('fileName') fileName: string, @Query('type') type: string) {
     return await this.fileService.getFiles(res, fileName, type);
   }
 
   // 测试是否可以删除
+  @UserRole([{ module: UserEnum.Leave, level: 1 }])
   @Get("demo")
   async demo() {
     return await this.fileService.demo()

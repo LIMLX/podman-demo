@@ -59,24 +59,33 @@ export class StudentRoleGuard implements CanActivate {
       console.log('jwt解密错误');
       return false;
     }
-    // 对比查找是否有模块权限
-    let indexOf: number
-    studentData.module.forEach((data) => {
-      indexOf = module.indexOf(data.moduleNum);
-      if (indexOf >= 0) {
-        // 判断权限等级是否高于或者等于
-        if (data.operationLevel >= leave[indexOf]) {
-          // 每当成功验证权限后减少需要的权限量
-          sum--;
-        }
-      }
-    })
 
-    // 当权限>0没有完全去除时权限验证失败
-    if (sum > 0) {
+    // 验证是否为学生
+    if (!studentData.student || !studentData.student.studentId) {
       return false;
-    } else {
+    }
+
+    // 当为user时,同时拥有学生数据时，放行
+    if (module[0] === "user" && studentData.student && studentData.student.studentId) {
       return true;
     }
+
+    if (studentData.student) {
+      // 对比查找是否有模块权限
+      let userAuth = [];
+      studentData.module.forEach((data: { moduleNum: string, operationLevel: number }) => {
+        userAuth[data.moduleNum] = data.operationLevel;
+      });
+      let flag = true;
+      roles.forEach((data) => {
+        // 当有确定模块权限时，同时当userAuth内有数据也就是有确认模块，同时等级大于约束等级时
+        if (!userAuth[data.module] || userAuth[data.module] < data.level) {
+          flag = false;
+          return;
+        }
+      })
+      return flag
+    }
+    return false;
   }
 }

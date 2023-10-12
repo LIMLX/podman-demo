@@ -1,9 +1,8 @@
 import { Body, Controller, Delete, Get, Param, Patch, Post } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { Admin, AdminRole } from "src/common";
-import { User } from "src/common/decorators/user.data";
-import { AuthEmployeeDto, AuthStudentDto, CreateModuleDto, PrivateEmployeeAuthDto, PrivateStudentAuthDto, UpdateEmployeeAuthDto, UpdateEmployeePrivateDto, UpdateModuleDto, UpdateStudentAuthDto, UpdateStudentPrivateDto } from "src/microservice/dto";
-import { DeleteAuthEmployeePrivateDto, DeleteAuthEmployeeRoleDto, DeleteAuthStudentPrivateDto, DeleteAuthStudentRoleDto } from "src/microservice/dto/users/module.dto/module/delete-module.dto";
+import { AuthEmployeeDto, AuthStudentDto, CreateModuleDto, UpdateEmployeeAuthDto, UpdateModuleDto, UpdateStudentAuthDto, UpdateStudentPrivateDto } from "src/microservice/dto";
+import { DeleteAuthEmployeeRoleDto, DeleteAuthStudentRoleDto } from "src/microservice/dto/users/module.dto/module/delete-module.dto";
 import { UsersModuleService } from "src/microservice/service";
 
 @ApiTags('模块权限')

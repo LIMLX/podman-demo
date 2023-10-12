@@ -14,7 +14,8 @@ export default () => ({
         adminKEY: config.get('admin'),
         employeeKEY: config.get('employee'),
         repairsAdminKEY: config.get('repairsAdmin'),
-        repairsMtrKEY: config.get('repairsMtr')
+        repairsMtrKEY: config.get('repairsMtr'),
+        userKEY: config.get("user")
     },
 
     userService: {

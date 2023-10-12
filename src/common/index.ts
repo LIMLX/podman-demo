@@ -1,6 +1,5 @@
 export * from './guards'
 export * from './decorators'
 export * from './encryptions'
-export * from './enums'
 export * from './logger'
 export * from './health-check'
