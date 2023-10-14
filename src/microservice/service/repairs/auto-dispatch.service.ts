@@ -19,4 +19,12 @@ export class RepairsAutoDispatchService {
         let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
         return status;
     }
+
+    // 获取当前开关状态
+    async demo() {
+        const pattern = { cmd: "repairs_auto-dispatch_demo" };
+        const data = {};
+        let status = this.repairsService.send<any>(pattern, data).pipe(map((message: any) => { return message }));
+        return status;
+    }
 }

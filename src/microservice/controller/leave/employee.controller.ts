@@ -89,11 +89,12 @@ export class LeaveEmployeeController {
   @EmployeeRole([{ module: Employee.Leave, level: 1 }])
   @ApiOperation({ summary: "职工(辅导员)批准的接口", description: "辅导员操作请假单接口" })
   @Patch('/leavePass')
-  async auditLeave(@Body() updateLeaveDto: UpdateLeaveDto, @User('id') employeeId: string) {
-    if (!employeeId || employeeId === "abnormal") {
+  async auditLeave(@Body() updateLeaveDto: UpdateLeaveDto, @User('id') employeeId: string, @User("name") employeeName: string) {
+    if (!employeeId || employeeId === "abnormal" || !employeeName || employeeName === "abnormal") {
       return "abnormal";
     }
     updateLeaveDto.approverId = employeeId;
+    updateLeaveDto.approverName = employeeName;
     return await this.employeeService.leaveAuditOne(updateLeaveDto);
   }
 
@@ -101,11 +102,11 @@ export class LeaveEmployeeController {
   @EmployeeRole([{ module: Employee.Leave, level: 1 }])
   @ApiOperation({ summary: "职工(辅导员)批量批准的接口", description: "辅导员批量操作请假单接口" })
   @Patch('/leavePassMany')
-  async auditLeaveMany(@Body() updateLeaveManyDto: UpdateLeaveManyDto[], @User('id') employeeId: string) {
-    if (!employeeId || employeeId === "abnormal") {
+  async auditLeaveMany(@Body() updateLeaveManyDto: UpdateLeaveManyDto[], @User('id') employeeId: string, @User("name") employeeName: string) {
+    if (!employeeId || employeeId === "abnormal" || !employeeName || employeeName === "abnormal") {
       return "abnormal";
     }
-    return await this.employeeService.auditLeaveMany(updateLeaveManyDto, employeeId)
+    return await this.employeeService.auditLeaveMany(updateLeaveManyDto, employeeId, employeeName)
   }
 
   // Excel表下载(近返回文件路径)---利用express下载

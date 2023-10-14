@@ -2,17 +2,20 @@ import { OnGatewayInit, SubscribeMessage, WebSocketGateway, WebSocketServer } fr
 import { Server, Socket } from "socket.io";
 import * as amqp from 'amqplib';
 import { ConfigService } from "@nestjs/config";
-import { JwtModuleOptions, JwtService } from "@nestjs/jwt";
-import { JWTDATA } from '../../common';
+import { JwtAuth } from "./jwt";
+import { Admin } from "src/common";
 
-@WebSocketGateway(13005)
-export class MtrRepairsSocket implements OnGatewayInit {
+// 党史模块socket
+@WebSocketGateway(13008)
+export class HistorySocket implements OnGatewayInit {
+    socketName = "党史-13008---";
     @WebSocketServer() server: Server;
+    jwtAuth: JwtAuth;
     connection: amqp.Connection;
     channels: amqp.Channel;
     config: ConfigService;
     connectSum = 0;
-    jwtData: JWTDATA;
+    user: string[] = [];
 
     // 初始连接
     async handleConnection(client: Socket) {
@@ -24,17 +27,15 @@ export class MtrRepairsSocket implements OnGatewayInit {
             client.disconnect();
             return;
         }
-        const userData = await this.authentication(token);
-        if (!userData) {
+        // 进行身份数据获取及验证
+        const userData = await this.jwtAuth.authentication(token, "admin", [{ module: Admin.History, level: 1 }]);
+        if (!userData.auth) {
             console.log('身份验证错误或过期');
             client.disconnect();
             return;
         }
-        // 添加当前连接人数
-        this.connectSum++
-        if (this.connectSum === 1) {
-            console.log('再一次有人访问开启');
-        }
+        // 成功连接后，将其数据存入user中
+        this.userLink(userData.userId, client.id);
         this.server.emit('message', true);
     }
 
@@ -42,14 +43,15 @@ export class MtrRepairsSocket implements OnGatewayInit {
     handleDisconnect(client: Socket) {
         // 客户端断开连接事件
         console.log('断开id: ' + client.id);
+        this.userDisconnect(client.id);
         // 记录是否还有消费者在内
-        this.connectSum--
         if (this.connectSum <= 0) {
             console.log('无人访问关闭');
             this.connectSum = 0;
         }
     }
 
+    // 初始化
     async afterInit(server: Server) {
         // WebSocket服务器初始化事件
         console.log('socket用户初始化');
@@ -66,36 +68,33 @@ export class MtrRepairsSocket implements OnGatewayInit {
         try {
             this.connection = await amqp.connect(mqOptions);
             this.channels = await this.connection.createChannel();
-            console.log("RabbitMQ连接建立成功");
+            console.log(`${this.socketName}RabbitMQ连接建立成功`);
         } catch (error) {
-            console.log("RabbitMQ连接错误");
+            console.log(`${this.socketName}RabbitMQ连接错误`);
             console.error(error);
         }
-        // JWT初始化配置
-        // 配置option
-        const options: JwtModuleOptions = {
-            secret: this.config.get('JWT_ENC'),
-            signOptions: { expiresIn: this.config.get('JWT_TIME') }
-        }
-        this.jwtData = new JWTDATA(new JwtService(options));
+        // 进行初始化
+        this.jwtAuth = new JwtAuth();
+        this.jwtAuth.init(this.socketName);
         // MQ消费者监听
         try {
             // 检测是否存在此队列，存在不进行操作，不存在则进行持久化创建
-            await this.channels.assertQueue(this.config.get('RabbitMQ_socketQueueName'), { durable: true });
+            await this.channels.assertQueue(this.config.get('RabbitMQ_history_socketQueueName'), { durable: true });
             // 队列监听
-            await this.channels.consume(this.config.get('RabbitMQ_socketQueueName'), (msg) => {
-                // 当有传递1时
-                if (msg.content.toString() === "1") {
+            await this.channels.consume(this.config.get('RabbitMQ_history_socketQueueName'), (msg) => {
+                // 当有数值传递时，以数值作为消息时间发送出去
+                if (msg.content) {
                     this.channels.ack(msg);
                     // 使用socket发送true
                     if (this.connectSum > 0) {
-                        this.server.emit('message', true);
+                        // 给指定用户发送消息
+                        this.server.to(this.user.map(data => { return data })).emit(msg.content.toString(), true);
                     }
                 }
             })
         } catch (error) {
-            console.log("RabbitMQ消费者接收错误")
-            console.error(error)
+            console.log("RabbitMQ消费者接收错误");
+            console.error(error);
         }
     }
 
@@ -105,11 +104,21 @@ export class MtrRepairsSocket implements OnGatewayInit {
     //     this.server.emit('rapairSocket', payload);
     // }
 
-    // 身份验证
-    async authentication(token: string) {
-        try {
-            return await this.jwtData.getJWT(token);
-        } catch (error) {
+    // 用户连接
+    async userLink(userId: string, socketId: string) {
+        // 成功连接后，将其数据存入user中
+        this.user[userId] = socketId;
+        this.connectSum++;
+    }
+
+    // 用户断开连接
+    async userDisconnect(socketId: string) {
+        for (const [key, value] of Object.entries(this.user)) {
+            if (value === socketId) {
+                delete this.user[key]; // 移除断开连接的用户
+                this.connectSum--;
+                break;
+            }
         }
     }
 }

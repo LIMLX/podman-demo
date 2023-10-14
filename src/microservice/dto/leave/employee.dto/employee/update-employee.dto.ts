@@ -36,6 +36,11 @@ export class UpdateLeaveDto {
         description: '审批人'
     })
     approverId: string
+    @ApiProperty({
+        required: false,
+        description: '审批人姓名'
+    })
+    approverName: string
 
     @ApiProperty({
         required: false,

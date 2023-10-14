@@ -19,7 +19,7 @@ import { RepairsAdminService, RepairsAutoDispatchService, RepairsFileService, Re
 import { MsEpiHealth, MsHistoryHealth, MsLeaveHealth, MsRepairsHealth, MsSmsHealth, MsUserHealth, httpBlacklist } from './common';
 import { EpiEmployeeController, EpiClockTypeController, EpiAdminController, EpiStudentController, EpiFileController, EpiDivisionController } from './microservice/controller/epi';
 import { EpiClockAdminService, EpiClockTypeService, EpiDivisionService, EpiEmployeeService, EpiFileService, EpiStudentService } from './microservice/service/epi';
-import { MtrRepairsSocket } from './microservice/socket';
+import { RepairsSocket, LeaveSocket, HistorySocket } from './microservice/socket';
 import { UserAdminStudentController } from './microservice/controller/users/admin-student.controller';
 import { HistoryAdminController, HistoryDivisionController, HistoryFileController, HistoryUserController } from './microservice/controller/history';
 import { HistoryAdminService, HistoryDivisionService, HistoryFileService, HistoryUserService } from './microservice/service/history';
@@ -127,6 +127,7 @@ import { HistoryAdminService, HistoryDivisionService, HistoryFileService, Histor
     LeaveFileService,
     LeaveTypeService,
     LeaveAdminService,
+    LeaveSocket,
 
     // repair报修
     RepairsFileService,
@@ -135,7 +136,7 @@ import { HistoryAdminService, HistoryDivisionService, HistoryFileService, Histor
     RepairsMaintainerService,
     RepairsAdminService,
     RepairsUserService,
-    MtrRepairsSocket,
+    RepairsSocket,
 
     // epi报备
     EpiClockAdminService,
@@ -150,6 +151,7 @@ import { HistoryAdminService, HistoryDivisionService, HistoryFileService, Histor
     HistoryUserService,
     HistoryFileService,
     HistoryDivisionService,
+    HistorySocket,
 
     // 用户模块
     {

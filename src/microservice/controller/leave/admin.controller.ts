@@ -10,6 +10,14 @@ import { Response } from "express";
 @UseGuards(AdminRoleGuard)
 export class LeaveAdminController {
     constructor(private readonly adminService: LeaveAdminService) { }
+    // 获取动态
+    @ApiOperation({ summary: "获取动态", description: "获取动态" })
+    @AdminRole([{ admin: Admin.Leave, level: 1 }])
+    @Get("findLeaveLog")
+    async findLeaveLog() {
+        return await this.adminService.findLeaveLog();
+    }
+
     // 获取全部请假类型---离校---返校的数量
     @ApiOperation({ summary: "获取全部请假类型---离校---返校的数量", description: "获取全部请假类型---离校---返校的数量" })
     @AdminRole([{ admin: Admin.Leave, level: 1 }])

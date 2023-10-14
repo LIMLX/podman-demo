@@ -9,6 +9,20 @@ export class LeaveAdminService {
     constructor(
         @Inject("LEAVE_SERVICE") private readonly leaveService: ClientProxy
     ) { }
+    // 获取动态
+    async findLeaveLog() {
+        const pattern = { cmd: "leave_admin_findLeaveLog" };
+        const data = {};
+
+        let status = this.leaveService
+            .send<any>(pattern, data)
+            .pipe(
+                map((message: any) => {
+                    return message
+                }
+                ));
+        return status;
+    }
 
     // 获取全部请假类型---离校---返校的数量
     async findLeaveSum() {

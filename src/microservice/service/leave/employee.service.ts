@@ -130,9 +130,9 @@ export class LeaveEmployeeService {
   }
 
   // 批量审批
-  async auditLeaveMany(updateLeaveManyDto: UpdateLeaveManyDto[], employeeId: string) {
+  async auditLeaveMany(updateLeaveManyDto: UpdateLeaveManyDto[], employeeId: string, employeeName: string) {
     const pattern = { cmd: "leave_employee_leavePassMany" };
-    const data = { employeeId: employeeId, updateLeaveManyDto: updateLeaveManyDto }
+    const data = { employeeId: employeeId, employeeName: employeeName, updateLeaveManyDto: updateLeaveManyDto }
 
     let status = this.leaveService
       .send<any>(pattern, data)

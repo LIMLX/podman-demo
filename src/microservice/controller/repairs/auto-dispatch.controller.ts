@@ -24,4 +24,9 @@ export class RepairsAutoDispatchController {
     async findSetting() {
         return await this.autoDispatchService.findSetting();
     }
+
+    @Get("demo")
+    async demo() {
+        return await this.autoDispatchService.demo();
+    }
 }
