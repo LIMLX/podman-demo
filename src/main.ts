@@ -8,6 +8,8 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
+  // 全局添加api路径
+  app.setGlobalPrefix("api");
   // 引入config配置文件
   const configService = app.get(ConfigService);
   // 获取当前环境
@@ -22,7 +24,6 @@ async function bootstrap() {
   } else {
     console.log('生产环境')
   }
-
   // 注册全局效验器
   app.useGlobalPipes(new ValidationPipe())
   // 响应拦截器

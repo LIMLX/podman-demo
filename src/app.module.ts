@@ -228,6 +228,7 @@ export class AppModule implements NestModule {
       consumer.apply(MsUserHealth).forRoutes({ path: 'users/*', method: RequestMethod.ALL }),
       consumer.apply(MsEpiHealth).forRoutes({ path: 'epi/*', method: RequestMethod.ALL }),
       consumer.apply(MsHistoryHealth).forRoutes({ path: 'history/*', method: RequestMethod.ALL }),
+      consumer.apply(MsHistoryHealth).forRoutes({ path: 'notice/*', method: RequestMethod.ALL }),
       // 黑名单拦截
       consumer.apply(httpBlacklist).forRoutes({ path: '*', method: RequestMethod.ALL })
   }
