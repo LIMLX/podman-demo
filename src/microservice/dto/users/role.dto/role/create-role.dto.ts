@@ -136,5 +136,13 @@ export class AuthRoleDto {
     @IsNotEmpty()
     @IsString()
     roleId: string
+
+    @ApiProperty({
+        required: true,
+        description: '角色权限等级'
+    })
+
+    @IsNotEmpty()
+    @IsString()
     operationId: string
 }

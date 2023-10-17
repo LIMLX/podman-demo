@@ -55,7 +55,7 @@ export class UsersRoleController {
   @ApiOperation({ summary: "授权学生角色模块权限", description: "授权学生角色模块权限" })
   @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
   @Post("authStudentRole")
-  async authStudentRole(authRoleDto: AuthRoleDto) {
+  async authStudentRole(@Body() authRoleDto: AuthRoleDto) {
     return await this.usersService.authStudentRole(authRoleDto);
   }
 
@@ -63,7 +63,7 @@ export class UsersRoleController {
   @ApiOperation({ summary: "删除/撤销学生角色权限", description: "删除/撤销学生角色权限" })
   @AdminRole([{ admin: Admin.SuperAdmin, level: 1 }])
   @Delete("delStudentRole")
-  async delStudentRole(authRoleDto: AuthRoleDto) {
+  async delStudentRole(@Body() authRoleDto: AuthRoleDto) {
     return await this.usersService.delStudentRole(authRoleDto);
   }
 

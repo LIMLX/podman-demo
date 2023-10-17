@@ -41,6 +41,18 @@ export class CreateEmployeeDto {
         description: '角色id'
     })
     role: string[]
+
+    @ApiProperty({
+        required: false,
+        description: '管理的班级的id'
+    })
+    classId: string[]
+
+    @ApiProperty({
+        required: false,
+        description: '授权的管理员模块id'
+    })
+    adminRole: string[]
     phone: string
     identification: string
 }
