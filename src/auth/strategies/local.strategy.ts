@@ -11,16 +11,12 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     super();
   }
   async validate(userDTO): Promise<any> {
-
     // 验证数据是否存在
-    const user: any = this.authService.validateUser(userDTO)
-
-    console.log(user)
-
+    const user: any = this.authService.validateUser(userDTO);
     return {
       userId: 1,
       username: 'john',
       password: 'changeme',
-    }
+    };
   }
 }

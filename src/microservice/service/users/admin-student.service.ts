@@ -11,13 +11,13 @@ export class UserAdminStudentService {
     // 查询学生
     async findStudent(findStudentDto: FindStudentDto) {
         const pattern = { cmd: "users_adminStudent_findStudent" };
-        const data = findStudentDto
+        const data = findStudentDto;
 
         const studentData = this.userService
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;
                 }
                 ))
         return studentData;
@@ -26,13 +26,13 @@ export class UserAdminStudentService {
     // 查询学生详情数据
     async findStudentOne(studentId: string) {
         const pattern = { cmd: "users_adminStudent_findStudentOne" };
-        const data = studentId
+        const data = studentId;
 
         const studentData = this.userService
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;
                 }
                 ))
         return studentData;
@@ -48,7 +48,7 @@ export class UserAdminStudentService {
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;
                 }
                 ))
         return studentData;
@@ -63,7 +63,7 @@ export class UserAdminStudentService {
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;
                 }
                 ))
         return status;
@@ -78,7 +78,7 @@ export class UserAdminStudentService {
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;
                 }
                 ))
         return status;
@@ -93,7 +93,7 @@ export class UserAdminStudentService {
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;
                 }
                 ))
         return status;
@@ -108,7 +108,7 @@ export class UserAdminStudentService {
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;;
                 }
                 ))
         return status;
@@ -123,7 +123,7 @@ export class UserAdminStudentService {
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;
                 }
                 ))
         return status;
@@ -138,7 +138,7 @@ export class UserAdminStudentService {
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;
                 }
                 ))
         return status;
@@ -153,7 +153,7 @@ export class UserAdminStudentService {
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;
                 }
                 ))
         return status;
@@ -176,7 +176,7 @@ export class UserAdminStudentService {
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;
                 }
                 ))
         return status;
@@ -191,7 +191,7 @@ export class UserAdminStudentService {
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;
                 }
                 ))
         return status;
@@ -206,7 +206,7 @@ export class UserAdminStudentService {
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;
                 }
                 ))
         return status;

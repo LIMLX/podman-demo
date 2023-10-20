@@ -13,15 +13,15 @@ export class UserEmployeeService {
   // 修改职工密码
   async updateEmployeePsw(updateEmployeePswDto: UpdateEmployeePswDto) {
     const pattern = { cmd: "users_employee_employeeUpdatePsw" };
-    const data = updateEmployeePswDto
+    const data = updateEmployeePswDto;
 
     let status = this.userService
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
-    return status
+    return status;
   }
 }

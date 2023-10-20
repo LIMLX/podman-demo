@@ -49,6 +49,7 @@ export class CreateNoticeDto {
         fileSite: string
         fileName: string
         fileType: string
+        fileSize: number
     }[]
 
     delFile?: {

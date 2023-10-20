@@ -21,7 +21,7 @@ export class MsRepairsHealth implements NestInterceptor {
     ) { }
 
     async intercept(context: ExecutionContext, next: CallHandler): Promise<Observable<any>> {
-        return next.handle()
+        return next.handle();
     }
 
     // 请求和响应周期
@@ -33,7 +33,7 @@ export class MsRepairsHealth implements NestInterceptor {
             throw new ServiceUnavailableException();
         }
         // 放行
-        return next()
+        return next();
     }
 }
 
@@ -46,7 +46,7 @@ export class MsLeaveHealth implements NestInterceptor {
 
     async intercept(context: ExecutionContext, next: CallHandler): Promise<Observable<any>> {
         // 放行
-        return next.handle()
+        return next.handle();
     }
 
     // 请求和响应周期
@@ -57,7 +57,7 @@ export class MsLeaveHealth implements NestInterceptor {
         } catch (error) {
             throw new ServiceUnavailableException();
         }
-        return next()
+        return next();
     }
 }
 
@@ -70,7 +70,7 @@ export class MsSmsHealth implements NestInterceptor {
 
     async intercept(context: ExecutionContext, next: CallHandler): Promise<Observable<any>> {
         // 放行
-        return next.handle()
+        return next.handle();
     }
 
     // 请求和响应周期
@@ -83,7 +83,7 @@ export class MsSmsHealth implements NestInterceptor {
         }
 
         // 放行
-        return next()
+        return next();
     }
 }
 
@@ -96,7 +96,7 @@ export class MsUserHealth implements NestInterceptor {
 
     async intercept(context: ExecutionContext, next: CallHandler): Promise<Observable<any>> {
         // 放行
-        return next.handle()
+        return next.handle();
     }
 
     // 请求和响应周期
@@ -108,7 +108,7 @@ export class MsUserHealth implements NestInterceptor {
             throw new ServiceUnavailableException();
         }
         // 放行
-        return next()
+        return next();
     }
 }
 
@@ -121,7 +121,7 @@ export class MsEpiHealth implements NestInterceptor {
 
     async intercept(context: ExecutionContext, next: CallHandler): Promise<Observable<any>> {
         // 放行
-        return next.handle()
+        return next.handle();
     }
 
     // 请求和响应周期
@@ -133,7 +133,7 @@ export class MsEpiHealth implements NestInterceptor {
             throw new ServiceUnavailableException();
         }
         // 放行
-        return next()
+        return next();
     }
 }
 
@@ -146,7 +146,7 @@ export class MsHistoryHealth implements NestInterceptor {
 
     async intercept(context: ExecutionContext, next: CallHandler): Promise<Observable<any>> {
         // 放行
-        return next.handle()
+        return next.handle();
     }
 
     // 请求和响应周期
@@ -158,6 +158,31 @@ export class MsHistoryHealth implements NestInterceptor {
             throw new ServiceUnavailableException();
         }
         // 放行
-        return next()
+        return next();
+    }
+}
+
+// notice(通知)服务
+@Injectable()
+export class MsNoticeHealth implements NestInterceptor {
+    constructor(
+        @Inject("NOTICE_SERVICE") private readonly epiService: ClientProxy
+    ) { }
+
+    async intercept(context: ExecutionContext, next: CallHandler): Promise<Observable<any>> {
+        // 放行
+        return next.handle();
+    }
+
+    // 请求和响应周期
+    async use(req: Request, res: Response, next: NextFunction) {
+        // 检测微服务状态
+        try {
+            await this.epiService.connect();
+        } catch (error) {
+            throw new ServiceUnavailableException();
+        }
+        // 放行
+        return next();
     }
 }

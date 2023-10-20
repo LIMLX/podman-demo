@@ -14,21 +14,21 @@ export class ResponseInterceptor implements NestInterceptor {
                     (data) => {
                         // 日志
 
-                        let message: any
+                        let message: any;
 
                         if (!data) {
-                            data = "0"
+                            data = "0";
                         }
 
                         if (data.message) {
-                            message = data.message
+                            message = data.message;
                         } else {
-                            message = data
+                            message = data;
                         }
 
                         // 捕获操作异常，导致报错401
                         if (data.message === "abnormal") {
-                            response.status(401)
+                            response.status(401);
                             return {
                                 success: true,
                                 message: message,
@@ -38,7 +38,7 @@ export class ResponseInterceptor implements NestInterceptor {
 
                         // 捕获操作异常，导致报错401
                         if (data === "abnormal") {
-                            response.status(401)
+                            response.status(401);
                             return {
                                 success: true,
                                 message: message,

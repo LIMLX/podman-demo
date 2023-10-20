@@ -16,7 +16,7 @@ import { LeaveAdminService, LeaveDivisionService, LeaveEmployeeService, LeaveFil
 import { LeaveAdminController, LeaveDivisionController, LeaveEmployeeController, LeaveFileController, LeaveStudentController, LeaveTypeController } from './microservice/controller/leave';
 import { RepairsAdminController, RepairsAutoDispatchController, RepairsFileController, RepairsMaintainerController, RepairsManagerController, RepairsUserController } from './microservice/controller/repairs';
 import { RepairsAdminService, RepairsAutoDispatchService, RepairsFileService, RepairsMaintainerService, RepairsManagerService, RepairsUserService } from './microservice/service/repairs';
-import { MsEpiHealth, MsHistoryHealth, MsLeaveHealth, MsRepairsHealth, MsSmsHealth, MsUserHealth, httpBlacklist } from './common';
+import { MsEpiHealth, MsHistoryHealth, MsLeaveHealth, MsNoticeHealth, MsRepairsHealth, MsSmsHealth, MsUserHealth, httpBlacklist } from './common';
 import { EpiEmployeeController, EpiClockTypeController, EpiAdminController, EpiStudentController, EpiFileController, EpiDivisionController } from './microservice/controller/epi';
 import { EpiClockAdminService, EpiClockTypeService, EpiDivisionService, EpiEmployeeService, EpiFileService, EpiStudentService } from './microservice/service/epi';
 import { RepairsSocket, LeaveSocket, HistorySocket } from './microservice/socket';
@@ -26,8 +26,11 @@ import { HistoryAdminService, HistoryDivisionService, HistoryFileService, Histor
 
 @Module({
   imports: [
-    PassportModule,
-    CacheModule.register(),
+    ConfigModule.forRoot({
+      envFilePath: ['.env'],
+      isGlobal: true,
+      load: [baseConfig]
+    }),
     JwtModule.registerAsync({
       useFactory: (config: ConfigService) => ({
         secret: config.get('jwt').KEY,
@@ -35,12 +38,8 @@ import { HistoryAdminService, HistoryDivisionService, HistoryFileService, Histor
       }),
       inject: [ConfigService]
     }),
-
-    ConfigModule.forRoot({
-      envFilePath: ['.env'],
-      isGlobal: true,
-      load: [baseConfig]
-    }),
+    PassportModule,
+    CacheModule.register(),
     AuthModule
   ],
 
@@ -228,7 +227,7 @@ export class AppModule implements NestModule {
       consumer.apply(MsUserHealth).forRoutes({ path: 'users/*', method: RequestMethod.ALL }),
       consumer.apply(MsEpiHealth).forRoutes({ path: 'epi/*', method: RequestMethod.ALL }),
       consumer.apply(MsHistoryHealth).forRoutes({ path: 'history/*', method: RequestMethod.ALL }),
-      consumer.apply(MsHistoryHealth).forRoutes({ path: 'notice/*', method: RequestMethod.ALL }),
+      consumer.apply(MsNoticeHealth).forRoutes({ path: 'notice/*', method: RequestMethod.ALL }),
       // 黑名单拦截
       consumer.apply(httpBlacklist).forRoutes({ path: '*', method: RequestMethod.ALL })
   }

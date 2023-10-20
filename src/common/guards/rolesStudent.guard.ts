@@ -4,7 +4,7 @@ import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
 import { Request } from 'express'
 import { JWTDATA } from '../encryptions';
-import { StudentData } from '../dto/userToken.dto';
+import { StudentData } from './dto/userToken.dto';
 
 @Injectable()
 export class StudentRoleGuard implements CanActivate {
@@ -54,7 +54,7 @@ export class StudentRoleGuard implements CanActivate {
     let studentData: StudentData;
 
     try {
-      studentData = this.jwtData.getJWT(jwt)
+      studentData = this.jwtData.getJWT(jwt);
     } catch (error) {
       console.log('jwt解密错误');
       return false;
@@ -84,7 +84,7 @@ export class StudentRoleGuard implements CanActivate {
           return;
         }
       })
-      return flag
+      return flag;
     }
     return false;
   }

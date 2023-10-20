@@ -6,13 +6,12 @@ import { map } from "rxjs";
 export class AuthService {
     constructor(
         @Inject("USER_SERVICE") private readonly userService: ClientProxy
-        ) {}
+    ) { }
 
-    validateUser(userDTO ) {
-    const pattern = { cmd: "user_validateUser" };
-
-    return this.userService
-        .send<string>(pattern,userDTO)
-        .pipe(map((massage: string) => ({ massage })));
+    validateUser(userDTO) {
+        const pattern = { cmd: "user_validateUser" };
+        return this.userService
+            .send<string>(pattern, userDTO)
+            .pipe(map((massage: string) => ({ massage })));
     }
 }

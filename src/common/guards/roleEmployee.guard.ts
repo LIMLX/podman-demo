@@ -4,7 +4,7 @@ import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
 import { Request } from 'express'
 import { JWTDATA } from '../encryptions';
-import { EmployeeData } from '../dto/userToken.dto';
+import { EmployeeData } from './dto/userToken.dto';
 
 @Injectable()
 export class EmployeeRoleGuard implements CanActivate {
@@ -25,19 +25,19 @@ export class EmployeeRoleGuard implements CanActivate {
     }
 
     if (roles.length === 0) {
-      return false
+      return false;
     }
 
     //整理守卫数据
-    let module: string[] = []
-    let leave: number[] = []
+    let module: string[] = [];
+    let leave: number[] = [];
 
     // 总模块权限量
-    let sum = 0
+    let sum = 0;
     roles.forEach((data) => {
-      sum++
-      module.push(data.module)
-      leave.push(data.level)
+      sum++;
+      module.push(data.module);
+      leave.push(data.level);
     })
 
     //====================================JWT权限验证和token解密==================================
@@ -45,17 +45,17 @@ export class EmployeeRoleGuard implements CanActivate {
     const req: Request = context.switchToHttp().getRequest();
     // 截取token数据，获得jwt
     if (req.headers.authorization === undefined || req.headers.authorization.indexOf('Bearer ') === -1) {
-      return false
+      return false;
     }
-    const jwt = req.headers.authorization.split('Bearer ')[1]
+    const jwt = req.headers.authorization.split('Bearer ')[1];
     // jwt解密
-    let employeeData: EmployeeData
+    let employeeData: EmployeeData;
 
     try {
-      employeeData = this.jwtData.getJWT(jwt)
+      employeeData = this.jwtData.getJWT(jwt);
     } catch (error) {
-      console.error('jwt解密错误')
-      return false
+      console.error('jwt解密错误');
+      return false;
     }
 
     // 验证是否为职工
@@ -82,7 +82,7 @@ export class EmployeeRoleGuard implements CanActivate {
           return;
         }
       })
-      return flag
+      return flag;
     }
     return false;
   }

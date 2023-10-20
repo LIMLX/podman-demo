@@ -12,7 +12,7 @@ export const AdminData = createParamDecorator((data: "id" | "module" | "num" | "
     const options: JwtModuleOptions = {
         secret: config.get('JWT_ENC'),
         signOptions: { expiresIn: config.get('JWT_TIME') }
-    }
+    };
     // 创建jwtService
     const jwtService = new JwtService(options);
     // 注入到构造函数内(
@@ -20,7 +20,7 @@ export const AdminData = createParamDecorator((data: "id" | "module" | "num" | "
     // 提取前端携带的token
     if (!request.headers.authorization) {
         return undefined;
-    }
+    };
     let jwt: any;
     try {
         jwt = request.headers.authorization.split('Bearer ')[1];

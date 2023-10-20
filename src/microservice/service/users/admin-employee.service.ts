@@ -11,13 +11,13 @@ export class UserAdminEmployeeService {
     // 查询职工
     async findEmployee(departmentId: string, search: string, page: number) {
         const pattern = { cmd: "users_adminEmployee_findEmployee" };
-        const data = { departmentId: departmentId, search: search, page: page }
+        const data = { departmentId: departmentId, search: search, page: page };
 
         const employeeData = this.userService
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;
                 }
                 ))
         return employeeData;
@@ -32,7 +32,7 @@ export class UserAdminEmployeeService {
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;
                 }
                 ))
         return employeeData;
@@ -41,13 +41,12 @@ export class UserAdminEmployeeService {
     // 查询职工当前筛选条件下的总数量
     async findEmployeeSum(departmentId: string, search: string) {
         const pattern = { cmd: "users_adminEmployee_findEmployeeSum" };
-        const data = { departmentId: departmentId, search: search }
-
+        const data = { departmentId: departmentId, search: search };
         const employeeData = this.userService
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;
                 }
                 ))
         return employeeData;
@@ -62,7 +61,7 @@ export class UserAdminEmployeeService {
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;
                 }
                 ))
         return status;
@@ -77,7 +76,7 @@ export class UserAdminEmployeeService {
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;
                 }
                 ))
         return status;
@@ -92,7 +91,7 @@ export class UserAdminEmployeeService {
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;
                 }
                 ))
         return status;
@@ -107,7 +106,7 @@ export class UserAdminEmployeeService {
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;
                 }
                 ))
         return status;
@@ -122,7 +121,7 @@ export class UserAdminEmployeeService {
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;
                 }
                 ))
         return status;
@@ -145,7 +144,7 @@ export class UserAdminEmployeeService {
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;
                 }
                 ))
         return status;
@@ -160,7 +159,7 @@ export class UserAdminEmployeeService {
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;
                 }
                 ))
         return status;
@@ -175,7 +174,7 @@ export class UserAdminEmployeeService {
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;
                 }
                 ))
         return status;
@@ -190,7 +189,7 @@ export class UserAdminEmployeeService {
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;
                 }
                 ))
         return status;
@@ -205,7 +204,7 @@ export class UserAdminEmployeeService {
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;
                 }
                 ))
         return status;
@@ -220,7 +219,7 @@ export class UserAdminEmployeeService {
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
-                    return message
+                    return message;
                 }
                 ))
         return status;

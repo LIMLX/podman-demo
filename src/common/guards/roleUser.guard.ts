@@ -4,7 +4,7 @@ import { Reflector } from '@nestjs/core';
 import { Observable } from 'rxjs';
 import { Request } from 'express'
 import { JWTDATA } from '../encryptions';
-import { StudentData } from '../dto/userToken.dto';
+import { StudentData } from './dto/userToken.dto';
 
 @Injectable()
 export class UserRoleGuard implements CanActivate {

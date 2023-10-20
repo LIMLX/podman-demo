@@ -15,12 +15,16 @@ export class NoticeUserController {
   @ApiOperation({ summary: "查看所有通知", description: "查看所有通知" })
   @UserRole([{ module: UserEnum.Notice, level: 1 }])
   @Get("findNotice/page=:page")
-  async findNotice(@Param() findNoticeDto: FindNoticeDto) {
+  async findNotice(@Param() findNoticeDto: FindNoticeDto, @User("id") userId: string) {
     // 进行页数数据验证和转换
     if (!/^[0-9]*$/.test(findNoticeDto.page)) {
       return "abnormal";
     }
+    if (!userId || userId === "abnormal") {
+      return "abnormal";
+    }
     findNoticeDto.page = Number(findNoticeDto.page);
+    findNoticeDto.userId = userId;
     return await this.userService.findNotice(findNoticeDto);
   }
 

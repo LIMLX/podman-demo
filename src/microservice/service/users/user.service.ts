@@ -24,7 +24,7 @@ export class UsersService {
                 map((message: any) => {
                     if (message && message !== "login error" && message !== "abnormal") {
                         token = { token: this.jwtService.sign(message) }
-                        return token
+                        return token;
                     } else if (message === "login error" || message === "abnormal") {
                         token = "账号或密码错误";
                     } else {
@@ -34,12 +34,12 @@ export class UsersService {
 
         // 异步执行获取查询的数据
         try {
-            await lastValueFrom(observable)
+            await lastValueFrom(observable);
         } catch (error) {
-            console.error(error)
+            console.error(error);
         }
 
-        return token
+        return token;
     }
 
     // 用户获取有权限模块的数据

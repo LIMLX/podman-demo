@@ -13,16 +13,16 @@ export class UserStudentService {
   // 学生密码修改
   async updateStudentPsw(updateStudentPswDto: UpdateStudentPswDto) {
     const pattern = { cmd: "users_student_studentUpdatePsw" };
-    const data = updateStudentPswDto
+    const data = updateStudentPswDto;
 
     let status = this.userService
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return { message: message }
+          return { message: message };
         }
         ))
-    return status
+    return status;
   }
 
   // 修改头像
@@ -34,31 +34,31 @@ export class UserStudentService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return { message: message }
+          return { message: message };
         }
         ))
-    return status
+    return status;
   }
 
   // 学生数据查询
   async getStudentData(studentId: string) {
     const pattern = { cmd: "users_student_getStudentData" };
-    const data = studentId
+    const data = studentId;
 
     let status = this.userService
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return { message: message }
+          return { message: message };
         }
         ))
-    return status
+    return status;
   }
 
   //  头像文件查看
   async getStudentAvatar(res: Response, studentId: string) {
     const pattern = { cmd: "users_student_getStudentAvatar" };
-    const data = studentId
+    const data = studentId;
     let status = this.userService.send<any>(pattern, data).pipe(map((message: any) => {
       if (message !== "Unknown resource") {
         res.sendFile(message, (err) => {

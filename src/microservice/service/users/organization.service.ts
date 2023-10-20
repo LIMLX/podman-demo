@@ -18,7 +18,7 @@ export class UsersOrganizationService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -33,10 +33,10 @@ export class UsersOrganizationService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
-    return status
+    return status;
   }
 
   // 删除二级学院
@@ -48,7 +48,7 @@ export class UsersOrganizationService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -63,7 +63,7 @@ export class UsersOrganizationService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -78,7 +78,7 @@ export class UsersOrganizationService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -93,7 +93,7 @@ export class UsersOrganizationService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -108,7 +108,7 @@ export class UsersOrganizationService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -123,7 +123,7 @@ export class UsersOrganizationService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -138,7 +138,7 @@ export class UsersOrganizationService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -153,7 +153,7 @@ export class UsersOrganizationService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -168,7 +168,7 @@ export class UsersOrganizationService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -183,7 +183,7 @@ export class UsersOrganizationService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -198,7 +198,7 @@ export class UsersOrganizationService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -213,7 +213,7 @@ export class UsersOrganizationService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -228,7 +228,7 @@ export class UsersOrganizationService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -243,7 +243,7 @@ export class UsersOrganizationService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -258,7 +258,7 @@ export class UsersOrganizationService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -269,45 +269,45 @@ export class UsersOrganizationService {
   // 创建学校
   async createSchool(createSchoolDto: CreateSchoolDto) {
     const pattern = { cmd: "users_school_create" };
-    const data = createSchoolDto
+    const data = createSchoolDto;
 
     let status = this.userService
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
-    return status
+    return status;
   }
 
   // 修改学校
   async updateSchool(updateSchoolDto: UpdateSchoolDto) {
     const pattern = { cmd: "users_school_update" };
-    const data = updateSchoolDto
+    const data = updateSchoolDto;
 
     let status = this.userService
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
-    return status
+    return status;
   }
 
   // 获取所有学校
   async findSchoolAll() {
     const pattern = { cmd: "users_school_findAll" };
-    const data = {}
+    const data = {};
 
     let status = this.userService
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
-    return status
+    return status;
   }
 }

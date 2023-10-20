@@ -27,28 +27,28 @@ export class RepairsMtrRoleGuard implements CanActivate {
         const req: Request = context.switchToHttp().getRequest();
         // 截取token数据，获得jwt
         if (req.headers.authorization === undefined || req.headers.authorization.indexOf('Bearer ') === -1) {
-            return false
+            return false;
         }
-        const jwt = req.headers.authorization.split('Bearer ')[1]
+        const jwt = req.headers.authorization.split('Bearer ')[1];
         // jwt解密
-        let mtrData: any
+        let mtrData: any;
 
         try {
-            mtrData = this.jwtData.getJWT(jwt)
+            mtrData = this.jwtData.getJWT(jwt);
         } catch (error) {
-            console.error('jwt解密错误')
-            return false
+            console.error('jwt解密错误');
+            return false;
         }
 
         // 判断
         if (mtrData.maintainer) {
             if (mtrData.maintainer.maintainerId && mtrData.maintainer.maintainerNum && mtrData.maintainer.maintainerName) {
-                return true
+                return true;
             } else {
-                return false
+                return false;
             }
         }
 
-        return false
+        return false;
     }
 }

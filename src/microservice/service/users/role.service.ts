@@ -12,46 +12,46 @@ export class UsersRoleService {
   // 创建角色
   async createRole(createRoleDto: CreateRoleDto) {
     const pattern = { cmd: "users_role_create" };
-    const data = createRoleDto
+    const data = createRoleDto;
 
     let status = this.userService
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
-    return status
+    return status;
   }
 
   // 修改角色
   async updateRole(updateRoledto: UpdateRoleDto) {
     const pattern = { cmd: "users_role_update" };
-    const data = updateRoledto
+    const data = updateRoledto;
 
     let status = this.userService
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
-    return status
+    return status;
   }
 
   // 删除角色
   async deleteRole(deleteRoleDto: DeleteRoleDto) {
     const pattern = { cmd: "users_role_delete" };
-    const data = deleteRoleDto
+    const data = deleteRoleDto;
 
     let status = this.userService
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
-    return status
+    return status;
   }
 
   // 授权职工的角色
@@ -63,7 +63,7 @@ export class UsersRoleService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -78,7 +78,7 @@ export class UsersRoleService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -93,7 +93,7 @@ export class UsersRoleService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -108,7 +108,7 @@ export class UsersRoleService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -123,7 +123,7 @@ export class UsersRoleService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -138,7 +138,7 @@ export class UsersRoleService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -147,16 +147,16 @@ export class UsersRoleService {
   // 获取所有职工角色信息
   async findRoleEmployeeAll() {
     const pattern = { cmd: "users_role_findEmployeeAll" };
-    const data = {}
+    const data = {};
 
     let status = this.userService
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
-    return status
+    return status;
   }
 
   // 获取某个职工角色下的用户信息
@@ -183,7 +183,7 @@ export class UsersRoleService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -198,10 +198,10 @@ export class UsersRoleService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
-    return status
+    return status;
   }
 
 
@@ -214,26 +214,26 @@ export class UsersRoleService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
-    return status
+    return status;
   }
 
 
   // 获取所有学生角色信息
   async findRoleStudentAll() {
     const pattern = { cmd: "users_role_findStudentAll" };
-    const data = {}
+    const data = {};
 
     let status = this.userService
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
-    return status
+    return status;
   }
 
   // 获取某个学生角色下的模块权限等级
@@ -245,26 +245,26 @@ export class UsersRoleService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
-    return status
+    return status;
   }
 
 
   // 获取某个学生角色下的用户信息
   async findStudent(roleId: string, like: string, page: number) {
     const pattern = { cmd: "users_role_findStudent" };
-    const data = { roleId: roleId, page: page, like: like }
+    const data = { roleId: roleId, page: page, like: like };
 
     let status = this.userService
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
-    return status
+    return status;
   }
 
   // 获取学生角色下的学生总数量接口
@@ -276,10 +276,10 @@ export class UsersRoleService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
-    return status
+    return status;
   }
 
   // 根据学号/姓名获取学生数据
@@ -291,10 +291,10 @@ export class UsersRoleService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
-    return status
+    return status;
   }
 
   // 获取所有管理员类
@@ -306,7 +306,7 @@ export class UsersRoleService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -321,7 +321,7 @@ export class UsersRoleService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -336,7 +336,7 @@ export class UsersRoleService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -351,7 +351,7 @@ export class UsersRoleService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -366,7 +366,7 @@ export class UsersRoleService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -381,7 +381,7 @@ export class UsersRoleService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -396,7 +396,7 @@ export class UsersRoleService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;
@@ -411,7 +411,7 @@ export class UsersRoleService {
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
     return status;

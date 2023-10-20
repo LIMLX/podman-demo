@@ -12,16 +12,16 @@ export class UsersModuleService {
   // 创建模块
   async createModule(createModuleDto: CreateModuleDto) {
     const pattern = { cmd: "users_module_create" };
-    const data = createModuleDto
+    const data = createModuleDto;
 
     let status = this.userService
       .send<any>(pattern, data)
       .pipe(
         map((message: any) => {
-          return message
+          return message;
         }
         ))
-    return status
+    return status;
   }
 
   // 修改模块
