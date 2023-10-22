@@ -5,6 +5,7 @@ import { ResponseInterceptor } from './interceptor';
 import { HttpFilter } from './interceptor';
 import { ValidationPipe } from '@nestjs/common';
 import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
+import { WINSTON_MODULE_NEST_PROVIDER } from 'nest-winston';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule);
@@ -30,7 +31,10 @@ async function bootstrap() {
   app.useGlobalInterceptors(new ResponseInterceptor());
   // 异常过滤器
   app.useGlobalFilters(new HttpFilter());
-  app.enableCors(); // 启用 CORS
+  // 启用 CORS
+  app.enableCors();
+  // 注册log
+  app.useLogger(app.get(WINSTON_MODULE_NEST_PROVIDER));
   await app.listen(configService.get('port'), () => {
     console.log(`正在监听 ${configService.get('port')}`);
   });

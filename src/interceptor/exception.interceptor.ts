@@ -1,5 +1,7 @@
-import { ExceptionFilter, Catch, ArgumentsHost, HttpException, BadRequestException, UnauthorizedException, NotFoundException, ServiceUnavailableException, ForbiddenException } from '@nestjs/common'
+import { ExceptionFilter, Catch, ArgumentsHost, HttpException, BadRequestException, UnauthorizedException, NotFoundException, ServiceUnavailableException, ForbiddenException, Inject } from '@nestjs/common'
 import { Request, Response } from 'express'
+import { WINSTON_MODULE_PROVIDER } from 'nest-winston'
+import { Logger } from 'winston'
 
 @Catch(HttpException)
 export class HttpFilter implements ExceptionFilter {

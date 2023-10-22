@@ -9,6 +9,15 @@ export default () => ({
         TIME: config.get('JWT_TIME')
     },
 
+    log: {
+        dirname: config.get("LOG_DIRNAME"),        // 日志保存的目录
+        filename: config.get("LOG_FILENAME"),      // 日志名称，占位符 %DATE% 取值为 datePattern 值。
+        datePattern: config.get("LOG_DATEPATTERN"),// 日志轮换的频率，此处表示每天。
+        zippedArchive: true,                       // 是否通过压缩的方式归档被轮换的日志文件。
+        maxSize: config.get("LOG_MAXSIZE"),        // 设置日志文件的最大大小，m 表示 mb 。
+        maxFiles: config.get("LOG_MAXFILES")       // 保留日志文件的最大天数，此处表示自动删除超过 14 天的日志文件。
+    },
+
     roles: {
         studentKEY: config.get('student'),
         adminKEY: config.get('admin'),

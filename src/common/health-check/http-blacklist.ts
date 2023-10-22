@@ -6,12 +6,9 @@ import { join } from "path";
 import { Request } from 'express';
 import { ConfigService } from "@nestjs/config";
 import { Cache } from 'cache-manager'
-
-
 /*
   用于拦截恶意攻击的ip(短时间内多次请求访问)
 */
-
 @Injectable()
 export class httpBlacklist implements NestInterceptor {
     constructor(
