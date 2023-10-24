@@ -4,17 +4,17 @@ import { Response } from "express";
 import { map } from "rxjs";
 
 @Injectable()
-export class NoticeFileService {
+export class IncorruptibilityFileService {
     constructor(
-        @Inject("NOTICE_SERVICE") private readonly noticeService: ClientProxy
+        @Inject("INCORRUPTIBILITY_SERVICE") private readonly incorruptibilityService: ClientProxy
     ) { }
 
     // 文件上传
     async uploadFile(file: Express.Multer.File, oldFileName?: string) {
-        const pattern = { cmd: "notice_file_uploadFile" };
+        const pattern = { cmd: "incorruptibility_file_uploadFile" };
         const data = file;
 
-        let status = this.noticeService
+        let status = this.incorruptibilityService
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
@@ -26,10 +26,10 @@ export class NoticeFileService {
 
     // 文件删除
     async removeFile(fileName: string, type?: string) {
-        const pattern = { cmd: "notice_file_removeFile" };
+        const pattern = { cmd: "incorruptibility_file_removeFile" };
         const data = fileName;
 
-        let status = this.noticeService
+        let status = this.incorruptibilityService
             .send<any>(pattern, data)
             .pipe(
                 map((message: any) => {
@@ -41,10 +41,10 @@ export class NoticeFileService {
 
     // 文件查看
     async getFiles(res: Response, fileName: string) {
-        const pattern = { cmd: "notice_file_getFiles" };
+        const pattern = { cmd: "incorruptibility_file_getFiles" };
         const data = fileName;
 
-        let status = this.noticeService
+        let status = this.incorruptibilityService
             .send<any>(pattern, data)
             .subscribe(meassage => {
                 if (meassage !== "Unknown resource") {
@@ -58,27 +58,5 @@ export class NoticeFileService {
                 }
             })
         return status;
-    }
-
-    // 文件下载
-    async dowFile(res: Response, fileSite: string, fileName: any) {
-        const pattern = { cmd: "notice_file_dowFile" };
-        const data = { fileSite: fileSite };
-        this.noticeService
-            .send<any>(pattern, data).subscribe(meassage => {
-                if (meassage && meassage !== "abnormal" && meassage !== "Unknown resource") {
-                    fileName = encodeURI(fileName);
-                    res.setHeader('Content-Type', 'application/octet-stream');
-                    res.setHeader('Content-Disposition', `attachment; filename=${fileName.toString("iso8859-1")}`);
-                    res.sendFile(meassage, (err) => {
-                        if (err) {
-                            console.log(err);
-                            res.status(400).send(meassage);
-                        }
-                    })
-                } else {
-                    res.status(400).send(meassage);
-                }
-            })
     }
 }

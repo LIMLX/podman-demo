@@ -1,10 +1,11 @@
-import { Body, Controller, Get, Patch, Post } from "@nestjs/common";
+import { Body, Controller, Get, Patch, Post, UseGuards } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
-import { Admin, AdminRole } from "src/common";
+import { Admin, AdminRole, AdminRoleGuard } from "src/common";
 import { CreateOperationDto, UpdateOperationDto } from "src/microservice/dto";
 import { UsersOperationService } from "src/microservice/service";
 
 @ApiTags('操作权限')
+@UseGuards(AdminRoleGuard)
 @Controller('users/operation')
 export class UsersOperationController {
   constructor(private readonly operationService: UsersOperationService) { }

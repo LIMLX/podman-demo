@@ -3,18 +3,18 @@ import { FileInterceptor } from '@nestjs/platform-express/multer';
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
 import { Response } from "express";
 import { Admin, AdminRole, AdminRoleGuard, UserEnum, UserRole, UserRoleGuard } from "src/common";
-import { NoticeFileService } from "src/microservice/service";
+import { IncorruptibilityFileService } from "src/microservice/service";
 
-@ApiTags('通知文件')
-@Controller("notice/file")
+@ApiTags('爱廉说文件')
 @UseGuards(UserRoleGuard)
 @UseGuards(AdminRoleGuard)
-export class NoticeFileController {
-    constructor(private readonly fileService: NoticeFileService) { }
+@Controller("incorruptibility/file")
+export class IncorruptibilityFileController {
+    constructor(private readonly fileService: IncorruptibilityFileService) { }
 
     // 文件上传
     @ApiOperation({ summary: "文件上传", description: "文件上传" })
-    @AdminRole([{ admin: Admin.Notice, level: 1 }])
+    @AdminRole([{ admin: Admin.Incorruptibility, level: 1 }])
     @Post('/uploadFile')
     @UseInterceptors(FileInterceptor('file'))
     async uploadFile(@UploadedFile() file: Express.Multer.File) {
@@ -30,7 +30,7 @@ export class NoticeFileController {
 
     // 文件删除
     @ApiOperation({ summary: "文件删除", description: "文件删除" })
-    @AdminRole([{ admin: Admin.Notice, level: 1 }])
+    @AdminRole([{ admin: Admin.Incorruptibility, level: 1 }])
     @Delete('/delFile/name=:fileName')
     async removeFile(@Param("fileName") fileName: string) {
         if (!fileName) {
@@ -41,17 +41,9 @@ export class NoticeFileController {
 
     // 查看文件
     @ApiOperation({ summary: "查看文件", description: "查看文件" })
-    @UserRole([{ module: UserEnum.Notice, level: 1 }])
+    @UserRole([{ module: UserEnum.Incorruptibility, level: 1 }])
     @Get('getFile/fileName=:fileName')
     async getFile(@Res() res: Response, @Param("fileName") fileName: string) {
         return await this.fileService.getFiles(res, fileName);
-    }
-
-    // 文件下载
-    @ApiOperation({ summary: "文件下载", description: "文件下载" })
-    @UserRole([{ module: UserEnum.Notice, level: 1 }])
-    @Post("dowFile")
-    async dowFile(@Res() res: Response, @Body() { fileSite, fileName }: { fileSite: string, fileName: any }) {
-        return await this.fileService.dowFile(res, fileSite, fileName);
     }
 }

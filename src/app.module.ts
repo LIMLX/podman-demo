@@ -12,11 +12,11 @@ import { NoticeAdminController, NoticeFileController, NoticeUserController, SmsC
 import { NoticeAdminService, NoticeFileService, NoticeUserService } from './microservice/service/notice';
 import { UserAdminController, UserAdminEmployeeController, UserController, UserEmployeeController, UserStudentController, UsersModuleController, UsersOperationController, UsersOrganizationController, UsersRoleController } from './microservice/controller/users';
 import { UserAdminEmployeeService, UserAdminService, UserAdminStudentService, UserEmployeeService, UserStudentService, UsersModuleService, UsersOperationService, UsersOrganizationService, UsersRoleService, UsersService } from './microservice/service/users';
-import { LeaveAdminService, LeaveDivisionService, LeaveEmployeeService, LeaveFileService, LeaveStudentService, LeaveTypeService } from './microservice';
+import { IncorruptibilityAdminService, IncorruptibilityFileService, IncorruptibilityUserService, LeaveAdminService, LeaveDivisionService, LeaveEmployeeService, LeaveFileService, LeaveStudentService, LeaveTypeService } from './microservice';
 import { LeaveAdminController, LeaveDivisionController, LeaveEmployeeController, LeaveFileController, LeaveStudentController, LeaveTypeController } from './microservice/controller/leave';
 import { RepairsAdminController, RepairsAutoDispatchController, RepairsFileController, RepairsMaintainerController, RepairsManagerController, RepairsUserController } from './microservice/controller/repairs';
 import { RepairsAdminService, RepairsAutoDispatchService, RepairsFileService, RepairsMaintainerService, RepairsManagerService, RepairsUserService } from './microservice/service/repairs';
-import { MsEpiHealth, MsHistoryHealth, MsLeaveHealth, MsNoticeHealth, MsRepairsHealth, MsSmsHealth, MsUserHealth, httpBlacklist } from './common';
+import { MsEpiHealth, MsHistoryHealth, MsIncorruptibilityHealth, MsLeaveHealth, MsNoticeHealth, MsRepairsHealth, MsSmsHealth, MsUserHealth, httpBlacklist } from './common';
 import { EpiEmployeeController, EpiClockTypeController, EpiAdminController, EpiStudentController, EpiFileController, EpiDivisionController } from './microservice/controller/epi';
 import { EpiClockAdminService, EpiClockTypeService, EpiDivisionService, EpiEmployeeService, EpiFileService, EpiStudentService } from './microservice/service/epi';
 import { RepairsSocket, LeaveSocket, HistorySocket } from './microservice/socket';
@@ -27,6 +27,8 @@ import { WinstonModule } from 'nest-winston';
 import * as winston from 'winston';
 import 'winston-daily-rotate-file';
 import LoggerMiddleware from './common/logger/logger.middleware';
+import { IncorruptibilityAdminController, IncorruptibilityFileController } from './microservice/controller/incorruptibility';
+import { IncorruptibilityUserController } from './microservice/controller/incorruptibility/user.controller';
 
 @Module({
   imports: [
@@ -119,7 +121,12 @@ import LoggerMiddleware from './common/logger/logger.middleware';
     HistoryAdminController,
     HistoryDivisionController,
     HistoryUserController,
-    HistoryFileController
+    HistoryFileController,
+
+    // incorruptibility爱廉说
+    IncorruptibilityAdminController,
+    IncorruptibilityUserController,
+    IncorruptibilityFileController
   ],
 
   providers: [
@@ -178,6 +185,11 @@ import LoggerMiddleware from './common/logger/logger.middleware';
     HistoryDivisionService,
     HistorySocket,
 
+    // incorruptibility爱廉说
+    IncorruptibilityFileService,
+    IncorruptibilityUserService,
+    IncorruptibilityAdminService,
+
     // 用户模块
     {
       provide: 'USER_SERVICE',
@@ -232,6 +244,15 @@ import LoggerMiddleware from './common/logger/logger.middleware';
       },
       inject: [ConfigService]
     },
+    // 爱廉说模块
+    {
+      provide: 'INCORRUPTIBILITY_SERVICE',
+      useFactory: (configService: ConfigService) => {
+        const mathSvcOptions = configService.get('incorruptibilityService');
+        return ClientProxyFactory.create(mathSvcOptions);
+      },
+      inject: [ConfigService]
+    },
     // 党史模块
     {
       provide: 'HISTORY_SERVICE',
@@ -254,6 +275,7 @@ export class AppModule implements NestModule {
       consumer.apply(MsEpiHealth).forRoutes({ path: 'epi/*', method: RequestMethod.ALL }),
       consumer.apply(MsHistoryHealth).forRoutes({ path: 'history/*', method: RequestMethod.ALL }),
       consumer.apply(MsNoticeHealth).forRoutes({ path: 'notice/*', method: RequestMethod.ALL }),
+      consumer.apply(MsIncorruptibilityHealth).forRoutes({ path: 'incorruptibility/*', method: RequestMethod.ALL }),
       // 黑名单拦截
       consumer.apply(httpBlacklist).forRoutes({ path: '*', method: RequestMethod.ALL }),
       // 日志访问

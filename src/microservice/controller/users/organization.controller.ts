@@ -1,10 +1,11 @@
-import { Body, Controller, Delete, Get, Param, Patch, Post, Query } from "@nestjs/common";
+import { Body, Controller, Delete, Get, Param, Patch, Post, Query, UseGuards } from "@nestjs/common";
 import { ApiOperation, ApiTags } from "@nestjs/swagger";
-import { Admin, AdminRole } from "src/common";
+import { Admin, AdminRole, AdminRoleGuard } from "src/common";
 import { CreateCampusDto, CreateClassDto, CreateDepartmentDto, CreateSchoolDto, UpdateCampusDto, UpdateClassDto, UpdateDepartmentDto, UpdateSchoolDto } from "src/microservice/dto";
 import { UsersOrganizationService } from "src/microservice/service";
 
 @ApiTags('组织')
+@UseGuards(AdminRoleGuard)
 @Controller('users/organization')
 export class UsersOrganizationController {
   constructor(private readonly organizationService: UsersOrganizationService) { }

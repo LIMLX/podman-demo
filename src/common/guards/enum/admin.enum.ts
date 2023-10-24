@@ -6,4 +6,5 @@ export enum Admin {
     Epi = "EpidemicPrevention",
     Notice = "Notice",
     Repairs = "Repairs",
+    Incorruptibility = "Incorruptibility"
 }

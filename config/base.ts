@@ -75,6 +75,14 @@ export default () => ({
             port: config.get('EPI_OPTIONS_PORT')
         }
     },
+    incorruptibilityService: {
+        name: config.get('INCORRUPTIBILITY_NAME'),
+        transport: config.get('INCORRUPTIBILITY_TRANSPORT'),
+        options: {
+            host: config.get('INCORRUPTIBILITY_OPTIONS_HOST'),
+            port: config.get('INCORRUPTIBILITY_OPTIONS_PORT')
+        }
+    },
     reportService: {
         name: config.get('REPROT_NAME'),
         transport: config.get('REPROT_TRANSPORT'),

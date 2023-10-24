@@ -4,5 +4,6 @@ export enum Student {
     Epi = "EpidemicPrevention",
     Notice = "Notice",
     Repairs = "Repairs",
-    User = "user"
+    User = "user",
+    Incorruptibility = "Incorruptibility"
 }

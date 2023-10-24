@@ -186,3 +186,28 @@ export class MsNoticeHealth implements NestInterceptor {
         return next();
     }
 }
+
+// incorruptibility(爱廉说)服务
+@Injectable()
+export class MsIncorruptibilityHealth implements NestInterceptor {
+    constructor(
+        @Inject("INCORRUPTIBILITY_SERVICE") private readonly incorruptibilityService: ClientProxy
+    ) { }
+
+    async intercept(context: ExecutionContext, next: CallHandler): Promise<Observable<any>> {
+        // 放行
+        return next.handle();
+    }
+
+    // 请求和响应周期
+    async use(req: Request, res: Response, next: NextFunction) {
+        // 检测微服务状态
+        try {
+            await this.incorruptibilityService.connect();
+        } catch (error) {
+            throw new ServiceUnavailableException();
+        }
+        // 放行
+        return next();
+    }
+}
