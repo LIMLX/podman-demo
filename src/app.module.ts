@@ -10,7 +10,6 @@ import { JWTDATA } from './common/encryptions';
 import { SmsCodeService } from './microservice/service/sms';
 import { NoticeAdminController, NoticeFileController, NoticeUserController, SmsCodeController } from './microservice/controller';
 import { NoticeAdminService, NoticeFileService, NoticeUserService } from './microservice/service/notice';
-import { UserAdminController, UserAdminEmployeeController, UserController, UserEmployeeController, UserStudentController, UsersModuleController, UsersOperationController, UsersOrganizationController, UsersRoleController } from './microservice/controller/users';
 import { UserAdminEmployeeService, UserAdminService, UserAdminStudentService, UserEmployeeService, UserStudentService, UsersModuleService, UsersOperationService, UsersOrganizationService, UsersRoleService, UsersService } from './microservice/service/users';
 import { IncorruptibilityAdminService, IncorruptibilityFileService, IncorruptibilityUserService, LeaveAdminService, LeaveDivisionService, LeaveEmployeeService, LeaveFileService, LeaveStudentService, LeaveTypeService } from './microservice';
 import { LeaveAdminController, LeaveDivisionController, LeaveEmployeeController, LeaveFileController, LeaveStudentController, LeaveTypeController } from './microservice/controller/leave';
@@ -29,6 +28,8 @@ import 'winston-daily-rotate-file';
 import LoggerMiddleware from './common/logger/logger.middleware';
 import { IncorruptibilityAdminController, IncorruptibilityFileController } from './microservice/controller/incorruptibility';
 import { IncorruptibilityUserController } from './microservice/controller/incorruptibility/user.controller';
+import { UserModule } from './microservice/server';
+import { UserController } from './microservice/server/users/controller/user.controller';
 
 @Module({
   imports: [
@@ -68,24 +69,12 @@ import { IncorruptibilityUserController } from './microservice/controller/incorr
     }),
     PassportModule,
     CacheModule.register(),
-    AuthModule
+    AuthModule, UserModule
   ],
 
   controllers: [
     // sms短信
     SmsCodeController,
-
-    // users用户
-    UsersModuleController,
-    UsersRoleController,
-    UsersOperationController,
-    UsersOrganizationController,
-    UserStudentController,
-    UserEmployeeController,
-    UserController,
-    UserAdminController,
-    UserAdminEmployeeController,
-    UserAdminStudentController,
 
     // notice通知
     NoticeAdminController,
@@ -134,18 +123,6 @@ import { IncorruptibilityUserController } from './microservice/controller/incorr
     JWTDATA,
     // sms短信
     SmsCodeService,
-
-    // users用户
-    UserEmployeeService,
-    UserStudentService,
-    UsersModuleService,
-    UsersOperationService,
-    UsersRoleService,
-    UsersOrganizationService,
-    UsersService,
-    UserAdminService,
-    UserAdminEmployeeService,
-    UserAdminStudentService,
 
     // notice通知
     NoticeAdminService,
